@@ -63,7 +63,7 @@
     @yield('styles')
 </head>
 <body>
-    @if(request()->routeIs('login'))
+    @if(request()->routeIs('login') || request()->routeIs('password.reset'))
     <!-- Login Layout - Sin estructura de dashboard -->
     @yield('content')
     @else
@@ -136,8 +136,7 @@
                         {{ auth()->user()->name }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">

@@ -1,11 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuditadoController;
 use App\Http\Controllers\AuditorController;
 use App\Http\Controllers\JefeAuditorController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +31,20 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rutas para cada rol - Dashboards separados por directorio
+// Rutas de restablecimiento de contraseña (públicas)
+Route::post('/password/email', [ProfileController::class, 'requestPasswordReset'])->name('password.email');
+Route::get('/password/reset/{token}', [ProfileController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [ProfileController::class, 'resetPassword'])->name('password.update');
+
+// Rutas protegidas con autenticación
 Route::middleware('auth')->group(function () {
+    // Rutas de perfil (disponibles para todos los usuarios autenticados)
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'show'])->name('show');
+        Route::put('/update', [ProfileController::class, 'updateProfile'])->name('update');
+        Route::put('/password', [ProfileController::class, 'changePassword'])->name('password');
+    });
+
     // Rutas del Auditado
     Route::prefix('auditado')->name('auditado.')->group(function () {
         Route::get('/dashboard', [AuditadoController::class, 'dashboard'])->name('dashboard');

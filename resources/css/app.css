@@ -1308,6 +1308,32 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+/* Forgot Password Link */
+.forgot-password-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.forgot-password-link:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+    transform: translateX(2px);
+}
+
+[data-theme="dark"] .forgot-password-link {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .forgot-password-link:hover {
+    color: var(--primary-hover);
+}
+
 /* Demo Users Section */
 .demo-users {
     background: rgba(248, 250, 252, 0.8);
