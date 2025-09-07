@@ -2,22 +2,30 @@
 
 ## Pasos para desplegar en Hostinger (Hosting Compartido)
 
-### 1. Preparación Local
+### 1. Preparación Local ✅ COMPLETADO
 
-Antes de comprimir y subir el proyecto, ejecuta estos comandos en tu entorno local:
+Los siguientes pasos ya están completados en este proyecto:
+
+✅ **Assets compilados para producción:**
+- CSS optimizado: `public/build/assets/app-Cb9iJH-7.css`
+- JavaScript optimizado: `public/build/assets/app-CGui_ntt.js`
+- Manifest generado: `public/build/manifest.json`
+
+✅ **Archivos listos para despliegue**
+
+Ejecuta estos comandos adicionales antes de comprimir:
 
 ```bash
-# Optimizar autoloader
-cd /c/m/hotinger/auditorsoft
-php composer.phar dump-autoload --optimize --no-dev
+# Limpiar cachés de desarrollo
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 
-# Cachear configuración (para producción)
+# Optimizar para producción (ejecutar en el servidor)
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-
-# Generar nueva clave de aplicación si es necesario
-php artisan key:generate
 ```
 
 ### 2. Configuración de Base de Datos
@@ -61,8 +69,13 @@ Cuando subas los archivos a Hostinger:
 public_html/                 (carpeta raíz del hosting)
 ├── index.php              (mover desde public/)
 ├── .htaccess               (mover desde public/)
-├── css/                    (mover desde public/css/)
-├── js/                     (mover desde public/js/)
+├── css/                    (mover desde public/css/ - opcional)
+├── js/                     (mover desde public/js/ - opcional)
+├── build/                  (mover desde public/build/ - REQUERIDO)
+│   ├── assets/
+│   │   ├── app-Cb9iJH-7.css
+│   │   └── app-CGui_ntt.js
+│   └── manifest.json
 └── auditorsoft/            (crear esta carpeta)
     ├── app/
     ├── bootstrap/
