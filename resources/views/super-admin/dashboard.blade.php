@@ -11,7 +11,7 @@
     </a>
 </div>
 <div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
+    <a class="sidebar-nav-link" href="{{ route('super-admin.users.index') }}">
         <i class="fas fa-users"></i>
         <span>Gestión de Usuarios</span>
     </a>
@@ -333,7 +333,7 @@
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <a href="#" class="quick-action-btn">
+                        <a href="{{ route('super-admin.users.create') }}" class="quick-action-btn">
                             <i class="fas fa-user-plus text-primary"></i>
                             <div class="fw-semibold">Crear Usuario</div>
                         </a>

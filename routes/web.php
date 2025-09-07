@@ -8,6 +8,7 @@ use App\Http\Controllers\AuditadoController;
 use App\Http\Controllers\AuditorController;
 use App\Http\Controllers\JefeAuditorController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -63,5 +64,17 @@ Route::middleware('auth')->group(function () {
     // Rutas del Super Administrador
     Route::prefix('super-admin')->name('super-admin.')->group(function () {
         Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+        
+        // Gestión de Usuarios
+        Route::resource('users', UserController::class)->except(['create', 'store', 'show', 'edit', 'update', 'destroy']);
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::patch('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+        Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])->name('users.update-password');
     });
 });
