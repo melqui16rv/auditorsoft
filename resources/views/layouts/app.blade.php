@@ -19,6 +19,35 @@
             if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
             }
+            
+            // Global theme sync function
+            window.syncTheme = function() {
+                const currentTheme = localStorage.getItem('theme') || 
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                
+                if (currentTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+                
+                // Update all theme toggles on the page
+                const toggles = document.querySelectorAll('.theme-toggle');
+                toggles.forEach(toggle => {
+                    if (currentTheme === 'dark') {
+                        toggle.classList.add('dark');
+                    } else {
+                        toggle.classList.remove('dark');
+                    }
+                });
+            };
+            
+            // Listen for storage changes (when theme is changed in another tab)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'theme') {
+                    window.syncTheme();
+                }
+            });
         })();
     </script>
     
@@ -34,6 +63,10 @@
     @yield('styles')
 </head>
 <body>
+    @if(request()->routeIs('login'))
+    <!-- Login Layout - Sin estructura de dashboard -->
+    @yield('content')
+    @else
     @auth
     <!-- Sidebar -->
     <nav class="sidebar">
@@ -138,12 +171,8 @@
             @yield('content')
         </div>
     </div>
-    @else
-    <!-- Guest Layout -->
-    <div class="container-fluid">
-        @yield('content')
-    </div>
     @endauth
+    @endif
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
