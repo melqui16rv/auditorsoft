@@ -9,6 +9,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>@yield('title', 'AuditorSoft')</title>
     
+    <!-- Script para evitar flash de tema -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+            
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -16,7 +29,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     @yield('styles')
 </head>
@@ -46,6 +59,12 @@
             </div>
             
             <div class="user-menu">
+                <!-- Theme Toggle -->
+                <button class="theme-toggle me-3" id="themeToggle" title="Cambiar tema">
+                    <i class="fas fa-sun theme-toggle-icon sun"></i>
+                    <i class="fas fa-moon theme-toggle-icon moon"></i>
+                </button>
+                
                 <span class="role-badge 
                     @switch(auth()->user()->role)
                         @case('auditado')
@@ -128,8 +147,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ asset('js/app.js') }}"></script>
     
     @yield('scripts')
 </body>

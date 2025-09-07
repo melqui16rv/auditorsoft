@@ -1,6 +1,108 @@
 // AuditorSoft - JavaScript Functions
 
 document.addEventListener('DOMContentLoaded', function() {
+    // ===============================
+    // FUNCIONALIDAD MODO OSCURO
+    // ===============================
+    
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Función para obtener el tema preferido
+    function getPreferredTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme;
+        }
+        
+        // Si no hay tema guardado, usar el del sistema
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    // Función para aplicar el tema
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle?.classList.add('dark');
+        } else {
+            html.removeAttribute('data-theme');
+            themeToggle?.classList.remove('dark');
+        }
+        
+        // Guardar preferencia
+        localStorage.setItem('theme', theme);
+        
+        // Actualizar título del botón
+        if (themeToggle) {
+            themeToggle.title = theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+        }
+    }
+    
+    // Función para cambiar el tema
+    function toggleTheme() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        
+        // Efecto visual suave
+        if (themeToggle) {
+            themeToggle.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 150);
+        }
+        
+        // Mostrar notificación sutil con icono
+        if (window.AuditorSoft) {
+            const icon = newTheme === 'dark' ? '🌙' : '☀️';
+            window.AuditorSoft.showNotification(
+                `${icon} Modo ${newTheme === 'dark' ? 'oscuro' : 'claro'} activado`, 
+                'info'
+            );
+        }
+        
+        // Trigger event para otras partes del sistema que puedan necesitarlo
+        window.dispatchEvent(new CustomEvent('themeChanged', { 
+            detail: { theme: newTheme } 
+        }));
+    }
+    
+    // Aplicar tema inicial
+    applyTheme(getPreferredTheme());
+    
+    // Event listener para el toggle con mejor UX
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Agregar tooltip dinámico
+        themeToggle.addEventListener('mouseenter', function() {
+            const currentTheme = html.getAttribute('data-theme');
+            const tooltipText = currentTheme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+            this.title = tooltipText;
+        });
+        
+        // Preevenir que el tooltip aparezca inmediatamente después del click
+        themeToggle.addEventListener('click', function() {
+            this.title = '';
+            setTimeout(() => {
+                const currentTheme = html.getAttribute('data-theme');
+                const tooltipText = currentTheme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+                this.title = tooltipText;
+            }, 100);
+        });
+    }
+    
+    // Detectar cambios en las preferencias del sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        // Solo aplicar automáticamente si no hay preferencia guardada
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+    
+    // ===============================
+    // FUNCIONALIDAD SIDEBAR MEJORADA
+    // ===============================
     // Sidebar toggle functionality - Funcionalidad mejorada
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.querySelector('.sidebar');
@@ -319,6 +421,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Utility functions
 window.AuditorSoft = {
+    // Theme management
+    toggleTheme: function() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.click();
+        }
+    },
+
+    getCurrentTheme: function() {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+    },
+
+    setTheme: function(theme) {
+        if (theme === 'dark' || theme === 'light') {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (theme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeToggle?.classList.add('dark');
+            } else {
+                html.removeAttribute('data-theme');
+                themeToggle?.classList.remove('dark');
+            }
+            
+            localStorage.setItem('theme', theme);
+            
+            if (themeToggle) {
+                themeToggle.title = theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+            }
+        }
+    },
+
     // Show notification
     showNotification: function(message, type = 'info') {
         const alertDiv = document.createElement('div');
