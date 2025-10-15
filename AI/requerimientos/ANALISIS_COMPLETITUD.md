@@ -1,7 +1,7 @@
 # Análisis de Completitud del Documento de Requerimientos
 
 **Fecha de análisis:** 15 de octubre de 2025  
-**Analista:** GitHub Copilot AI  
+**Analista:** Melqui Romero
 **Versión del documento evaluado:** 2.0
 
 ---
