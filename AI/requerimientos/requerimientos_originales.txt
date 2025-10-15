@@ -1,0 +1,608 @@
+Contexto y Alcance de la Aplicación de Gestión de Auditoría Interna
+La aplicación de gestión de auditoría interna está concebida como una herramienta integral para medir y evaluar la eficiencia, eficacia y economía de los controles internos de la entidad, asegurando el cumplimiento de las políticas y objetivos del ente territorial. El sistema debe facilitar el desarrollo de las funciones de la Oficina de Control Interno (OCI) a través de cinco roles esenciales definidos en el Decreto 648 de 2017: Liderazgo estratégico, Enfoque hacia la prevención, Evaluación de la gestión del riesgo, Evaluación y seguimiento, y Relación con entes externos de control. El alcance de este procedimiento es aplicable a todos los procesos de la Administración Municipal.
+El Jefe de Control Interno es el principal responsable del cumplimiento de los objetivos y la gestión del programa de auditorías. Por lo tanto, el sistema debe estructurarse para soportar tanto su labor de liderazgo estratégico como la ejecución práctica por parte del equipo auditor o profesional universitario de apoyo. Es fundamental que el sistema siga los lineamientos técnicos establecidos en la NTC-19011:2018 (Directrices para la auditoría de los Sistemas de Gestión) y la Guía de auditoría interna basada en riesgos para entidades públicas.
+Módulo de Parametrización y Planificación General
+El primer pilar funcional reside en la parametrización de los elementos de control y de personal. Se requiere la gestión de funcionarios, permitiendo registrar al Jefe de Control Interno y al personal de apoyo, con opciones para crear nuevos registros, editar o eliminar datos. Los cinco roles de la OCI deben estar establecidos de conformidad con el Decreto 648 de 2017, con capacidad para modificarlos o actualizarlos si la normativa cambia. Adicionalmente, se deben parametrizar las entidades de control externas (ej. Contraloría Departamental, Procuraduría), a las cuales se realiza seguimiento. La herramienta debe contar con un mecanismo de inicio de sesión para el acceso seguro (usuario y contraseña).
+La planificación general se formaliza en el Plan Anual de Auditoría (PAA), que debe capturar la fecha de creación, el Jefe de Control Interno responsable, y la ciudad/municipio. El PAA soporta la definición y seguimiento de tareas asociadas a los cinco roles. Para cada tarea, se debe registrar la descripción, fechas de inicio y finalización, el responsable asignado y la periodicidad del seguimiento (ej., semestral). El sistema requiere una funcionalidad para registrar puntos de control, donde se ingresan observaciones, el estado de la tarea (realizado, pendiente, anulado) y la evaluación de cumplimiento. Es imprescindible la capacidad de cargar y vincular archivos de evidencia a cada tarea, incluyendo la descripción del informe de evidencia, para su posterior visualización. Un requisito clave para la evaluación del PAA es la generación de un resumen de cumplimiento que muestre el porcentaje de avance de las tareas planeadas.
+Módulo de Programación y Ejecución de Auditorías Internas
+El corazón de la aplicación se centra en el rol de "Evaluación y seguimiento" (auditoría interna). Este proceso inicia con la Conformación y Priorización del Universo de Auditoría basado en riesgos. El sistema debe permitir la parametrización de los procesos de la entidad (estratégicos, misionales, de apoyo y de evaluación y mejora). La priorización se realiza capturando los riesgos por proceso (ej. moderado, bajo, extremo) para calcular una ponderación. Se consideran factores como los requerimientos de entes reguladores y el tiempo transcurrido desde la última auditoría. El resultado de esta matriz define el ciclo de rotación de las auditorías (ej., auditar cada tres años).
+Una vez definidas las áreas a auditar (unidades auditables), se requiere la parametrización de Criterios (toda la normatividad y legislación aplicable, como la Ley 99 de 1993) y Alcances. Estos deben ser asociados específicamente al área auditada (ej. criterios ambientales para el área ambiental), con validaciones para evitar la selección de criterios o alcances no aplicables. El Programa de Auditoría debe ser establecido con fechas de inicio, finalización y el responsable. Se debe generar un formato visual de este programa que consolide las áreas, fechas, criterios y alcances para la alta dirección.
+Gestión del Plan Individual y Comunicación de Resultados
+Para la ejecución, el sistema debe trasladar automáticamente la información del programa (criterios y alcances) al Plan Individual de Auditoría Interna (PIAI). El PIAI requiere el diligenciamiento de los detalles de ejecución, incluyendo fecha y hora de inicio y finalización de actividades específicas (como reunión de apertura, revisión de contratos, reunión de cierre) y los nombres del personal auditado y el equipo auditor.
+La auditoría formalmente inicia con una Reunión de Apertura, y un requisito clave es la gestión de la Carta de Salvaguarda, donde el auditado declara la veracidad, calidad y oportunidad de la información entregada. Durante la ejecución, se recopila evidencia para generar hallazgos u observaciones. El sistema debe soportar la elaboración del Informe Preliminar, concediendo al auditado un plazo (ej., 15 días hábiles) para la presentación de controversias a los hallazgos. La funcionalidad debe permitir al auditor aceptar o rechazar dichas controversias, lo que define los hallazgos definitivos. La auditoría culmina con la Reunión de Cierre, donde se presentan los hallazgos definitivos y se establece el plazo para el Plan de Mejoramiento.
+Seguimiento de Acciones Correctivas y Trazabilidad
+El Informe de Auditoría Interna (FR-GCA-004) debe consolidar los hallazgos, conclusiones y recomendaciones definitivas. Los hallazgos ratificados exigen la creación de un Plan de Mejoramiento por procesos. El sistema debe permitir al auditado registrar la causa, efecto, la descripción de la acción de mejora, objetivos, metas y fechas de inicio y fin de la acción correctiva.
+El Jefe de Control Interno debe tener funcionalidades de seguimiento continuo, registrando las actividades cumplidas y evaluando si la acción fue efectiva o no. El sistema requiere la capacidad de adjuntar y visualizar evidencias de este seguimiento. El Jefe de Control Interno es responsable de formalizar el cierre de las acciones cuando se considere que las causas han sido eliminadas y no habrá recurrencia. Para la trazabilidad y la calidad, todos los registros clave, incluyendo el Plan Individual (FR-GCA-002), el Informe (FR-GCA-004, que incluye criterios cualitativos y cuantitativos (educación, formación, experiencia, etc.), y donde el auditado realiza la evaluación respectiva. El sistema debe registrar las brechas de competencia (cuando el auditor no cumple los criterios) y determinar la necesidad de formación o experiencia adicional.
+ 
+I. Requisitos de Metadatos de Trazabilidad (Registros de Calidad)
+Como ingeniero de sistemas, la gestión de la trazabilidad y los metadatos de los registros de calidad es un requerimiento no funcional crítico para garantizar la validez probatoria y la integridad del proceso de auditoría, tal como se define en la documentación de la entidad. Para el desarrollo en Laravel 10, estos metadatos deben estar integrados a nivel de la capa de persistencia y la lógica de negocio para cada registro clave.
+El sistema debe asegurar la captura y persistencia de un conjunto estandarizado de metadatos para todos los formatos de registro de la Oficina de Control Interno (OCI), tanto aquellos relativos a la planeación estratégica (FR-GCE-XXX) como los relativos a la ejecución de auditorías (FR-GCA-XXX).
+Estructura y Persistencia de los Metadatos
+Para cada registro documentado en el sistema, los siguientes atributos de trazabilidad deben ser obligatorios y persistentes, siguiendo los parámetros definidos para los registros en la documentación MA-GCE-003 y PD-GCA-004:
+1. Versión del Formato (V / Ver): Debe registrarse la versión específica del formato utilizado al momento de crear el registro. Esto es crucial para manejar la evolución de la documentación a lo largo del tiempo, por ejemplo, los registros FR-GCE-001, 002 y 003 utilizan la Versión 01.
+2. Fecha de Aprobación del Formato: Debe registrarse la fecha de aprobación del formato o de la versión correspondiente.
+3. Medio de Almacenamiento: El sistema debe identificar el medio de almacenamiento como "Medio magnético". Esto establece la naturaleza digital de la persistencia de los registros de calidad.
+4. Protección: El nivel de seguridad o protección debe ser clasificado como "Controlado", implicando restricciones de acceso y modificación para mantener la integridad de la información.
+5. Ubicación: La ubicación lógica de los archivos o registros debe ser designada como "PC control interno". En el contexto del desarrollo en Laravel 10, esto se interpreta como el servidor de la aplicación controlada y accesible únicamente por el personal de la OCI.
+6. Recuperación: El método de recuperación de la información debe ser "Por fecha", lo que requiere que el sistema permita búsquedas y filtros efectivos basados en la fecha de creación o de la actividad.
+7. Responsable del Archivo: El responsable de la gestión y archivo de los documentos debe ser registrado. Para los registros del Plan Anual de Auditoría (FR-GCE-001, 002, 003 y 004), el responsable de archivo es el "Jefe control interno". Para los registros de auditoría y evaluación (FR-GCA-001, 002, 003, 004, 005, 006), la responsable de archivo es la "Secretaria". El sistema debe contemplar esta dualidad de responsables según el tipo de formato.
+8. Permanencia: El periodo de conservación de todos los registros debe ser establecido como "Permanente".
+9. Disposición Final: El método de disposición final de la información debe ser "Backups", lo que implica la necesidad de una estrategia de respaldo de datos robusta y continua dentro de los requisitos no funcionales.
+Aplicación a Registros Clave
+Estos metadatos deben aplicarse a la gestión de todos los registros formales que son evidencia de la actividad de la OCI. Esto incluye, pero no se limita a, los siguientes formatos, asegurando la captura de la información mencionada previamente:
+• Registros de Planeación y Roles (FR-GCE-XXX): Plan anual de auditorías (FR-GCE-001), Función de Advertencia (FR-GCE-002), Acompañamientos (FR-GCE-003), y registro de posibles actos de corrupción (FR-GCE-004).
+• Registros de Ejecución de Auditoría (FR-GCA-XXX): Plan individual de auditorías internas (FR-GCA-002), Informe de auditoría interna (FR-GCA-004), Evaluación de desempeño del auditor (FR-GCA-005), Acta de reunión (FR-GCA-006), y las Acciones correctivas y preventivas (FR-GCA-001). El formato FR-GCA-001 también se utiliza para el Programa de auditorías internas.
+La correcta implementación de estos atributos garantiza que la información de los informes de auditoría, seguimientos y evaluaciones mantenga su valor probatorio, esencial para los procesos disciplinarios, administrativos, judiciales y fiscales si son requeridos por las autoridades pertinentes, cumpliendo con la necesidad de documentación suficiente, confiable, relevante y útil.
+
+
+II. Requerimiento de Confidencialidad y Protección de Datos (Nivel "Controlado")
+Este requisito funcional y no funcional asegura la integridad, disponibilidad y, fundamentalmente, la confidencialidad de la información gestionada por la Oficina de Control Interno (OCI), alineándose con los estándares documentales y éticos de la entidad.
+1. Nivel de Protección y Almacenamiento
+El sistema debe implementar la clasificación de seguridad definida en los registros de calidad para todos los formatos esenciales de planificación y ejecución (FR-GCE-XXX y FR-GCA-XXX),,,.
+• Clasificación de Protección: La plataforma debe asignar y mantener la propiedad de "Protección" como "Controlado" para todos los registros de auditoría (tales como FR-GCA-001, FR-GCA-002, FR-GCA-004, FR-GCA-005, FR-GCA-006, FR-GCE-001, FR-GCE-002, FR-GCE-003, FR-GCE-004),,,. Esto implica que solo los usuarios con roles autorizados (Jefe de Control Interno, Auditor Líder, Equipo Auditor, y Secretaria) podrán acceder y manipular dichos registros.
+• Ubicación Lógica: Se debe configurar la ubicación lógica de almacenamiento de los registros como "PC control interno",,,. En la implementación de Laravel 10, esto se traduce en que la información debe residir en un espacio de servidor con acceso estrictamente controlado y restringido a la OCI.
+• Gestión de Registros: El sistema debe establecer procesos para asegurar que se traten las necesidades de seguridad y confidencialidad asociadas con los registros de la auditoría.
+2. Mecanismos de Seguridad y Confidencialidad en el Flujo de Trabajo
+El sistema debe integrar controles de seguridad directamente en el flujo de trabajo de auditoría, garantizando la discreción en el manejo de la información:
+• Gestión de Acceso a Información Confidencial: Durante la Reunión de Apertura de cada auditoría, el sistema debe exigir la confirmación de los temas relacionados con la confidencialidad y seguridad de la información, y el plan de auditoría debe incluir los procesos para tratar la confidencialidad y la seguridad de la información.
+• Protección de la Información Adquirida: Los auditores deben proceder con discreción en el uso y la protección de la información adquirida en el curso de sus tareas. El sistema debe facilitar que los auditores mantengan la confidencialidad y seguridad de la información, datos, documentos y registros,.
+• Restricción de Observadores: El líder del equipo auditor debe tener el derecho de negarse a que observadores tomen parte en ciertas actividades de auditoría si no se puede asegurar que no influirán o interferirán en la realización de la auditoría.
+3. Requisitos de Integridad Ética y Prevención de Uso Indebido
+El sistema debe incorporar requisitos éticos y de conflicto de intereses para evitar que la información sea utilizada con fines personales o de terceros, un pilar fundamental del Código de Ética del Auditor Interno,:
+• Prevención de Beneficio Personal o de Terceros: El sistema debe aplicar reglas de negocio que refuercen que el auditor no puede utilizar información confidencial con propósitos de beneficios personales o de terceros, ni que de alguna manera pueda ir en contra de los intereses de la entidad.
+• Declaración de Conflicto de Intereses: Se debe gestionar el reporte de Conflictos de Interés y Confidencial del personal de la OCI (Anexo b). El auditor debe abstenerse de evaluar operaciones específicas de las cuales haya sido previamente responsable, comunicando dicha situación al superior inmediato para evaluar el conflicto de intereses y garantizar la objetividad,.
+• Uso Objetivo de la Información: El sistema debe promover la Objetividad, garantizando que la información y los resultados del trabajo sean justos, imparciales y sin sesgos, y que los auditores internos no subordinen su juicio al de otros sobre temas de auditoría.
+• Independencia: El sistema debe mantener la libertad de condicionamientos que amenacen la capacidad de la actividad de auditoría interna para llevar a cabo sus responsabilidades de forma imparcial,.
+
+III. Requisitos de Modelado de Entidades Fundamentales para el Aplicativo de Auditoría Interna (Laravel 10)
+Como analista de software e ingeniero de sistemas, la definición precisa de las entidades o modelos de datos es esencial para la arquitectura en Laravel 10. A continuación, se detallan los requisitos de modelado para las entidades principales del sistema, asegurando la captura de toda la información requerida por la metodología y los registros (formatos) de la Oficina de Control Interno (OCI).
+Nota de Integración de Trazabilidad: Cada una de las entidades de registro clave (FR-GCE-XXX y FR-GCA-XXX) debe incluir, como atributos obligatorios para la trazabilidad y gestión documental, los metadatos definidos en el Requerimiento I: Versión del Formato, Fecha de Aprobación del Formato, Medio de Almacenamiento ("Medio magnético"), Protección ("Controlado"), Ubicación ("PC control interno"), Recuperación ("Por fecha"), Permanencia ("Permanente") y Disposición Final ("Backups").
+1. Entidad: Usuario / Funcionario
+Esta entidad gestiona el acceso al sistema y la asignación de responsabilidades.
+Atributos de la Entidad:
+• Identificador Único: Clave primaria para el registro del funcionario.
+• Nombre Completo: Nombre del Jefe de Control Interno, Auditor Líder, o Profesional Universitario.
+• Cargo/Rol Operativo: Definición del rol dentro de la entidad (Jefe de Control Interno, Profesional universitario, Auditor Líder, Secretaria).
+• Credenciales de Acceso: Usuario y Contraseña para la autenticación.
+• Roles Funcionales OCI: Capacidad de asociación a los cinco roles de la OCI (Liderazgo estratégico, Enfoque hacia la prevención, Evaluación de la gestión del riesgo, Evaluación y seguimiento, Relación con entes externos de control).
+2. Entidad: Entidad de Control Externa
+Esta entidad soporta la parametrización de los entes reguladores para el seguimiento en el PAA.
+Atributos de la Entidad:
+• Nombre de la Entidad: Identificación del ente (e.g., Contraloría Departamental del Tolima, Procuraduría).
+• Seguimiento Asociado: Campo para vincular si el ente realiza seguimiento a la Oficina de Control Interno.
+3. Entidad: Plan Anual de Auditoría (PAA) (Registro FR-GCE-001)
+Esta entidad formaliza la planificación general de la OCI y sirve como contenedor para las tareas asociadas a los cinco roles.
+Atributos de la Entidad:
+• Fecha de Creación: Fecha de elaboración del plan.
+• Fecha de Aprobación: Fecha de aprobación del Plan (Comité Institucional de Coordinación de Control Interno).
+• Jefe de Control Interno (Responsable): Referencia al funcionario responsable del plan.
+• Ciudad/Municipio: Ubicación de la entidad territorial.
+• Imagen Institucional: Campo para incluir la imagen institucional de la entidad.
+4. Entidad: Tarea / Actividad de Rol (Asociada al PAA)
+Esta entidad gestiona las tareas específicas necesarias para el cumplimiento de cada uno de los cinco roles.
+Atributos de la Entidad:
+• Rol OCI Asociado: Identificación del rol al que pertenece la tarea (e.g., Liderazgo estratégico, Evaluación y seguimiento).
+• Descripción de la Tarea: Descripción detallada de la actividad a realizar (e.g., "establecer canales de comunicación directos").
+• Fecha de Inicio (Planeada): Fecha de inicio programada de la tarea.
+• Fecha de Finalización (Planeada): Fecha de fin programada de la tarea.
+• Responsable Asignado: Referencia al Funcionario responsable de la tarea.
+• Comentarios / Periodicidad: Observaciones sobre la periodicidad del seguimiento (e.g., semestral).
+• Estado General: Estado actual de la tarea (realizado, pendiente, anulado).
+5. Entidad: Seguimiento de Tareas (Punto de Control)
+Registra el avance y la evaluación periódica de las tareas definidas en el PAA.
+Atributos de la Entidad:
+• Tarea Asociada: Referencia a la Tarea del PAA que se está siguiendo.
+• Fecha de Seguimiento (Punto de Control): Fecha en que se realiza el seguimiento (e.g., junio, diciembre).
+• Observación: Registro de lo encontrado durante el seguimiento (e.g., "publicación de informes en web institucional").
+• Estado del Cumplimiento: Estado del punto de control (realizado, anulado, pendiente).
+• Evaluación de la Tarea: Calificación del cumplimiento de la tarea (bien, mal, pendiente).
+• Entidad de Control Relacionada: Vínculo a la entidad de control externa que hace el seguimiento, si aplica.
+• Evidencia de Cumplimiento (Documento): Debe permitir el cargue y vinculación de archivos de evidencia.
+• Descripción de la Evidencia: Nombre o descripción del informe de evidencia.
+6. Entidad: Matriz de Priorización (Universo de Auditoría)
+Esta entidad gestiona los datos de los procesos auditables y la lógica de priorización basada en riesgos.
+Atributos de la Entidad:
+• Proceso/Área Auditable: Nombre del proceso o área (Unidad Auditable).
+• Tipo de Proceso: Clasificación (Estratégico, Misional, de Apoyo, Evaluación y Mejora).
+• Riesgos Identificados: Registro de los riesgos por proceso (e.g., moderado, bajo, extremo).
+• Ponderación del Riesgo: Resultado del cálculo de riesgo.
+• Requerimientos de Comité: Registro si hay requerimientos del comité.
+• Requerimientos de Entes Reguladores: Registro si hay requerimientos externos.
+• Fecha de Última Auditoría: Fecha de la última revisión realizada.
+• Días Transcurridos: Cálculo de los días desde la última auditoría.
+• Nivel de Criticidad/Ciclo de Rotación: Resultado de la priorización (e.g., Extrema: Cada año; Alta: Cada 2 años; Media: Cada 3 años; Baja: No auditar).
+7. Entidad: Programa de Auditoría Interna (Registro FR-GCA-001)
+Esta entidad formaliza las auditorías planificadas después de la priorización. Nota: Este formato FR-GCA-001 se reutiliza también para Acciones Correctivas.
+Atributos de la Entidad (Para Programación):
+• Área a Auditar: Referencia a la Unidad Auditable priorizada (e.g., Ambiental, Contratación).
+• Fecha de Programación: Fecha en que se planifica.
+• Fecha de Aprobación (Comité): Fecha en que el Comité Institucional aprueba el programa.
+• Objetivos del Programa: Selección del objetivo global (parametrizado).
+• Alcance del Programa: Selección del alcance global (parametrizado).
+• Criterios de Auditoría: Lista de criterios aplicables (normatividad, legislación).
+• Alcances Específicos: Lista de alcances específicos aplicables.
+• Fecha de Inicio (Auditoría): Fecha programada de inicio de la auditoría específica.
+• Fecha Final (Auditoría): Fecha programada de finalización.
+• Responsable de la Auditoría: Funcionario asignado como líder.
+• Estado de la Auditoría: (pendiente, en proceso, realizado, anulado).
+8. Entidad: Plan Individual de Auditoría Interna (PIAI) (Registro FR-GCA-002)
+Esta entidad gestiona la planificación detallada y la bitácora de ejecución de la auditoría en campo.
+Atributos de la Entidad:
+• Auditoría Asociada: Vínculo al registro en el Programa de Auditoría Interna.
+• Información Trasladada: Campos para almacenar Objetivos, Alcance y Criterios tomados del Programa de Auditoría.
+• Detalle de Ejecución (Bitácora):
+    ◦ Fecha y Hora de inicio (proceso auditor).
+    ◦ Fecha y Hora final (proceso auditor).
+    ◦ Actividad (e.g., Reunión de apertura, revisión de contratos, Reunión de cierre).
+    ◦ Nombre de las personas auditadas.
+    ◦ Nombre de los auditores.
+9. Entidad: Informe de Auditoría Interna (Registro FR-GCA-004)
+Esta entidad contiene los hallazgos, el proceso de controversia y las conclusiones definitivas.
+Atributos de la Entidad:
+• Auditoría Asociada (PIAI): Vínculo al Plan Individual.
+• Título de la Auditoría: Título del aspecto evaluable.
+• Objetivo y Alcance Cumplido: Resumen del objetivo y el alcance alcanzado.
+• Hallazgos (Observaciones): Debe soportar el registro de los elementos del hallazgo:
+    ◦ Condición (Evidencia).
+    ◦ Criterio (Normas, reglamentos).
+    ◦ Causa (Origen de la diferencia).
+    ◦ Consecuencias o Efectos (Impacto de la diferencia).
+• Controversia del Auditado: Espacio para que el auditado registre su controversia sobre el hallazgo.
+• Estado del Hallazgo/Controversia: Indicación si la controversia es aceptada o rechazada, definiendo si el hallazgo es ratificado o no.
+• Resumen de Hallazgos: Consolidación de los aspectos más importantes de las observaciones.
+• Conclusiones: Conclusiones que responden a los objetivos de la auditoría.
+• Recomendaciones: Recomendaciones para subsanar las causas.
+• Destinatario (Cliente de la Auditoría): Referencia al Representante Legal/Alta Dirección.
+10. Entidad: Acción Correctiva / Plan de Mejoramiento (Registro FR-GCA-001)
+Esta entidad gestiona las acciones de mejora para subsanar hallazgos ratificados. Nota: Reutiliza el formato FR-GCA-001.
+Atributos de la Entidad (Para Acciones Correctivas):
+• Hallazgo Asociado: Vínculo al hallazgo ratificado del Informe de Auditoría.
+• Causa: Razón subyacente del hallazgo (diligenciada por el auditado).
+• Efecto: Consecuencia del hallazgo.
+• Acción de Mejora (Descripción): Descripción de la acción a implementar.
+• Objetivo de la Acción: Propósito de la mejora.
+• Meta y Unidad de Medida: Denominación y valor de la meta y su unidad de medida.
+• Fecha de Inicio (Acción): Fecha de inicio de la implementación de la acción.
+• Fecha de Fin (Acción): Fecha de finalización de la implementación de la acción.
+• Seguimiento por OCI:
+    ◦ Actividades planificadas/cumplidas (registro del número).
+    ◦ Efectividad de la Acción (Sí/No efectiva).
+    ◦ Fecha de Seguimiento (Punto de control).
+    ◦ Evidencias de Seguimiento (Cargue de archivos).
+11. Entidad: Evaluación de Desempeño del Auditor (Registro FR-GCA-005)
+Esta entidad registra los criterios para evaluar la competencia y el desempeño del equipo auditor.
+Atributos de la Entidad:
+• Funcionario Evaluado: Referencia al Auditor o Líder de Equipo Auditado.
+• Criterios Cualitativos: Registro de la demostración de comportamiento personal, conocimientos o desempeño de habilidades.
+• Criterios Cuantitativos: Registro de años de experiencia laboral, educación, número de auditorías realizadas y horas de formación en auditoría.
+• Evaluador: Identificación de la persona que realiza la evaluación (suministrado al auditado para que este realice la evaluación respectiva).
+• Resultado de la Evaluación: Registro de si la persona cumple o no con los criterios.
+• Brechas de Competencia: Registro de la necesidad de formación, experiencia laboral o auditoría adicional si no se cumplen los criterios.
+12. Entidad: Acta de Reunión (Registro FR-GCA-006)
+Esta entidad formaliza las reuniones clave del proceso auditor.
+Atributos de la Entidad:
+• Tipo de Reunión: (Apertura o Cierre).
+• Número de Acta: Identificador único del acta.
+• Fecha y Hora: Fecha y hora de la reunión.
+• Ubicación: Lugar donde se lleva a cabo la reunión.
+• Asistentes: Lista de funcionarios presentes (Auditados y Equipo Auditor).
+• Propósitos Confirmados (Apertura): Objetivos, alcance y criterios, plan de auditoría, métodos, confidencialidad, seguridad, y condiciones de finalización.
+• Propósitos Confirmados (Cierre): Resultados, hallazgos y conclusiones, recomendaciones, plazo para la elaboración y presentación del plan de mejoramiento (15 días hábiles), y actividades post-auditoría.
+• Compromisos: Compromisos derivados de la reunión (e.g., envío de solicitud de información con fecha final).
+13. Entidad: Documentación de Referencia (Repositorio)
+Esta entidad gestiona los documentos no transaccionales que son clave para la referencia metodológica del Jefe de Control Interno.
+Atributos de la Entidad:
+• Nombre del Documento: Título del documento (e.g., Guía de Auditoría Interna Basada en Riesgos, Procedimiento de Auditoría Interna).
+• Tipo de Documento: Clasificación (Guía, Formato, Procedimiento, etc.).
+• Versión: Versión del documento.
+• Archivo Digital: Vínculo o almacenamiento del archivo para consulta (e.g., formatos de cálculo de muestra).
+
+IV. Requerimiento de Interfaz de Documentación de Referencia
+Este módulo debe proporcionar una interfaz dedicada y un repositorio para la documentación metodológica y de referencia que es esencial para el soporte y la ejecución de las funciones de auditoría y los demás roles de la OCI.
+1. Requerimientos de Interfaz y Navegación
+1. Requerimiento de Acceso al Repositorio: El sistema debe incluir un formulario o sección dedicado exclusivamente para adjuntar y consultar la documentación clave.
+2. Requerimiento de Funcionalidad de Adjuntar Documentos: El repositorio debe permitir al Jefe de Control Interno la carga de archivos digitales (documentación auxiliar relevante).
+3. Requerimiento de Descripción de Documentos: Para cada documento adjunto, el sistema debe capturar el nombre, la descripción o el título para facilitar su identificación (e.g., "Guía de Auditoría Interna Basada en Riesgos", "Procedimiento de Auditoría Interna").
+4. Requerimiento de Visualización y Consulta: El sistema debe proporcionar la funcionalidad para vincular y visualizar los documentos de referencia cargados, permitiendo la consulta directa por parte del equipo auditor.
+5. Requerimiento de Indexación: La documentación debe ser consultable y organizable por atributos clave, como nombre, tipo de documento (Guía, Procedimiento, Formato) y versión.
+2. Requerimientos de Contenido Obligatorio del Repositorio
+El repositorio debe estar precargado o debe permitir la carga de los siguientes documentos y herramientas de referencia, esenciales para la operación metodológica de la OCI:
+1. Guías y Metodologías Normativas:
+    ◦ La Guía de Auditoría Interna Basada en Riesgos (Versión 4 - Julio de 2020).
+    ◦ Procedimientos de Auditoría Interna: Documentos que detallan la secuencia de actividades del proceso auditor.
+    ◦ Modelos de documentación clave, como el Plan Anual de Auditoría (MA-GCE-003, o su formato FR-GCE-001), el Procedimiento - Estatuto de Auditorías Internas (PD-GCA-004).
+2. Instrumentos Técnicos y Formatos Auxiliares:
+    ◦ Formatos para determinar el universo de auditoría basada en riesgos.
+    ◦ Formatos de cálculo de la muestra (Muestreo estadístico) para auditoría.
+    ◦ Otros documentos de referencia, como la Guía de Riesgos, el Procedimiento de Auditorías Internas, y documentos relacionados con los cinco roles de la OCI.
+3. Documentación Ética y de Calidad:
+    ◦ Documentos que contienen guías obligatorias sobre principios fundamentales, definición, normas internacionales para la práctica profesional de auditoría interna y código de ética.
+    ◦ Modelo del Estatuto de Auditoría Interna.
+    ◦ Lineamientos para la presentación efectiva de los informes de auditoría.
+3. Requisito de Integración de la Entidad Documentación de Referencia
+La arquitectura del sistema (Entidad: Documentación de Referencia, según el Modelado de Entidades) debe permitir la captura de los siguientes atributos para cada registro en el repositorio:
+• Nombre del Documento.
+• Tipo de Documento (e.g., Guía, Procedimiento, Formato de Cálculo).
+• Versión del documento.
+• Vínculo al Archivo Digital.
+
+
+
+Requerimientos Funcionales para el Desarrollo de la Aplicación de Gestión de Auditoría Interna (Laravel 10)
+Como analista de software e ingeniero de sistemas, procedo a detallar los requerimientos funcionales esenciales para el desarrollo de la aplicación, basándonos en la metodología de auditoría interna y el flujo de trabajo descrito en la documentación fuente. Estos requerimientos definen lo que el sistema debe hacer para soportar la gestión del Jefe de la Oficina de Control Interno (Auditor Líder) y su equipo de apoyo.
+I. Gestión de Usuarios y Roles (Autenticación y Autorización)
+1. Requerimiento de Autenticación: El sistema debe permitir el acceso seguro a través de un mecanismo de inicio de sesión que valide el usuario y la contraseña.
+2. Requerimiento de Parametrización de Funcionarios (CRUD): El sistema debe proporcionar la funcionalidad para la creación, lectura, actualización y eliminación (CRUD) de registros de funcionarios (incluyendo el Jefe de Control Interno y el personal de apoyo o profesional universitario), con la capacidad de asignarles sus respectivos roles dentro de la entidad.
+3. Requerimiento de Parametrización de Roles de la OCI (CRUD): El sistema debe permitir la gestión (CRUD) de los cinco roles establecidos para la Oficina de Control Interno, según el Decreto 648 de 2017: Liderazgo estratégico, Enfoque hacia la prevención, Evaluación de la gestión del riesgo, Evaluación y seguimiento, y Relación con entes externos de control. El sistema debe ser flexible para permitir su modificación o actualización si la normativa cambia.
+4. Requerimiento de Parametrización de Entidades de Control (CRUD): El sistema debe permitir la gestión (CRUD) de las entidades de control externas (e.g., Contraloría Departamental, Procuraduría), a las cuales se hace seguimiento en el Plan Anual de Auditoría.
+5. Requerimiento de Perfiles Funcionales: El sistema debe distinguir entre el Jefe de la Oficina de Control Interno (quien tiene la responsabilidad principal de la gestión del programa) y el Auditor Líder o el equipo auditor (quienes tienen responsabilidades en la ejecución de las auditorías).
+II. Módulo de Plan Anual de Auditoría (PAA)
+1. Requerimiento de Creación del PAA: El sistema debe permitir la creación de un nuevo Plan Anual de Auditoría, capturando la fecha de creación, el nombre del Jefe de Control Interno (seleccionado de la lista de funcionarios) y la ciudad/municipio de la entidad territorial.
+2. Requerimiento de Gestión de Tareas por Rol: Para cada uno de los cinco roles de la Oficina de Control Interno (Liderazgo estratégico, Enfoque hacia la prevención, Evaluación de la gestión de riesgo, Evaluación y seguimiento, Relación con entes externos de control), el sistema debe permitir definir y registrar tareas específicas para el cumplimiento de las funciones.
+3. Requerimiento de Captura de Detalles de Tarea: Para cada tarea definida, el sistema debe capturar la descripción, la fecha de inicio y la fecha de finalización, el responsable asignado (seleccionado de funcionarios), el estado de la tarea (realizado, pendiente, anulado), y observaciones o comentarios (incluyendo la periodicidad de seguimiento).
+4. Requerimiento de Seguimiento y Evaluación de Tareas: El sistema debe proveer una funcionalidad de seguimiento para cada tarea, permitiendo establecer puntos de control para la revisión periódica. En cada punto de control, se debe registrar la observación, el estado de cumplimiento, la evaluación de la tarea y la entidad de control relacionada.
+5. Requerimiento de Gestión de Evidencias: El sistema debe permitir la carga y vinculación de archivos de evidencia a cada tarea, incluyendo la descripción o nombre del informe de evidencia, con la funcionalidad para visualizar dichos documentos.
+6. Requerimiento de Resumen de Cumplimiento: El sistema debe generar un resumen de cumplimiento que muestre el porcentaje de avance de las tareas y el estado general del PAA, basado en los seguimientos realizados.
+III. Módulo de Programación y Priorización de Auditorías
+1. Requerimiento de Parametrización de Procesos y Áreas: El sistema debe permitir la parametrización de los procesos de la entidad (estratégicos, misionales, de apoyo, y de evaluación y mejora) y sus respectivas áreas, conforme al mapa de procesos institucional.
+2. Requerimiento de Matriz de Priorización (Universo de Auditoría): El sistema debe integrar la funcionalidad para conformar y priorizar el universo de auditoría basado en riesgos.
+3. Requerimiento de Cálculo y Asignación de Riesgo: Para cada proceso o área, el sistema debe permitir ingresar y registrar los riesgos (moderado, bajo, extremo) y debe realizar el cálculo de la ponderación de riesgo para determinar el nivel de criticidad del área.
+4. Requerimiento de Factores de Priorización: La matriz debe capturar información sobre los requerimientos del comité y de los entes reguladores, así como la fecha de la última auditoría realizada y el cálculo de los días transcurridos.
+5. Requerimiento de Rotación de Auditorías: El sistema debe determinar el ciclo de rotación de las auditorías basado en el nivel de riesgo y la ponderación, indicando si el proceso debe ser incluido en el programa anual.
+6. Requerimiento de Gestión de Criterios y Alcances: El sistema debe permitir la parametrización de los criterios de auditoría (normatividad, legislación, NTC, etc.) y los alcances.
+7. Requerimiento de Asociación de Criterios y Alcances por Área: El sistema debe permitir asociar criterios y alcances de forma específica a las áreas correspondientes, aplicando validaciones sistémicas para evitar la selección de criterios o alcances que no apliquen a dicha área (ej., criterios ambientales solo para el área ambiental).
+8. Requerimiento de Implementación del Programa: El sistema debe permitir la selección de las áreas priorizadas, la asignación de objetivos, alcances y criterios ya parametrizados, el establecimiento de fechas de inicio y fin, y la definición del responsable, permitiendo el registro del estado de la auditoría (pendiente, en proceso, realizado, anulado).
+9. Requerimiento de Visualización de Formato de Programa: El sistema debe generar un formato visual del Programa de Auditoría, listando las áreas, fechas, criterios y alcances definidos para la alta dirección.
+IV. Módulo de Plan Individual de Auditoría y Ejecución
+1. Requerimiento de Trazabilidad PAA a PAI: El sistema debe trasladar automáticamente la información relevante del Programa de Auditoría (criterios y alcances) al Plan Individual de Auditoría Interna (PIAI).
+2. Requerimiento de Detalle de Ejecución: El PIAI debe permitir el diligenciamiento de los detalles de ejecución, incluyendo fecha y hora de inicio y finalización del proceso auditor, la descripción de las actividades (como reunión de apertura, revisión de contratos, reunión de cierre), y los nombres del personal auditado y el equipo auditor.
+3. Requerimiento de Gestión de Reunión de Apertura: El sistema debe registrar la realización de la Reunión de Apertura, confirmando objetivos, alcance, criterios, métodos de muestreo, canales de comunicación y condiciones de finalización.
+4. Requerimiento de Carta de Salvaguarda: El sistema debe gestionar y/o vincular la Carta de Salvaguarda, que formaliza el compromiso del auditado de entregar información válida, integral y completa, y debe ser requerida al inicio del proceso auditor.
+5. Requerimiento de Generación de Hallazgos y Observaciones: Durante la ejecución, el sistema debe permitir la recopilación, verificación y registro de hallazgos u observaciones, comparando la evidencia recolectada con los criterios de auditoría.
+6. Requerimiento de Informe Preliminar y Controversia: El sistema debe generar el Informe Preliminar de Auditoría. Debe proporcionar un espacio al auditado para presentar controversias a los hallazgos en un plazo establecido (e.g., 15 días hábiles), y debe permitir al auditor registrar si la controversia es aceptada o rechazada.
+7. Requerimiento de Gestión de Reunión de Cierre: El sistema debe registrar la Reunión de Cierre, presentando los hallazgos definitivos, conclusiones, recomendaciones, y estableciendo el plazo máximo para la presentación del Plan de Mejoramiento.
+V. Módulo de Informes Finales y Acciones Correctivas
+1. Requerimiento de Informe Final: El sistema debe generar el Informe Final de Auditoría, el cual debe consolidar los objetivos, el alcance, los criterios, el resumen de hallazgos definitivos (no conformidades o conformidades, después de resolver controversias), conclusiones y recomendaciones.
+2. Requerimiento de Distribución de Informes: El sistema debe gestionar la distribución del Informe Final a las partes interesadas, incluyendo el auditado y el Representante Legal (Cliente de la Auditoría).
+3. Requerimiento de Gestión del Plan de Mejora (Acciones Correctivas): El sistema debe permitir al auditado registrar un Plan de Mejoramiento vinculado a cada hallazgo ratificado en el informe final.
+4. Requerimiento de Captura de Plan de Mejora: Para cada acción correctiva, el sistema debe capturar la causa, el efecto, la descripción de la acción de mejora, el objetivo, la meta, la unidad de medida, y las fechas de inicio y fin de la acción.
+5. Requerimiento de Seguimiento a Acciones Correctivas: El sistema debe permitir al Jefe de Control Interno realizar un seguimiento continuo a las acciones de mejora planificadas, registrando las actividades cumplidas y determinando si la acción fue o no efectiva.
+6. Requerimiento de Evidencia de Seguimiento: Se debe permitir adjuntar y visualizar evidencias asociadas al seguimiento de las acciones correctivas.
+7. Requerimiento de Cierre de Acciones: El Jefe de Control Interno debe tener la funcionalidad para registrar el cierre formal de la acción cuando se ha verificado la eliminación de sus causas y se considera que no habrá recurrencia.
+VI. Módulo de Competencia y Evaluación del Auditor
+1. Requerimiento de Gestión de Competencias: El sistema debe registrar y gestionar los criterios de competencia requeridos para Auditores y Auditores Líderes, incluyendo educación, formación, conocimientos, habilidades, experiencia y comportamiento personal.
+2. Requerimiento de Evaluación de Desempeño del Auditor (FR-GCA-005): El sistema debe gestionar el formato de Evaluación de Desempeño del Auditor.
+3. Requerimiento de Flujo de Evaluación: El sistema debe permitir al Jefe de Control Interno suministrar el formato de evaluación al auditado para que este realice la evaluación del desempeño del equipo auditor.
+4. Requerimiento de Tracking de Brechas de Competencia: El sistema debe registrar cuando un auditor no cumple con los criterios de competencia y requiere formación o experiencia adicional.
+VII. Módulo de Documentación y Registros
+1. Requerimiento de Gestión de Actas: El sistema debe gestionar las Actas de Reunión (FR-GCA-006) tanto para la apertura como para el cierre de las auditorías.
+2. Requerimiento de Repositorio de Consulta: El sistema debe incluir un formulario o sección para adjuntar y consultar documentación auxiliar relevante, como la Guía de Auditoría Interna Basada en Riesgos, el Procedimiento de Auditorías Internas, formatos de cálculo de muestra y otros documentos de referencia para el Jefe de Control Interno y su equipo.
+3. Requerimiento de Trazabilidad de Registros de Calidad: El sistema debe asegurar la gestión de los metadatos de los registros clave (formato, versión, fecha de aprobación, medio de almacenamiento, protección, ubicación, recuperación, responsable, archivo y disposición final), como se define en la documentación de calidad (incluyendo formatos como FR-GCA-001, FR-GCA-002, FR-GCA-004, etc.).
+ 
+ 
+Modelado de Entidades Fundamentales (Base Relacional)
+NOMBRE TABLA: FUNCIONARIO funcionario_id INT(10) SI (PK) nombre_completo VARCHAR(255) cargo_operativo VARCHAR(100) credencial_usuario VARCHAR(50) SI (Unique) credencial_password VARCHAR(255) rol_jefe_oci BOOLEAN
+NOMBRE TABLA: ROL_OCI rol_oci_id INT(10) SI (PK) nombre_rol VARCHAR(100) descripcion TEXT
+NOMBRE TABLA: FUNCIONARIO_ROL_OCI (Tabla de Mapeo) funcionario_rol_id INT(10) SI (PK) funcionario_fk INT(10) SI (FK) rol_oci_fk INT(10) SI (FK)
+NOMBRE TABLA: ENTIDAD_CONTROL_EXTERNA ente_control_id INT(10) SI (PK) nombre VARCHAR(255)
+NOMBRE TABLA: PLAN_ANUAL_AUDITORIA (FR-GCE-001) paa_id INT(10) SI (PK) codigo_registro VARCHAR(50) fecha_creacion DATE fecha_aprobacion_comite DATE jefe_oci_responsable_fk INT(10) SI (FK) ciudad_municipio VARCHAR(150) imagen_institucional_path VARCHAR(255) version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: TAREA_ROL_PAA tarea_id INT(10) SI (PK) paa_fk INT(10) SI (FK) rol_oci_fk INT(10) SI (FK) descripcion_tarea TEXT fecha_inicio_planeada DATE fecha_fin_planeada DATE responsable_fk INT(10) SI (FK) estado_general VARCHAR(50) comentarios_periodicidad TEXT
+NOMBRE TABLA: SEGUIMIENTO_TAREA_PAA seguimiento_id INT(10) SI (PK) tarea_fk INT(10) SI (FK) fecha_punto_control DATE observacion TEXT estado_cumplimiento VARCHAR(50) evaluacion_tarea VARCHAR(50) ente_control_fk INT(10) SI (FK)
+NOMBRE TABLA: PROCESO_AREA_AUDITABLE proceso_area_id INT(10) SI (PK) nombre_area VARCHAR(255) tipo_proceso VARCHAR(100)
+NOMBRE TABLA: CRITERIO_ALCANCE_PARAM criterio_alcance_id INT(10) SI (PK) tipo VARCHAR(50) descripcion TEXT
+NOMBRE TABLA: ASIGNACION_CRITERIO_AREA asignacion_id INT(10) SI (PK) proceso_area_fk INT(10) SI (FK) criterio_alcance_fk INT(10) SI (FK)
+NOMBRE TABLA: MATRIZ_PRIORIZACION priorizacion_id INT(10) SI (PK) proceso_area_fk INT(10) SI (FK) paa_fk INT(10) SI (FK) ponderacion_calculada VARCHAR(50) requerimientos_comite TEXT requerimientos_entes_reguladores TEXT fecha_ultima_auditoria DATE dias_transcurridos INT(10) ciclo_rotacion VARCHAR(50)
+NOMBRE TABLA: PROGRAMA_AUDITORIA_INTERNA (FR-GCA-001 Programación) programa_auditoria_id INT(10) SI (PK) codigo_registro VARCHAR(50) area_auditar_fk INT(10) SI (FK) fecha_programacion DATE fecha_aprobacion DATE elaborador_fk INT(10) SI (FK) objetivos_programa TEXT alcance_programa TEXT riesgos_programa TEXT recursos_programa TEXT fecha_inicio_planeada DATE fecha_fin_planeada DATE responsable_auditor_fk INT(10) SI (FK) estado_auditoria VARCHAR(50) version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: PLAN_INDIVIDUAL_AUDITORIA (PIAI) (FR-GCA-002) piai_id INT(10) SI (PK) codigo_registro VARCHAR(50) programa_auditoria_fk INT(10) SI (FK) objetivos_trasladados TEXT alcance_trasladado TEXT criterios_trasladados TEXT fecha_inicio_auditoria DATETIME hora_inicio_auditoria TIME fecha_fin_auditoria DATETIME hora_fin_auditoria TIME carta_salvaguarda_path VARCHAR(255) version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: DETALLE_ACTIVIDAD_PIAI detalle_actividad_id INT(10) SI (PK) piai_fk INT(10) SI (FK) fecha_actividad DATE hora_inicio TIME hora_fin TIME actividad_descripcion TEXT nombre_auditados TEXT nombre_auditores TEXT
+NOMBRE TABLA: INFORME_AUDITORIA_INTERNA (FR-GCA-004) informe_id INT(10) SI (PK) codigo_registro VARCHAR(50) piai_fk INT(10) SI (FK) titulo_auditoria VARCHAR(255) resumen_hallazgos TEXT conclusiones TEXT recomendaciones TEXT destinatario_legal VARCHAR(255) fecha_radicacion_preliminar DATE version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: HALLAZGO hallazgo_id INT(10) SI (PK) informe_fk INT(10) SI (FK) descripcion_hallazgo TEXT condicion_evidencia TEXT criterios_aplicados TEXT causa TEXT consecuencias_efectos TEXT hallazgo_ratificado BOOLEAN
+NOMBRE TABLA: CONTROVERSIA controversia_id INT(10) SI (PK) hallazgo_fk INT(10) SI (FK) descripcion_controversia TEXT auditor_decision VARCHAR(50) fecha_presentacion DATE
+NOMBRE TABLA: ACCION_CORRECTIVA (FR-GCA-001 Seguimiento) accion_correctiva_id INT(10) SI (PK) codigo_registro VARCHAR(50) hallazgo_ratificado_fk INT(10) SI (FK) causa_mejora TEXT efecto_mejora TEXT accion_a_implementar TEXT objetivo_accion VARCHAR(255) meta_descripcion TEXT unidad_medida_meta VARCHAR(100) fecha_inicio_accion DATE fecha_fin_accion DATE jefe_oci_seguimiento_fk INT(10) SI (FK) cierre_eliminacion_causas BOOLEAN version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: SEGUIMIENTO_ACCION_CORRECTIVA seg_accion_id INT(10) SI (PK) accion_correctiva_fk INT(10) SI (FK) actividades_planificadas INT(5) actividades_cumplidas INT(5) efectividad_accion BOOLEAN fecha_seguimiento DATE evidencia_seguimiento_fk INT(10) SI (FK)
+NOMBRE TABLA: EVIDENCIA_DOCUMENTO evidencia_id INT(10) SI (PK) descripcion_informe VARCHAR(255) ruta_archivo VARCHAR(255) tipo_registro_origen VARCHAR(50) registro_origen_fk INT(10)
+NOMBRE TABLA: ACTA_REUNION (FR-GCA-006) acta_id INT(10) SI (PK) codigo_registro VARCHAR(50) piai_fk INT(10) SI (FK) tipo_reunion VARCHAR(50) fecha_reunion DATE hora_reunion TIME lugar_reunion VARCHAR(255) asistentes_lista TEXT propositos_confirmados TEXT compromisos_adquiridos TEXT version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: EVALUACION_DESEMPENO_AUDITOR (FR-GCA-005) evaluacion_id INT(10) SI (PK) codigo_registro VARCHAR(50) auditor_fk INT(10) SI (FK) evaluador_fk INT(10) SI (FK) piai_fk INT(10) SI (FK) criterios_cualitativos TEXT criterios_cuantitativos TEXT cumplimiento_criterios BOOLEAN necesidad_formacion_adicional BOOLEAN version_formato VARCHAR(50) fecha_aprobacion_formato DATE medio_almacenamiento VARCHAR(50) proteccion VARCHAR(50) ubicacion VARCHAR(100) metodo_recuperacion VARCHAR(50) permanencia VARCHAR(50) disposicion_final VARCHAR(50)
+NOMBRE TABLA: DOCUMENTACION_REFERENCIA documento_ref_id INT(10) SI (PK) nombre_documento VARCHAR(255) tipo_documento VARCHAR(100) version VARCHAR(50) ruta_archivo VARCHAR(255)
+Modelado de Entidades Fundamentales (Estructura Relacional en Tablas)
+I. Gestión de Usuarios, Roles y Parametrización
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+FUNCIONARIO	funcionario_id	INT	(10)	SI (PK)
+	nombre_completo	VARCHAR	(255)	
+	cargo_operativo	VARCHAR	(100)	
+	credencial_usuario	VARCHAR	(50)	SI (Unique)
+	credencial_password	VARCHAR	(255)	
+	rol_jefe_oci	BOOLEAN		
+ROL_OCI	rol_oci_id	INT	(10)	SI (PK)
+	nombre_rol	VARCHAR	(100)	(e.g., Liderazgo estratégico, Evaluación y seguimiento)
+	descripcion	TEXT		
+FUNCIONARIO_ROL_OCI	funcionario_rol_id	INT	(10)	SI (PK)
+	funcionario_fk	INT	(10)	SI (FK)
+	rol_oci_fk	INT	(10)	SI (FK)
+ENTIDAD_CONTROL_EXTERNA	ente_control_id	INT	(10)	SI (PK)
+	nombre	VARCHAR	(255)	(e.g., Contraloría, Procuraduría)
+II. Entidades de Planificación General (PAA y Roles)
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+PLAN_ANUAL_AUDITORIA (FR-GCE-001)	paa_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	fecha_creacion	DATE		
+	fecha_aprobacion_comite	DATE		(No de Acta 002/2020)
+	jefe_oci_responsable_fk	INT	(10)	SI (FK)
+	ciudad_municipio	VARCHAR	(150)	
+	imagen_institucional_path	VARCHAR	(255)	
+	Metadato: version_formato	VARCHAR	(50)	
+	Metadato: fecha_aprobacion_formato	DATE		
+	Metadato: medio_almacenamiento	VARCHAR	(50)	
+	Metadato: proteccion	VARCHAR	(50)	
+	Metadato: ubicacion	VARCHAR	(100)	
+	Metadato: metodo_recuperacion	VARCHAR	(50)	
+	Metadato: permanencia	VARCHAR	(50)	
+	Metadato: disposicion_final	VARCHAR	(50)	
+TAREA_ROL_PAA	tarea_id	INT	(10)	SI (PK)
+	paa_fk	INT	(10)	SI (FK)
+	rol_oci_fk	INT	(10)	SI (FK)
+	descripcion_tarea	TEXT		
+	fecha_inicio_planeada	DATE		
+	fecha_fin_planeada	DATE		
+	responsable_fk	INT	(10)	SI (FK)
+	estado_general	VARCHAR	(50)	(realizado, pendiente, anulado)
+	comentarios_periodicidad	TEXT		(e.g., seguimiento semestral)
+SEGUIMIENTO_TAREA_PAA	seguimiento_id	INT	(10)	SI (PK)
+	tarea_fk	INT	(10)	SI (FK)
+	fecha_punto_control	DATE		
+	observacion	TEXT		
+	estado_cumplimiento	VARCHAR	(50)	
+	evaluacion_tarea	VARCHAR	(50)	(bien, mal, pendiente)
+	ente_control_fk	INT	(10)	SI (FK)
+III. Entidades de Priorización y Programación de Auditoría
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+PROCESO_AREA_AUDITABLE	proceso_area_id	INT	(10)	SI (PK)
+	nombre_area	VARCHAR	(255)	
+	tipo_proceso	VARCHAR	(100)	(Estratégico, Misional, de Apoyo, Evaluación y Mejora)
+CRITERIO_ALCANCE_PARAM	criterio_alcance_id	INT	(10)	SI (PK)
+	tipo	VARCHAR	(50)	(Criterio o Alcance)
+	descripcion	TEXT		
+ASIGNACION_CRITERIO_AREA	asignacion_id	INT	(10)	SI (PK)
+	proceso_area_fk	INT	(10)	SI (FK)
+	criterio_alcance_fk	INT	(10)	SI (FK)
+MATRIZ_PRIORIZACION	priorizacion_id	INT	(10)	SI (PK)
+	proceso_area_fk	INT	(10)	SI (FK)
+	paa_fk	INT	(10)	SI (FK)
+	riesgos_identificados	VARCHAR	(100)	(e.g., Moderado, Extremo)
+	ponderacion_calculada	VARCHAR	(50)	
+	requerimientos_comite	TEXT		
+	requerimientos_entes_reguladores	TEXT		
+	fecha_ultima_auditoria	DATE		
+	dias_transcurridos	INT	(10)	
+	ciclo_rotacion	VARCHAR	(50)	(e.g., Cada tres años, No auditar)
+PROGRAMA_AUDITORIA_INTERNA (FR-GCA-001 Programación)	programa_auditoria_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	area_auditar_fk	INT	(10)	SI (FK)
+	fecha_programacion	DATE		
+	fecha_aprobacion	DATE		
+	elaborador_fk	INT	(10)	SI (FK)
+	responsable_auditor_fk	INT	(10)	SI (FK)
+	estado_auditoria	VARCHAR	(50)	
+	objetivos_programa	TEXT		
+	alcance_programa	TEXT		
+	criterios_aplicados	TEXT		
+	fecha_inicio_planeada	DATE		
+	fecha_fin_planeada	DATE		
+	Metadato: version_formato	VARCHAR	(50)	
+	Metadato: ubicacion	VARCHAR	(100)	
+	Metadato: permanencia	VARCHAR	(50)	
+IV. Entidades de Ejecución y Comunicación de Resultados
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+PLAN_INDIVIDUAL_AUDITORIA (PIAI) (FR-GCA-002)	piai_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	programa_auditoria_fk	INT	(10)	SI (FK)
+	objetivos_trasladados	TEXT		
+	alcance_trasladado	TEXT		
+	criterios_trasladados	TEXT		
+	fecha_inicio_auditoria	DATETIME		
+	fecha_fin_auditoria	DATETIME		
+	carta_salvaguarda_path	VARCHAR	(255)	
+	Metadato: version_formato	VARCHAR	(50)	
+	Metadato: proteccion	VARCHAR	(50)	
+DETALLE_ACTIVIDAD_PIAI	detalle_actividad_id	INT	(10)	SI (PK)
+	piai_fk	INT	(10)	SI (FK)
+	fecha_actividad	DATE		
+	hora_inicio	TIME		
+	hora_fin	TIME		
+	actividad_descripcion	TEXT		(e.g., Reunión de apertura, Reunión de cierre)
+	nombre_auditados	TEXT		
+	nombre_auditores	TEXT		
+INFORME_AUDITORIA_INTERNA (FR-GCA-004)	informe_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	piai_fk	INT	(10)	SI (FK)
+	titulo_auditoria	VARCHAR	(255)	
+	resumen_hallazgos	TEXT		
+	conclusiones	TEXT		
+	recomendaciones	TEXT		
+	destinatario_legal	VARCHAR	(255)	(Cliente de la auditoría)
+	fecha_radicacion_preliminar	DATE		(2 de Mayo de 2018)
+	Metadato: responsable_archivo	VARCHAR	(100)	(Secretaria)
+HALLAZGO	hallazgo_id	INT	(10)	SI (PK)
+	informe_fk	INT	(10)	SI (FK)
+	descripcion_hallazgo	TEXT		
+	condicion_evidencia	TEXT		
+	criterios_aplicados	TEXT		
+	causa	TEXT		
+	consecuencias_efectos	TEXT		
+	hallazgo_ratificado	BOOLEAN		
+CONTROVERSIA	controversia_id	INT	(10)	SI (PK)
+	hallazgo_fk	INT	(10)	SI (FK)
+	descripcion_controversia	TEXT		
+	auditor_decision	VARCHAR	(50)	(Aceptada/Rechazada)
+	fecha_presentacion	DATE		(Plazo: 15 días hábiles a partir de la recepción)
+V. Entidades de Seguimiento y Evaluación de Competencia
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+ACCION_CORRECTIVA (FR-GCA-001 Seguimiento)	accion_correctiva_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	hallazgo_ratificado_fk	INT	(10)	SI (FK)
+	causa_mejora	TEXT		
+	efecto_mejora	TEXT		
+	accion_a_implementar	TEXT		
+	objetivo_accion	VARCHAR	(255)	
+	meta_descripcion	TEXT		
+	unidad_medida_meta	VARCHAR	(100)	
+	fecha_inicio_accion	DATE		
+	fecha_fin_accion	DATE		
+	jefe_oci_seguimiento_fk	INT	(10)	SI (FK)
+	cierre_eliminacion_causas	BOOLEAN		
+	Metadato: version_formato	VARCHAR	(50)	
+SEGUIMIENTO_ACCION_CORRECTIVA	seg_accion_id	INT	(10)	SI (PK)
+	accion_correctiva_fk	INT	(10)	SI (FK)
+	actividades_planificadas	INT	(5)	
+	actividades_cumplidas	INT	(5)	
+	efectividad_accion	BOOLEAN		
+	fecha_seguimiento	DATE		
+	evidencia_seguimiento_fk	INT	(10)	SI (FK)
+EVALUACION_DESEMPENO_AUDITOR (FR-GCA-005)	evaluacion_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	auditor_fk	INT	(10)	SI (FK)
+	evaluador_fk	INT	(10)	SI (FK)
+	piai_fk	INT	(10)	SI (FK)
+	criterios_cualitativos	TEXT		
+	criterios_cuantitativos	TEXT		
+	cumplimiento_criterios	BOOLEAN		
+	necesidad_formacion_adicional	BOOLEAN		
+VI. Entidades de Documentación y Actas
+NOMBRE TABLA	NOMBRE CAMPO	TIPO DE DATO	TAMAÑO ADMITIDO	LLAVE
+EVIDENCIA_DOCUMENTO	evidencia_id	INT	(10)	SI (PK)
+	descripcion_informe	VARCHAR	(255)	
+	ruta_archivo	VARCHAR	(255)	
+	tipo_registro_origen	VARCHAR	(50)	
+	registro_origen_fk	INT	(10)	
+ACTA_REUNION (FR-GCA-006)	acta_id	INT	(10)	SI (PK)
+	codigo_registro	VARCHAR	(50)	
+	piai_fk	INT	(10)	SI (FK)
+	tipo_reunion	VARCHAR	(50)	(Apertura o Cierre)
+	fecha_reunion	DATE		
+	hora_reunion	TIME		
+	lugar_reunion	VARCHAR	(255)	
+	asistentes_lista	TEXT		
+	propositos_confirmados	TEXT		
+	compromisos_adquiridos	TEXT		
+	Metadato: responsable_archivo	VARCHAR	(100)	(Secretaria)
+DOCUMENTACION_REFERENCIA	documento_ref_id	INT	(10)	SI (PK)
+	nombre_documento	VARCHAR	(255)	(e.g., Guía de auditoría interna basada en riesgos)
+	tipo_documento	VARCHAR	(100)	
+	version	VARCHAR	(50)	
+	ruta_archivo	VARCHAR	(255)	
+
+
+Documento de Requerimientos para la Gestión de Auditoría (Laravel 10)
+I. Introducción y Contexto
+La aplicación busca migrar y modernizar una herramienta existente (desarrollada en Access) a un entorno web robusto y escalable utilizando Laravel 10. La funcionalidad se centra en la gestión de auditorías internas y el seguimiento a los roles del Jefe de Control Interno en entidades de la Rama Ejecutiva (nacional y territorial).
+El marco funcional se basa en:
+1. Decreto 648 de 2017: Establece la reglamentación para las Oficinas de Control Interno, sus roles, y el Comité de Coordinación de Control Interno.
+2. Guías de Auditoría: Toma orientaciones de la norma ISO 19.011 (versión 2018) y la Guía de Auditoría Interna Basada en Riesgos del Departamento Administrativo de la Función Pública.
+II. Requerimientos Tecnológicos y Pautas de Desarrollo (Laravel 10)
+Dado que la plataforma se migrará a Laravel 10, se deben seguir las siguientes pautas:
+Aspecto	Pauta de Desarrollo (Laravel 10)	Referencia Funcional
+Arquitectura	Usar la arquitectura Modelo-Vista-Controlador (MVC) de Laravel. Se requiere una estructura de modelos clara para las relaciones complejas (uno-a-muchos, muchos-a-muchos), especialmente entre PAA_Tareas y PAA_Seguimiento y la gestión de Evidencias.	Gestión de Múltiples Tareas y Seguimientos.
+Base de Datos	Uso de migraciones y seeders de Laravel para establecer las tablas de catálogo (tablas de referencia). Se recomienda PostgreSQL o MySQL/MariaDB para soportar la carga relacional y transaccional.	Todos los módulos, especialmente los catálogos y transacciones.
+Autenticación y Roles	Implementar middleware y gates para diferenciar claramente las funcionalidades entre el Jefe Auditor, el Personal de Apoyo, y el Auditado (rol limitado a controversias/acciones correctivas).	Roles de Usuario.
+Manejo de Archivos	Implementar almacenamiento seguro para las Evidencias (usando el sistema de archivos de Laravel/Storage) y asegurar su vinculación correcta con las tareas y acciones correctivas.	Cargue de Evidencias.
+Seguridad	Implementar protección contra CSRF (Cross-Site Request Forgery) y sanitización de entradas para prevenir inyecciones SQL y XSS, crucial en formularios donde se digita información (como observaciones de seguimiento o controversias).	Entradas de texto y formularios.
+Reportes	Usar librerías como Dompdf o Laravel Excel/Snappy para generar reportes en formatos exportables (PDF, Excel), especialmente para el Programa de Auditoría y el Resumen de Cumplimiento.	Visualización de formatos.
+Parámetros/Catálogos	Los catálogos deben ser fácilmente actualizables por el Jefe Auditor o su apoyo, previendo cambios en la normatividad.	Gestión de Roles, Entidades de Control, Criterios.
+III. Requerimientos Funcionales por Módulo (RF)
+RF 1: Módulo de Parametrización (Catálogos)
+Este módulo debe permitir la gestión de información base necesaria para la operación del aplicativo.
+Requerimiento	Descripción	Roles de Usuario
+RF 1.1 Gestión de Funcionarios	CRUD (Crear, Editar, Eliminar) de funcionarios (Jefe CI, personal de apoyo, auditores) que actuarán en el sistema. Debe permitir asociar nombre, cargo y usuario de acceso.	Jefe Auditor, Apoyo
+RF 1.2 Gestión de Roles CI	CRUD de los cinco roles establecidos por el Decreto 648 de 2017: Liderazgo Estratégico, Enfoque hacia la Prevención, Relación con Entes Externos de Control, Evaluación de la Gestión de Riesgo, y Evaluación y Seguimiento.	Jefe Auditor, Apoyo
+RF 1.3 Gestión de Entidades de Control	CRUD de las entidades externas que ejercen seguimiento (ej. Contraloría Departamental, Procuraduría).	Jefe Auditor, Apoyo
+RF 1.4 Gestión de Procesos y Áreas	CRUD para categorizar los procesos (estratégicos, misionales, de apoyo, etc.) y las áreas de la entidad territorial.	Jefe Auditor, Apoyo
+RF 1.5 Gestión de Criterios y Alcances	CRUD para ingresar la normatividad (criterios) y los alcances que aplican a las auditorías (ej. Ley 99-93, normatividad ambiental).	Jefe Auditor, Apoyo
+RF 1.6 Imagen Institucional	Funcionalidad para cargar y almacenar la imagen institucional de la entidad territorial, hospital o empresa.	Jefe Auditor, Apoyo
+RF 2: Módulo de Plan Anual de Auditoría (PAA) y Cumplimiento
+Este módulo se centra en la planeación de las tareas asociadas a los cinco roles del Control Interno, no solo auditoría interna.
+Requerimiento	Descripción	Roles de Usuario
+RF 2.1 Creación PAA	Creación del PAA, incluyendo fecha de creación, nombre del Jefe de Control Interno (seleccionado del catálogo de Funcionarios), y ciudad.	Jefe Auditor, Apoyo
+RF 2.2 Asignación de Tareas por Rol	Dentro de cada uno de los 5 roles, debe poder agregar Tareas específicas (ej. Establecer canales de comunicación con el alcalde), con fecha de inicio, fecha de fin y responsable.	Jefe Auditor, Apoyo
+RF 2.3 Seguimiento Detallado (Puntos de Control)	Para cada tarea, se debe establecer y registrar un seguimiento detallado (puntos de control). Esto incluye registrar observaciones, estado (Realizado, Anulado, Pendiente), la entidad de control relacionada, y la evaluación de la tarea (si se cumplió bien o mal).	Jefe Auditor, Apoyo
+RF 2.4 Gestión de Evidencias (PAA)	Debe permitir adjuntar (vincular) documentos como soporte (evidencias) a cada seguimiento de tarea, permitiendo una descripción del informe adjunto.	Jefe Auditor, Apoyo
+RF 2.5 Resumen de Cumplimiento	Generación de un resumen que muestre el porcentaje de avance de cumplimiento de las tareas del PAA, por rol.	Jefe Auditor
+RF 3: Módulo de Programa de Auditoría Interna (Evaluación y Seguimiento)
+Este módulo corresponde al rol de Evaluación y Seguimiento.
+Requerimiento	Descripción	Roles de Usuario
+RF 3.1 Matriz de Priorización (Universo de Auditoría)	Implementación del formulario de Matriz de Priorización basado en riesgos. Debe permitir: a) Selección de Procesos, b) Asignación de nivel de riesgo (moderado, extremo) y cálculo de ponderación, c) Registro de requerimientos de entes reguladores/comité, d) Registro de fecha de última auditoría y cálculo de días transcurridos.	Jefe Auditor, Apoyo
+RF 3.2 Plan de Rotación	El sistema debe utilizar la ponderación de riesgos y los resultados históricos para determinar si un proceso debe ser incluido en el programa (ej. auditado cada tres años).	Jefe Auditor, Apoyo
+RF 3.3 Establecimiento del Programa	Creación del Programa de Auditoría, seleccionando objetivos, alcance, riesgos y recursos (previamente parametrizados).	Jefe Auditor
+RF 3.4 Implementación del Programa	Asignación de áreas priorizadas (ej. Ambiental, Contratación), validando que el proceso seleccionado corresponda al tipo de área (ej. no confundir proceso misional con estratégico). Debe vincular criterios y alcances específicos a esa área.	Jefe Auditor, Apoyo
+RF 3.5 Aprobación del Programa	El sistema debe registrar que el programa fue aprobado por el Comité Institucional de Coordinación de Control Interno.	Jefe Auditor
+RF 3.6 Seguimiento del Programa	Pantalla de seguimiento que muestre el estado de las auditorías programadas (Pendiente, En Proceso, Realizado).	Jefe Auditor
+RF 3.7 Generación de Reporte del Programa	Funcionalidad para visualizar y exportar el formato del Programa de Auditoría que se entrega a la alta dirección.	Jefe Auditor
+RF 4: Módulo de Plan Individual de Auditoría (PIA) e Informe
+Este módulo gestiona la ejecución de la auditoría y sus resultados.
+Requerimiento	Descripción	Roles de Usuario
+RF 4.1 Traslado de Datos	El PIA debe arrastrar automáticamente la información relevante (área, criterios, alcances) desde el Programa de Auditoría.	Jefe Auditor, Apoyo
+RF 4.2 Detalle de Actividades	Registro de las actividades específicas (reunión de apertura, revisión de contratos, reunión de cierre), incluyendo fecha, hora de inicio y fin, nombres de los auditados y los auditores.	Apoyo, Auditores
+RF 4.3 Informe de Hallazgos	Creación del Informe Auditor, donde se registran los hallazgos.	Auditores, Jefe Auditor
+RF 4.4 Gestión de Controversia	El sistema debe permitir al Auditado (con acceso limitado) ingresar una Controversia para cada hallazgo, que luego debe ser aceptada o rechazada por el auditor/Jefe CI. Solo los hallazgos ratificados (aceptados) proceden a acciones correctivas.	Auditado, Auditores, Jefe Auditor
+RF 5: Módulo de Acciones Correctivas
+Este módulo se activa para los hallazgos ratificados.
+Requerimiento	Descripción	Roles de Usuario
+RF 5.1 Registro de Plan de Mejora	El sistema debe arrastrar la descripción del hallazgo ratificado. El Auditado debe diligenciar la causa, efecto, acción de mejora, objetivo, descripción de metas, unidad de medida, fecha de inicio y fin de la acción.	Auditado, Apoyo
+RF 5.2 Seguimiento de Acciones	El Jefe de Control Interno o Apoyo debe poder realizar seguimiento al cumplimiento de las actividades planificadas, registrar si la acción fue efectiva (Sí/No) y adjuntar las evidencias del cumplimiento.	Jefe Auditor, Apoyo
+IV. Requerimientos No Funcionales (RNF)
+1. Usabilidad: La interfaz debe ser intuitiva, replicando la facilidad de uso del aplicativo en Access, pero modernizada y adaptada a estándares web (Bootstrap/Tailwind en Laravel).
+2. Rendimiento: El sistema debe garantizar tiempos de carga rápidos, especialmente al generar reportes consolidados (PAA, Resumen de Cumplimiento).
+3. Disponibilidad: Alta disponibilidad para el acceso continuo desde diferentes ubicaciones (web/cloud-hosted).
+4. Capacitación/Documentación: Incluir un módulo (o funcionalidad) para adjuntar documentación de consulta (guías de auditoría, formatos, ejemplos de PAA), tal como se mencionó en la fuente, para apoyar al Jefe de Control Interno.
+V. Desglose de Tablas Relacionales o Catálogo
+A continuación, se identifican las tablas esenciales para la estructura de la aplicación en Laravel 10.
+1. Tablas de Catálogo (Datos de Referencia)
+Estas tablas contienen información estática o de referencia, necesaria para poblar dropdowns y asegurar la coherencia de datos.
+Nombre de la Tabla	Descripción	Campos Clave	Origen / Referencia D. 648
+users (Laravel Default)	Usuarios del sistema (Jefe CI, Apoyo, Auditado).	id, name, email, password, rol_sistema_id	Jefe Auditor y Apoyo.
+cat_roles_ci	Los 5 roles del Jefe de Control Interno.	id, nombre_rol	Decreto 648 / 2017, Art. 2.2.21.5.3.
+cat_entidades_control	Entidades que realizan seguimiento.	id, nombre_entidad	Contraloría, Procuraduría.
+cat_procesos	Procesos de la entidad (Estratégicos, Misionales, Apoyo, etc.).	id, nombre_proceso, tipo_proceso	Usado para estructurar el Mapa de Procesos.
+cat_areas	Áreas auditables dentro de los procesos (ej. Medio Ambiente, Contratación).	id, nombre_area, proceso_id	Definición del Universo de Auditoría.
+cat_criterios_normatividad	Normatividad y legislación aplicable.	id, descripcion, tipo_norma	Criterios de auditoría.
+cat_alcances_auditoria	Alcances predefinidos de la auditoría.	id, descripcion_alcance	Alcances de auditoría.
+cat_objetivos_programa	Objetivos generales del programa de auditoría.	id, descripcion_objetivo	Basado en ISO 19.011.
+2. Tablas Transaccionales (Datos Operacionales)
+Estas tablas almacenan la lógica de la planeación, ejecución y seguimiento de la auditoría.
+Nombre de la Tabla	Descripción	Relaciones / Campos Clave	Referencia Funcional
+plan_anual_auditoria	Encabezado del plan anual.	id, fecha_creacion, jefe_ci_id (FK a users), aprobado_comite_id (FK a Comité)	PAA.
+paa_tareas	Tareas específicas dentro del PAA.	id, paa_id (FK), rol_ci_id (FK a cat_roles_ci), descripcion_tarea, fecha_inicio, fecha_fin, responsable_id (FK a users)	Definición de Tareas por Rol.
+paa_seguimiento	Puntos de control para cada tarea del PAA.	id, tarea_id (FK), fecha_seguimiento, observaciones, estado, evaluacion_tarea, entidad_control_id (FK)	Seguimiento Semestral.
+paa_evidencias	Archivos adjuntos para el cumplimiento de tareas.	id, seguimiento_id (FK), descripcion, ruta_archivo	Cargue de Evidencias.
+matriz_priorizacion	Evaluación de riesgos para definir el universo de auditoría.	id, area_id (FK), nivel_riesgo (Ej. Moderado, Extremo), dias_transcurridos, ultima_auditoria	Matriz de Priorización.
+programa_auditoria	Definición de la auditoría para un área priorizada.	id, paa_id (FK), area_id (FK), fecha_aprobacion	Programa de Auditoría.
+programa_criterios	Relación M:M entre programa_auditoria y cat_criterios_normatividad.	programa_id, criterio_id	Evitar errores en la selección de criterios.
+plan_individual_auditoria	Detalle de la ejecución de la auditoría.	id, programa_auditoria_id (FK), actividad, fecha_inicio_act, auditores (JSON/String), auditados (JSON/String)	Plan de Auditoría (PIA).
+informe_auditor	Registro de hallazgos y controversias.	id, pia_id (FK), descripcion_hallazgo, controversia, estado_controversia (Aceptada/Rechazada)	Informe de Auditoría.
+acciones_correctivas	Planes de mejora derivados de hallazgos ratificados.	id, informe_hallazgo_id (FK), causa, efecto, descripcion_meta, fecha_fin_accion	Plan de Mejora.
+ac_seguimiento	Seguimiento de las actividades planificadas para las acciones correctivas.	id, accion_correctiva_id (FK), actividades_cumplidas, efectiva (Sí/No), evidencia_ruta	Seguimiento de Acciones.
+VI. Funcionalidades por Rol de Usuario
+El diseño del aplicativo debe asegurar que cada rol tenga acceso únicamente a las funcionalidades que le corresponden.
+A. Jefe Auditor (Jefe de la Oficina de Control Interno)
+El Jefe Auditor tiene la máxima autoridad y control estratégico.
+Funcionalidad	Descripción
+Control Total de Catálogos	Creación, modificación y eliminación de Funcionarios, Roles, Entidades, Criterios y Alcances.
+Planeación PAA	Creación y asignación de Tareas y Seguimientos del Plan Anual de Auditoría.
+Monitoreo y Evaluación	Revisión del Resumen de Cumplimiento (porcentaje de avance) y evaluación de la efectividad de las Tareas.
+Aprobación de Programas	Rol de aprobación del Programa de Auditoría (o registro de aprobación del Comité).
+Gestión de Controversias	Revisión y decisión final sobre las controversias presentadas por los auditados.
+Seguimiento Final	Seguimiento a las Acciones Correctivas y evaluación de su efectividad.
+B. Personal de Apoyo / Auditores
+Ejecutan las actividades operativas bajo la dirección del Jefe Auditor.
+Funcionalidad	Descripción
+Ejecución del PAA	Registro de Puntos de Control y Observaciones de las tareas asignadas en el PAA.
+Gestión de Evidencias	Cargue y vinculación de evidencias a las tareas del PAA y Acciones Correctivas.
+Matriz de Priorización	Diligenciamiento de la Matriz de Priorización y definición del Programa de Auditoría.
+Elaboración de PIA	Creación y detalle de las actividades del Plan Individual de Auditoría (PIA), incluyendo la asignación de auditados.
+Elaboración de Informe	Registro de hallazgos en el Informe Auditor.
+C. Auditado (Área o Funcionario Auditable)
+Su funcionalidad es limitada a la respuesta post-auditoría.
+Funcionalidad	Descripción
+Visualización de Hallazgos	Acceso a la sección de Informe Auditor correspondiente a su área para ver los hallazgos.
+Registro de Controversia	Diligenciamiento de la Controversia para los hallazgos recibidos.
+Plan de Mejora	Diligenciamiento de la Causa, Efecto, Acción de Mejora y Metas para los hallazgos ratificados.
+
