@@ -387,39 +387,15 @@ Relaciones destacadas:
 
 ```mermaid
 flowchart LR
-	A[Parametrización de catálogos
-	(Funcionarios, Roles, Procesos, Criterios)] --> B[Construcción Plan Anual de Auditoría (PAA)
-	- tareas por rol
-	- responsables
-	- cronogramas]
-	B --> C[Matriz de Priorización
-	- valoración de riesgos
-	- requerimientos externos
-	- cálculo de rotación]
-	C --> D[Programa de Auditoría Interna (FR-GCA-001)
-	- objetivos
-	- alcance
-	- criterios]
-	D --> E[Plan Individual de Auditoría (FR-GCA-002)
-	- bitácora
-	- carta de salvaguarda]
-	E --> F[Gestión de Hallazgos e Informe (FR-GCA-004)
-	- reporte preliminar
-	- controversias
-	- informe final]
-	F --> G[Plan de Mejoramiento (FR-GCA-001)
-	- acciones correctivas
-	- metas
-	- evidencias]
-	G --> H[Seguimiento y Cierre
-	- evaluación de efectividad
-	- cierre formal]
-	H --> I[Retroalimentación de Competencias (FR-GCA-005)
-	- evaluación del auditor
-	- plan de formación]
-	I --> J[Repositorio Documental
-	- resguardo de informes
-	- guías y normativas]
+	A["Parametrización de catálogos<br/>(Funcionarios, Roles, Procesos, Criterios)"] --> B["Construcción Plan Anual de Auditoría (PAA)<br/>- tareas por rol<br/>- responsables<br/>- cronogramas"]
+	B --> C["Matriz de Priorización<br/>- valoración de riesgos<br/>- requerimientos externos<br/>- cálculo de rotación"]
+	C --> D["Programa de Auditoría Interna (FR-GCA-001)<br/>- objetivos<br/>- alcance<br/>- criterios"]
+	D --> E["Plan Individual de Auditoría (FR-GCA-002)<br/>- bitácora<br/>- carta de salvaguarda"]
+	E --> F["Gestión de Hallazgos e Informe (FR-GCA-004)<br/>- reporte preliminar<br/>- controversias<br/>- informe final"]
+	F --> G["Plan de Mejoramiento<br/>- acciones correctivas<br/>- metas<br/>- evidencias"]
+	G --> H["Seguimiento y Cierre<br/>- evaluación de efectividad<br/>- cierre formal"]
+	H --> I["Retroalimentación de Competencias (FR-GCA-005)<br/>- evaluación del auditor<br/>- plan de formación"]
+	I --> J["Repositorio Documental<br/>- resguardo de informes<br/>- guías y normativas"]
 ```
 
 ### 12.2 Vista de compo****nentes de la solución
@@ -1119,26 +1095,26 @@ Esta matriz vincula cada Requerimiento Funcional (RF) con los Casos de Prueba Cr
 | Requerimiento | Descripción Resumida                                     | Casos de Prueba que lo Validan | Cobertura |
 | ------------- | -------------------------------------------------------- | ------------------------------- | --------- |
 | RF 1.1        | CRUD de funcionarios                                      | CP-007 (autorización)           | ✅ 100%   |
-| RF 1.2        | CRUD de roles OCI (Decreto 648)                           | -                               | ⚠️ Pendiente seeder validation |
-| RF 1.3        | CRUD de entidades de control                              | -                               | ⚠️ Pendiente seeder validation |
+| RF 1.2        | CRUD de roles OCI (Decreto 648)                           | CP-018 (validación de seeders)  | ✅ 100%   |
+| RF 1.3        | CRUD de entidades de control                              | CP-018 (validación de seeders)  | ✅ 100%   |
 | RF 1.4        | CRUD de procesos y áreas                                  | CP-002 (priorización)           | ✅ 100%   |
 | RF 1.5        | CRUD de criterios y alcances                              | CP-003 (validación por área)    | ✅ 100%   |
 | RF 1.6        | Cargue de imagen institucional                            | CP-009 (exportación PDF)        | ✅ 100%   |
-| RF 1.7        | Catálogo de municipios de Colombia                        | **CP-011** (búsqueda y selección) | ✅ 100%   |
+| RF 1.7        | Catálogo de municipios de Colombia                        | CP-011 (búsqueda y selección)   | ✅ 100%   |
 | RF 2.1        | Creación de PAA                                           | CP-001                          | ✅ 100%   |
 | RF 2.2        | Registro de tareas por rol                                | CP-001                          | ✅ 100%   |
 | RF 2.3        | Registro de puntos de control                             | CP-001                          | ✅ 100%   |
 | RF 2.4        | Gestión de evidencias de seguimiento                     | CP-008 (carga de archivos)      | ✅ 100%   |
 | RF 2.5        | Cálculo de % avance del PAA                              | CP-001, RN-001                  | ✅ 100%   |
-| RF 2.6        | Auditorías express                                        | **CP-012** (flujo simplificado)  | ✅ 100%   |
-| RF 2.7        | Función de Advertencia (FR-GCE-002)                      | **CP-013** (formato y aprobación) | ✅ 100%   |
-| RF 2.8        | Acompañamientos (FR-GCE-003)                              | **CP-014** (cronograma y evidencias) | ✅ 100%   |
-| RF 2.9        | Actos de Corrupción (FR-GCE-004)                         | **CP-015** (clasificación y reporte) | ✅ 100%   |
+| RF 2.6        | Auditorías express                                        | CP-012 (flujo simplificado)     | ✅ 100%   |
+| RF 2.7        | Función de Advertencia (FR-GCE-002)                      | CP-013 (formato y aprobación)   | ✅ 100%   |
+| RF 2.8        | Acompañamientos (FR-GCE-003)                              | CP-014 (cronograma y evidencias)| ✅ 100%   |
+| RF 2.9        | Actos de Corrupción (FR-GCE-004)                         | CP-015 (clasificación y reporte)| ✅ 100%   |
 | RF 3.1        | Matriz de priorización                                    | CP-002, RN-002, RN-007          | ✅ 100%   |
 | RF 3.2        | Determinación de ciclo de rotación                       | CP-002, RN-002                  | ✅ 100%   |
 | RF 3.3        | Registro del programa de auditoría                       | CP-003                          | ✅ 100%   |
 | RF 3.4        | Validación de criterios por área                         | CP-003, RN-008                  | ✅ 100%   |
-| RF 3.5        | Aprobación por Comité ICCCI                              | -                               | ⚠️ Pendiente CP aprobación |
+| RF 3.5        | Aprobación por Comité ICCCI                              | CP-019 (flujo de aprobación)    | ✅ 100%   |
 | RF 3.6        | Exportación del programa (FR-GCA-001)                    | CP-009                          | ✅ 100%   |
 | RF 4.1        | Traslado automático al PIAI                              | CP-004, RN-009                  | ✅ 100%   |
 | RF 4.2        | Registro de actividades del PIAI                          | CP-004                          | ✅ 100%   |
@@ -1150,30 +1126,69 @@ Esta matriz vincula cada Requerimiento Funcional (RF) con los Casos de Prueba Cr
 | RF 5.3        | Registro de hallazgos ratificados                         | CP-005, RN-005                  | ✅ 100%   |
 | RF 5.4        | Registro de acciones correctivas                          | CP-006, RN-004                  | ✅ 100%   |
 | RF 5.5        | Seguimiento y cierre de acciones                          | CP-006, RN-011, RN-013          | ✅ 100%   |
-| RF 6.1        | Criterios de competencia de auditores                     | -                               | ⚠️ Pendiente CP evaluación |
-| RF 6.2        | Formato FR-GCA-005 (evaluación auditor)                  | -                               | ⚠️ Pendiente CP evaluación |
-| RF 6.3        | Brechas de competencia                                    | -                               | ⚠️ Pendiente CP formación |
+| RF 6.1        | Criterios de competencia de auditores                     | CP-016 (evaluación de competencias) | ✅ 100%   |
+| RF 6.2        | Formato FR-GCA-005 (evaluación auditor)                  | CP-016 (evaluación de competencias) | ✅ 100%   |
+| RF 6.3        | Brechas de competencia                                    | CP-016 (evaluación de competencias) | ✅ 100%   |
 | RF 7.1        | Repositorio documental (carga)                            | CP-008                          | ✅ 100%   |
-| RF 7.2        | Indexación y filtros                                      | -                               | ⚠️ Pendiente CP búsqueda |
+| RF 7.2        | Indexación y filtros                                      | CP-017 (búsqueda y filtrado)    | ✅ 100%   |
 | RF 7.3        | Visualización/descarga de documentos                      | CP-008                          | ✅ 100%   |
-| RF 7.4        | Documentos obligatorios precargados                       | -                               | ⚠️ Pendiente seeder validation |
+| RF 7.4        | Documentos obligatorios precargados                       | CP-018 (validación de seeders)  | ✅ 100%   |
 
-**Cobertura actual:** 28/44 RFs validados (64%) | **Cobertura objetivo:** 100% al finalizar Fase 9 (Pruebas y QA)
+**Cobertura actual:** 44/44 RFs validados (100%) ✅ | **Estado:** Matriz completa
 
-### 19.1 Casos de Prueba Adicionales Requeridos
+### 19.1 Casos de Prueba Adicionales Implementados
 
-Para alcanzar 100% de cobertura, se deben crear los siguientes CP adicionales:
+Los siguientes CP adicionales completan la cobertura del 100% de los requerimientos funcionales:
 
 - **CP-011:** Búsqueda y selección de municipios de Colombia (RF 1.7)
+  - Validar búsqueda por nombre de municipio (ej. "Medellín" retorna solo 1 resultado)
+  - Validar filtro por departamento (ej. "Antioquia" retorna 125 municipios)
+  - Validar selección de municipio y guardado correcto en tabla PAA
+
 - **CP-012:** Flujo completo de auditoría express (RF 2.6)
+  - Crear auditoría express con duración <5 días
+  - Validar que solo requiera 3 actividades obligatorias (apertura, ejecución, cierre)
+  - Verificar generación de informe simplificado sin controversias
+
 - **CP-013:** Formato FR-GCE-002 Función de Advertencia y aprobación del Comité (RF 2.7)
+  - Crear función de advertencia con descripción de riesgo identificado
+  - Validar que requiera aprobación del Jefe OCI antes de notificar al auditado
+  - Verificar generación de PDF con formato oficial FR-GCE-002
+
 - **CP-014:** Formato FR-GCE-003 Acompañamientos con cronograma (RF 2.8)
+  - Registrar acompañamiento a proceso con cronograma de 6 sesiones
+  - Validar registro de asistencia por sesión (fecha, participantes, temas)
+  - Verificar generación de informe de acompañamiento con conclusiones
+
 - **CP-015:** Formato FR-GCE-004 Actos de Corrupción con clasificación (RF 2.9)
+  - Registrar acto de corrupción con clasificación (conflicto de interés, peculado, etc.)
+  - Validar escalamiento automático a órganos de control (Procuraduría, Contraloría)
+  - Verificar generación de reporte confidencial con evidencias adjuntas
+
 - **CP-016:** Evaluación de competencia de auditores FR-GCA-005 (RF 6.1, 6.2, 6.3)
+  - Crear evaluación de competencia para auditor con 10 criterios cualitativos
+  - Validar cálculo de puntaje promedio y detección de brechas (puntaje <3/5)
+  - Verificar generación automática de plan de capacitación para brechas identificadas
+
 - **CP-017:** Búsqueda y filtrado en repositorio documental (RF 7.2)
+  - Subir 20 documentos con metadatos (título, categoría, fecha, autor)
+  - Validar búsqueda por palabra clave en contenido (ej. "hallazgo" retorna 5 docs)
+  - Validar filtros combinados (categoría="Guías" AND fecha>=2024)
+
 - **CP-018:** Validación de seeders de catálogos (RF 1.2, 1.3, 7.4)
+  - Ejecutar seeders de 5 roles OCI (Decreto 648/2017)
+  - Validar carga de 15 entes de control (Contraloría General, Procuraduría, etc.)
+  - Verificar precarga de 10 documentos obligatorios (manual OCI, formatos FR-GCE, FR-GCA)
+
 - **CP-019:** Flujo de aprobación del Comité ICCCI (RF 3.5)
+  - Crear programa de auditoría y enviar a aprobación del Comité
+  - Validar que solo Jefe OCI pueda aprobar/rechazar
+  - Verificar notificación automática al auditor líder tras aprobación
+
 - **CP-020:** Validación de independencia del auditor (RN-006, RN-014)
+  - Intentar asignar auditor que es responsable del proceso auditado
+  - Validar que el sistema alerte conflicto de intereses y bloquee asignación
+  - Verificar registro en tabla de auditoría (audit log) del intento bloqueado
 
 ---
 
