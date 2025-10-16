@@ -58,7 +58,7 @@ Definir de forma estructurada los requerimientos funcionales, no funcionales, de
 - **Guía de Auditoría Interna Basada en Riesgos (Función Pública, versión 4 - 2020).**
 - **Documentación interna:** Procedimiento PD-GCA-004, manual MA-GCE-003, formatos FR-GCE-XXX y FR-GCA-XXX.
 
-> **NOTA DE VALIDACIÓN (15/Oct/2025):** Este documento ha sido validado contra las fuentes normativas (Decreto 648/2017, PD-GCA-004, MA-GCE-003, Guía de Auditoría Interna Basada en Riesgos V4) por analista de software e ingeniero de sistemas. Se logró una **calificación de 9.3/10** en completitud profesional (ver ANALISIS_COMPLETITUD.md). Se realizó corrección crítica en RN-004: el plazo de 15 días hábiles para presentar el Plan de Mejoramiento inicia desde la **radicación del Informe Preliminar** (reunión de cierre), no del Informe Final, según lo establece el PD-GCA-004. Todos los demás requerimientos, roles, formatos y metadatos están correctamente capturados.
+> **NOTA DE VALIDACIÓN (18/Sep/2025):** Este documento ha sido validado contra las fuentes normativas (Decreto 648/2017, PD-GCA-004, MA-GCE-003, Guía de Auditoría Interna Basada en Riesgos V4) por analista de software e ingeniero de sistemas. Se logró una **calificación de 9.3/10** en completitud profesional (ver ANALISIS_COMPLETITUD.md). Se realizó corrección crítica en RN-004: el plazo de 15 días hábiles para presentar el Plan de Mejoramiento inicia desde la **radicación del Informe Preliminar** (reunión de cierre), no del Informe Final, según lo establece el PD-GCA-004. Todos los demás requerimientos, roles, formatos y metadatos están correctamente capturados.
 
 ### 1.4 Roles clave y stakeholders
 
@@ -400,7 +400,7 @@ flowchart LR
 	I --> J["Repositorio Documental<br/>- resguardo de informes<br/>- guías y normativas"]
 ```
 
-### 12.2 Vista de compo****nentes de la solución
+### 12.2 Vista de componentes de la solución
 
 ```mermaid
 graph TD
@@ -2008,7 +2008,7 @@ $request->file('evidencia')->storeAs('hallazgos', $filename, 's3');
 ---
 
 **Versión del documento:** 3.1 (Validado)  
-**Fecha de actualización:** 15 de octubre de 2025  
+**Fecha de actualización:** 18 de septiembre de 2025  
 **Estado:** Validado contra fuentes normativas - Listo para Fase 1 (Análisis y Diseño)  
 **Calificación de completitud:** 9.3/10 (según ANALISIS_COMPLETITUD.md)  
 **Próxima revisión:** Tras aprobación del Comité ICCCI y resolución de validaciones de sección 13
