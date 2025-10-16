@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePAARequest;
 use App\Http\Requests\UpdatePAARequest;
 use App\Models\PAA;
+use App\Models\PAATarea;
 use App\Models\MunicipioColombia;
 use App\Models\RolOci;
 use Illuminate\Http\Request;
@@ -40,6 +41,13 @@ class PAAController extends Controller
         $query = PAA::with(['elaboradoPor', 'municipio'])
             ->orderBy('vigencia', 'desc')
             ->orderBy('fecha_elaboracion', 'desc');
+
+        // Si es auditor, solo mostrar PAAs donde tiene tareas asignadas
+        if (auth()->user()->role === 'auditor') {
+            $query->whereHas('tareas', function($q) {
+                $q->where('responsable_id', auth()->id());
+            });
+        }
 
         // Filtrar por vigencia si se especifica
         if ($request->filled('vigencia')) {
@@ -145,21 +153,40 @@ class PAAController extends Controller
             'aprobadoPor'
         ]);
 
+        // Si es auditor, verificar que tiene al menos una tarea asignada
+        if (auth()->user()->role === 'auditor') {
+            $tieneTareasAsignadas = $paa->tareas->where('responsable_id', auth()->id())->count() > 0;
+            
+            if (!$tieneTareasAsignadas) {
+                return redirect()->route('paa.index')
+                    ->with('info', 'No tienes acceso a ese PAA.');
+            }
+
+            // Filtrar solo las tareas del auditor
+            $paa->setRelation('tareas', $paa->tareas->where('responsable_id', auth()->id()));
+        }
+
         // Calcular estadísticas
         $porcentajeCumplimiento = $paa->calcularPorcentajeCumplimiento();
-        $cumplimientoPorRol = $paa->calcularCumplimientoPorRol();
+        
+        // Para auditores, calcular cumplimiento solo con sus tareas filtradas
+        if (auth()->user()->role === 'auditor') {
+            $cumplimientoPorRol = $this->calcularCumplimientoPorRolFiltrado($paa);
+        } else {
+            $cumplimientoPorRol = $paa->calcularCumplimientoPorRol();
+        }
 
-        // Estadísticas de tareas
+        // Estadísticas de tareas (basadas en las tareas filtradas)
         $now = now();
         $estadisticas = [
             'total_tareas' => $paa->tareas->count(),
             'tareas_pendientes' => $paa->tareas->where('estado_tarea', 'pendiente')->count(),
             'tareas_en_proceso' => $paa->tareas->where('estado_tarea', 'en_proceso')->count(),
-            'tareas_realizadas' => $paa->tareas->where('estado_tarea', 'realizado')->count(),
-            'tareas_anuladas' => $paa->tareas->where('estado_tarea', 'anulado')->count(),
-            'tareas_vencidas' => $paa->tareas->where('estado_tarea', '!=', 'realizado')
-                                             ->where('estado_tarea', '!=', 'anulado')
-                                             ->where('fecha_fin', '<', $now)
+            'tareas_realizadas' => $paa->tareas->where('estado_tarea', 'realizada')->count(),
+            'tareas_anuladas' => $paa->tareas->where('estado_tarea', 'anulada')->count(),
+            'tareas_vencidas' => $paa->tareas->where('estado_tarea', '!=', 'realizada')
+                                             ->where('estado_tarea', '!=', 'anulada')
+                                             ->where('fecha_fin_planeada', '<', $now)
                                              ->count(),
         ];
 
@@ -366,6 +393,39 @@ class PAAController extends Controller
             
             return back()->with('error', 'Error al anular el PAA: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Calcular cumplimiento por rol usando solo las tareas filtradas (para auditores)
+     */
+    private function calcularCumplimientoPorRolFiltrado(PAA $paa): array
+    {
+        $rolesOci = RolOci::orderBy('orden')->get();
+        $cumplimientoPorRol = [];
+
+        foreach ($rolesOci as $rol) {
+            // Usar la colección de tareas ya filtradas
+            $tareasDelRol = $paa->tareas->where('rol_oci_id', $rol->id);
+            
+            $totalTareasRol = $tareasDelRol->count();
+            $tareasRealizadasRol = $tareasDelRol
+                ->where('estado_tarea', PAATarea::ESTADO_REALIZADA)
+                ->count();
+
+            $porcentajeRol = $totalTareasRol > 0 
+                ? round(($tareasRealizadasRol / $totalTareasRol) * 100, 2)
+                : 0.0;
+
+            // Usar el ID del rol como clave (igual que el método del modelo)
+            $cumplimientoPorRol[$rol->id] = [
+                'nombre' => $rol->nombre_rol,
+                'porcentaje' => $porcentajeRol,
+                'tareas_total' => $totalTareasRol,
+                'tareas_realizadas' => $tareasRealizadasRol,
+            ];
+        }
+
+        return $cumplimientoPorRol;
     }
 
     /**

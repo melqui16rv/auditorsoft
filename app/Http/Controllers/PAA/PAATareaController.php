@@ -23,16 +23,28 @@ class PAATareaController extends Controller
      */
     public function index(PAA $paa)
     {
-        // Verificar autorización
+        // Verificar autorización básica
         if (!in_array(auth()->user()->role, ['jefe_auditor', 'auditor', 'super_administrador'])) {
             abort(403, 'No tienes permisos para ver las tareas de este PAA.');
         }
 
-        // Cargar tareas con relaciones
-        $tareas = $paa->tareas()
+        // Construir query de tareas
+        $query = $paa->tareas()
             ->with(['rolOci', 'responsable', 'seguimientos'])
-            ->orderBy('fecha_inicio_planeada')
-            ->paginate(15);
+            ->orderBy('fecha_inicio_planeada');
+
+        // Si es auditor, filtrar solo sus tareas asignadas
+        if (auth()->user()->role === 'auditor') {
+            $query->where('responsable_id', auth()->id());
+        }
+
+        $tareas = $query->paginate(15);
+
+        // Si es auditor y no tiene tareas, mostrar mensaje
+        if (auth()->user()->role === 'auditor' && $tareas->count() === 0) {
+            return redirect()->route('paa.show', $paa)
+                ->with('info', 'No tienes tareas asignadas en este PAA.');
+        }
 
         return view('paa.tareas.index', compact('paa', 'tareas'));
     }
@@ -114,6 +126,12 @@ class PAATareaController extends Controller
             abort(403, 'No tienes permisos para ver esta tarea.');
         }
 
+        // Si es auditor, verificar que es el responsable de la tarea
+        if (auth()->user()->role === 'auditor' && $tarea->responsable_id !== auth()->id()) {
+            return redirect()->route('paa.show', $paa)
+                ->with('info', 'No tienes acceso a esa tarea.');
+        }
+
         // Cargar relaciones
         $tarea->load([
             'rolOci',
@@ -161,6 +179,12 @@ class PAATareaController extends Controller
         // Verificar autorización
         if (!in_array(auth()->user()->role, ['jefe_auditor', 'auditor', 'super_administrador'])) {
             abort(403, 'No tienes permisos para editar esta tarea.');
+        }
+
+        // Si es auditor, verificar que es el responsable de la tarea
+        if (auth()->user()->role === 'auditor' && $tarea->responsable_id !== auth()->id()) {
+            return redirect()->route('paa.show', $paa)
+                ->with('info', 'No tienes acceso a esa tarea.');
         }
 
         // Verificar que el PAA puede ser editado
