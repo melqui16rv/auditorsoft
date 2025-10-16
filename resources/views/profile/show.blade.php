@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'Mi Perfil')
+@section('page-title', 'Mi Perfil')
+
+@section('sidebar')
+    @include('partials.sidebar')
+@endsection
 
 @section('content')
 <div class="container-fluid">

@@ -4,42 +4,7 @@
 @section('page-title', 'Dashboard Auditor')
 
 @section('sidebar')
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link active" href="{{ route('auditor.dashboard') }}">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-clipboard-list"></i>
-        <span>Auditorías Asignadas</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-users"></i>
-        <span>Mis Auditados</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-file-signature"></i>
-        <span>Revisión de Documentos</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-chart-bar"></i>
-        <span>Reportes</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-comments"></i>
-        <span>Comunicaciones</span>
-    </a>
-</div>
+    @include('partials.sidebar')
 @endsection
 
 @section('content')

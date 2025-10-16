@@ -4,36 +4,7 @@
 @section('page-title', 'Dashboard Auditado')
 
 @section('sidebar')
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link active" href="{{ route('auditado.dashboard') }}">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-file-alt"></i>
-        <span>Mis Auditorías</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-calendar"></i>
-        <span>Cronograma</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-upload"></i>
-        <span>Subir Documentos</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-comments"></i>
-        <span>Mensajes</span>
-    </a>
-</div>
+    @include('partials.sidebar')
 @endsection
 
 @section('content')

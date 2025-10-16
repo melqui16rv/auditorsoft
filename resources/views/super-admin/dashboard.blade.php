@@ -4,48 +4,7 @@
 @section('page-title', 'Dashboard Super Administrador')
 
 @section('sidebar')
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link active" href="{{ route('super-admin.dashboard') }}">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="{{ route('super-admin.users.index') }}">
-        <i class="fas fa-users"></i>
-        <span>Gestión de Usuarios</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-building"></i>
-        <span>Gestión de Empresas</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-cogs"></i>
-        <span>Configuración del Sistema</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-chart-line"></i>
-        <span>Análisis Global</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-shield-alt"></i>
-        <span>Seguridad y Auditoría</span>
-    </a>
-</div>
-<div class="sidebar-nav-item">
-    <a class="sidebar-nav-link" href="#">
-        <i class="fas fa-database"></i>
-        <span>Base de Datos</span>
-    </a>
-</div>
+    @include('partials.sidebar')
 @endsection
 
 @section('content')

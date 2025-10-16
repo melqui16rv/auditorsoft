@@ -89,6 +89,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Relación uno a uno con Funcionario
+     */
+    public function funcionario()
+    {
+        return $this->hasOne(Funcionario::class);
+    }
+
+    /**
      * Obtener la ruta del dashboard según el rol
      */
     public function getDashboardRoute()
