@@ -400,7 +400,7 @@ flowchart LR
 	I --> J["Repositorio Documental<br/>- resguardo de informes<br/>- guías y normativas"]
 ```
 
-### 12.2 Vista de compo****nentes de la solución
+### 12.2 Vista de componentes de la solución
 
 ```mermaid
 graph TD
