@@ -2,6 +2,10 @@
 
 @section('title', 'Detalle de Tarea - ' . $tarea->rolOci->nombre_rol)
 
+@section('sidebar')
+    @include('partials.sidebar')
+@endsection
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">

@@ -139,7 +139,13 @@ class PAATareaController extends Controller
         // Obtener seguimientos para la vista
         $seguimientos = $tarea->seguimientos;
 
-        return view('paa.tareas.show', compact('paa', 'tarea', 'seguimientos', 'totalSeguimientos', 'seguimientosRealizados', 'porcentajeSeguimientos', 'totalEvidencias'));
+        // Obtener todas las evidencias de todos los seguimientos
+        $evidencias = collect();
+        foreach ($tarea->seguimientos as $seguimiento) {
+            $evidencias = $evidencias->merge($seguimiento->evidencias);
+        }
+
+        return view('paa.tareas.show', compact('paa', 'tarea', 'seguimientos', 'totalSeguimientos', 'seguimientosRealizados', 'porcentajeSeguimientos', 'totalEvidencias', 'evidencias'));
     }
 
     /**
@@ -165,7 +171,8 @@ class PAATareaController extends Controller
 
         // Obtener roles OCI y usuarios auditores
         $rolesOci = RolOci::orderBy('nombre_rol')->get();
-        $responsables = User::whereIn('role', ['jefe_auditor', 'auditor'])
+        $responsables = User::whereIn('role', ['super_administrador', 'jefe_auditor', 'auditor'])
+            ->where('is_active', true)
             ->orderBy('name')
             ->get();
 
