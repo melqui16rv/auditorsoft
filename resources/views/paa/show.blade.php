@@ -185,9 +185,9 @@
                                     @if($paa->imagen_institucional)
                                     <h5 class="mb-3">Logo Institucional</h5>
                                     <div class="border rounded p-3 text-center bg-light">
-                                        <img src="{{ asset('storage/' . $paa->imagen_institucional) }}" 
-                                             alt="Logo" 
-                                             class="img-fluid" 
+                                        <img src="{{ asset('storage/' . $paa->imagen_institucional) }}"
+                                             alt="Logo"
+                                             class="img-fluid"
                                              style="max-height: 200px;">
                                     </div>
                                     @endif
@@ -199,9 +199,9 @@
                                                 {{ number_format($porcentajeCumplimiento, 1) }}%
                                             </strong>
                                         </div>
-                                        <div class="progress" style="height: 30px;">
-                                            <div class="progress-bar bg-{{ $porcentajeCumplimiento >= 80 ? 'success' : ($porcentajeCumplimiento >= 50 ? 'warning' : 'danger') }}" 
-                                                 style="width: {{ $porcentajeCumplimiento }}%">
+                                        <div class="progress h-8">
+                                            <div class="progress-bar bg-{{ $porcentajeCumplimiento >= 80 ? 'success' : ($porcentajeCumplimiento >= 50 ? 'warning' : 'danger') }}"
+                                                 data-width="{{ $porcentajeCumplimiento }}">
                                                 {{ number_format($porcentajeCumplimiento, 1) }}%
                                             </div>
                                         </div>
@@ -251,9 +251,9 @@
                                 @endphp
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}" 
-                                                type="button" 
-                                                data-bs-toggle="collapse" 
+                                        <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}"
+                                                type="button"
+                                                data-bs-toggle="collapse"
                                                 data-bs-target="#{{ $accordionId }}">
                                             <strong>{{ $nombreRol }}</strong>
                                             <span class="ms-auto me-3">
@@ -384,7 +384,8 @@
                                     <h6 class="mb-0">Distribución de Tareas por Estado</h6>
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="chartEstadosTareas" height="80"></canvas>
+                                    <canvas id="chartEstadosTareas" height="80"
+                                            data-tareas="{{ json_encode($paa->tareas) }}"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -522,11 +523,11 @@
                         <label for="motivo" class="form-label">
                             Motivo de Anulación <span class="text-danger">*</span>
                         </label>
-                        <textarea name="motivo" 
-                                  id="motivo" 
-                                  class="form-control" 
-                                  rows="3" 
-                                  required 
+                        <textarea name="motivo"
+                                  id="motivo"
+                                  class="form-control"
+                                  rows="3"
+                                  required
                                   minlength="10"
                                   placeholder="Ingrese el motivo de la anulación (mínimo 10 caracteres)"></textarea>
                     </div>
@@ -549,7 +550,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gráfico de Estados de Tareas
     const ctxEstados = document.getElementById('chartEstadosTareas');
     if (ctxEstados) {
-        const tareas = {!! json_encode($paa->tareas) !!};
+        const tareasData = ctxEstados.getAttribute('data-tareas');
+        const tareas = JSON.parse(tareasData);
         const realizadas = tareas.filter(t => t.estado === 'realizada').length;
         const enProceso = tareas.filter(t => t.estado === 'en_proceso').length;
         const pendientes = tareas.filter(t => t.estado === 'pendiente').length;

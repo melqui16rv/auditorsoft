@@ -44,11 +44,11 @@
                                 <strong>Evaluación:</strong> {!! $tarea->evaluacion_badge !!}
                             </div>
                             <div class="col-md-4">
-                                <strong>Progreso:</strong> 
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar {{ $tarea->porcentaje_avance == 100 ? 'bg-success' : 'bg-info' }}" 
-                                         role="progressbar" 
-                                         style="width: {{ $tarea->porcentaje_avance }}%">
+                                <strong>Progreso:</strong>
+                                <div class="progress h-5">
+                                    <div class="progress-bar {{ $tarea->porcentaje_avance == 100 ? 'bg-success' : 'bg-info' }}"
+                                         role="progressbar"
+                                         data-width="{{ $tarea->porcentaje_avance }}">
                                         {{ $tarea->porcentaje_avance }}%
                                     </div>
                                 </div>
@@ -69,9 +69,9 @@
                                     <label for="rol_oci" class="form-label">
                                         Rol OCI <span class="text-danger">*</span>
                                     </label>
-                                    <select name="rol_oci" 
-                                            id="rol_oci" 
-                                            class="form-select @error('rol_oci') is-invalid @enderror" 
+                                    <select name="rol_oci"
+                                            id="rol_oci"
+                                            class="form-select @error('rol_oci') is-invalid @enderror"
                                             {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                         <option value="">Seleccione el rol OCI...</option>
                                         <option value="fomento_cultura" {{ (old('rol_oci', $tarea->rol_oci) == 'fomento_cultura') ? 'selected' : '' }}>
@@ -100,8 +100,8 @@
                                     <label for="descripcion" class="form-label">
                                         Descripción de la Tarea <span class="text-danger">*</span>
                                     </label>
-                                    <textarea name="descripcion" 
-                                              id="descripcion" 
+                                    <textarea name="descripcion"
+                                              id="descripcion"
                                               class="form-control @error('descripcion') is-invalid @enderror"
                                               rows="4"
                                               minlength="10"
@@ -122,11 +122,11 @@
                                             <label for="fecha_inicio" class="form-label">
                                                 Inicio <span class="text-danger">*</span>
                                             </label>
-                                            <input type="date" 
-                                                   name="fecha_inicio" 
-                                                   id="fecha_inicio" 
+                                            <input type="date"
+                                                   name="fecha_inicio"
+                                                   id="fecha_inicio"
                                                    class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                                   value="{{ old('fecha_inicio', optional($tarea->fecha_inicio)->format('Y-m-d')) }}" 
+                                                   value="{{ old('fecha_inicio', optional($tarea->fecha_inicio)->format('Y-m-d')) }}"
                                                    {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                             @error('fecha_inicio')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -138,11 +138,11 @@
                                             <label for="fecha_fin" class="form-label">
                                                 Fin <span class="text-danger">*</span>
                                             </label>
-                                            <input type="date" 
-                                                   name="fecha_fin" 
-                                                   id="fecha_fin" 
+                                            <input type="date"
+                                                   name="fecha_fin"
+                                                   id="fecha_fin"
                                                    class="form-control @error('fecha_fin') is-invalid @enderror"
-                                                   value="{{ old('fecha_fin', optional($tarea->fecha_fin)->format('Y-m-d')) }}" 
+                                                   value="{{ old('fecha_fin', optional($tarea->fecha_fin)->format('Y-m-d')) }}"
                                                    {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                             @error('fecha_fin')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -158,9 +158,9 @@
                                     <label for="auditor_responsable_id" class="form-label">
                                         Responsable <span class="text-danger">*</span>
                                     </label>
-                                    <select name="auditor_responsable_id" 
-                                            id="auditor_responsable_id" 
-                                            class="form-select @error('auditor_responsable_id') is-invalid @enderror" 
+                                    <select name="auditor_responsable_id"
+                                            id="auditor_responsable_id"
+                                            class="form-select @error('auditor_responsable_id') is-invalid @enderror"
                                             {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                         @foreach($responsables as $responsable)
                                             <option value="{{ $responsable->id }}" {{ (old('auditor_responsable_id', $tarea->auditor_responsable_id) == $responsable->id) ? 'selected' : '' }}>
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Contador de caracteres
     const descripcion = document.getElementById('descripcion');
     const charCount = document.getElementById('charCount');
-    
+
     if (descripcion && !descripcion.disabled) {
         descripcion.addEventListener('input', function() {
             charCount.textContent = this.value.length;
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const observaciones = document.getElementById('observaciones');
     const obsCharCount = document.getElementById('obsCharCount');
-    
+
     if (observaciones) {
         observaciones.addEventListener('input', function() {
             obsCharCount.textContent = this.value.length;

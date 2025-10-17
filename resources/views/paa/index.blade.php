@@ -69,7 +69,7 @@
 
                 <div class="col-md-4">
                     <label for="buscar" class="form-label">Buscar</label>
-                    <input type="text" name="buscar" id="buscar" class="form-control" 
+                    <input type="text" name="buscar" id="buscar" class="form-control"
                            placeholder="Código o entidad..." value="{{ request('buscar') }}">
                 </div>
 
@@ -134,34 +134,35 @@
                                             $porcentaje = $paa->calcularPorcentajeCumplimiento();
                                             $colorBarra = $porcentaje >= 80 ? 'success' : ($porcentaje >= 50 ? 'warning' : 'danger');
                                         @endphp
-                                        <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar bg-{{ $colorBarra }}" role="progressbar" 
-                                                 style="width: {{ $porcentaje }}%" 
-                                                 aria-valuenow="{{ $porcentaje }}" 
-                                                 aria-valuemin="0" 
-                                                 aria-valuemax="100">
+                                        <div class="progress h-5">
+                                            <div class="progress-bar bg-{{ $colorBarra }}" 
+                                                 role="progressbar"
+                                                 aria-valuenow="{{ $porcentaje }}"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 data-width="{{ $porcentaje }}">
                                                 {{ number_format($porcentaje, 1) }}%
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <a href="{{ route('paa.show', $paa) }}" 
-                                               class="btn btn-info" 
+                                            <a href="{{ route('paa.show', $paa) }}"
+                                               class="btn btn-info"
                                                title="Ver detalle">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            
+
                                             @if($paa->puedeSerEditado() && in_array(auth()->user()->role, ['jefe_auditor', 'super_administrador']))
-                                                <a href="{{ route('paa.edit', $paa) }}" 
-                                                   class="btn btn-warning" 
+                                                <a href="{{ route('paa.edit', $paa) }}"
+                                                   class="btn btn-warning"
                                                    title="Editar">
                                                     <i class="bi bi-pencil"></i>
                                                 </a>
                                             @endif
-                                            
-                                            <a href="{{ route('paa.pdf', $paa) }}" 
-                                               class="btn btn-danger" 
+
+                                            <a href="{{ route('paa.pdf', $paa) }}"
+                                               class="btn btn-danger"
                                                title="Descargar PDF">
                                                 <i class="bi bi-file-pdf"></i>
                                             </a>

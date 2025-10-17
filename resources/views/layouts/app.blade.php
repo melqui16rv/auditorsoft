@@ -176,6 +176,15 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- Script global para progress bars -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.progress-bar[data-width]').forEach(function(bar) {
+                bar.style.width = bar.getAttribute('data-width') + '%';
+            });
+        });
+    </script>
+    
     @yield('scripts')
 </body>
 </html>

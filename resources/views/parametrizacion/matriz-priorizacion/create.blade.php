@@ -7,7 +7,7 @@
     <div class="row mb-4">
         <div class="col">
             <h1 class="h3 text-dark">
-                <i class="fas fa-chart-bar"></i> 
+                <i class="fas fa-chart-bar"></i>
                 {{ $matriz ? 'Editar Matriz' : 'Nueva Matriz de Priorización' }}
             </h1>
         </div>
@@ -25,7 +25,7 @@
         </div>
     @endif
 
-    <form method="POST" 
+    <form method="POST"
         action="{{ $matriz ? route('matriz-priorizacion.update', $matriz) : route('matriz-priorizacion.store') }}"
         id="matrizForm">
         @csrf
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" 
+                        <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                             id="nombre" name="nombre" required
                             value="{{ old('nombre', $matriz?->nombre) }}"
                             placeholder="Ej: Matriz PAA 2025">
@@ -53,7 +53,7 @@
 
                     <div class="col-md-2">
                         <label for="vigencia" class="form-label">Vigencia <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control @error('vigencia') is-invalid @enderror" 
+                        <input type="number" class="form-control @error('vigencia') is-invalid @enderror"
                             id="vigencia" name="vigencia" required min="2020" max="2099"
                             value="{{ old('vigencia', $matriz?->vigencia ?? now()->year) }}">
                         @error('vigencia')
@@ -63,11 +63,11 @@
 
                     <div class="col-md-3">
                         <label for="municipio_id" class="form-label">Municipio <span class="text-danger">*</span></label>
-                        <select class="form-select @error('municipio_id') is-invalid @enderror" 
+                        <select class="form-select @error('municipio_id') is-invalid @enderror"
                             id="municipio_id" name="municipio_id" required>
                             <option value="">-- Seleccionar --</option>
                             @foreach ($municipios as $municipio)
-                                <option value="{{ $municipio->id }}" 
+                                <option value="{{ $municipio->id }}"
                                     {{ old('municipio_id', $matriz?->municipio_id) == $municipio->id ? 'selected' : '' }}>
                                     {{ $municipio->nombre }}
                                 </option>
@@ -91,7 +91,9 @@
         <div class="card">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Procesos a Evaluar</h5>
-                <button type="button" class="btn btn-sm btn-success" id="btnAgregarProceso">
+                <button type="button" class="btn btn-sm btn-success" id="btnAgregarProceso"
+                        data-procesos="{{ json_encode($procesos->map(fn($p) => ['id' => $p->id, 'nombre' => $p->nombre])->values()) }}"
+                        data-contador="{{ $matriz ? $matriz->detalles->count() : 0 }}">
                     <i class="fas fa-plus"></i> Agregar Proceso
                 </button>
             </div>
@@ -117,7 +119,7 @@
                                                 name="procesos[{{ $index }}][proceso_id]" required>
                                                 <option value="">-- Seleccionar --</option>
                                                 @foreach ($procesos as $proceso)
-                                                    <option value="{{ $proceso->id }}" 
+                                                    <option value="{{ $proceso->id }}"
                                                         {{ $detalle->proceso_id == $proceso->id ? 'selected' : '' }}>
                                                         {{ $proceso->nombre }}
                                                     </option>
@@ -202,7 +204,11 @@
 </div>
 
 <script>
-    let contadorFilas = {{ $matriz ? $matriz->detalles->count() : 0 }};
+    const btnAgregar = document.getElementById('btnAgregarProceso');
+    let contadorFilas = parseInt(btnAgregar.getAttribute('data-contador') || '0');
+    
+    // Procesos disponibles para el select
+    const procesosOptions = JSON.parse(btnAgregar.getAttribute('data-procesos') || '[]');
 
     // Mapa de riesgos a ponderación
     const riesgoPonderacion = {
@@ -223,23 +229,27 @@
     document.getElementById('btnAgregarProceso').addEventListener('click', function () {
         const tbody = document.getElementById('detallesBody');
         const sinProcesos = document.getElementById('sinProcesos');
-        
+
         const indice = contadorFilas++;
-        
+
         const fila = document.createElement('tr');
         fila.className = 'filaDetalle';
+        
+        // Generar opciones de procesos
+        let procesosOptionsHtml = '<option value="">-- Seleccionar --</option>';
+        procesosOptions.forEach(proceso => {
+            procesosOptionsHtml += `<option value="${proceso.id}">${proceso.nombre}</option>`;
+        });
+        
         fila.innerHTML = `
             <td>
-                <select class="form-select form-select-sm procesos-select" 
+                <select class="form-select form-select-sm procesos-select"
                     name="procesos[${indice}][proceso_id]" required>
-                    <option value="">-- Seleccionar --</option>
-                    @foreach ($procesos as $proceso)
-                        <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
-                    @endforeach
+                    ${procesosOptionsHtml}
                 </select>
             </td>
             <td>
-                <select class="form-select form-select-sm riesgo-select" 
+                <select class="form-select form-select-sm riesgo-select"
                     name="procesos[${indice}][riesgo_nivel]" required>
                     <option value="">--</option>
                     <option value="extremo">Extremo</option>

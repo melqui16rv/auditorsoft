@@ -32,25 +32,25 @@
                             <i class="bi bi-play-circle"></i> Iniciar Tarea
                         </button>
                     @endif
-                    
+
                     @if($tarea->estado == 'en_proceso')
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCompletar">
                             <i class="bi bi-check-circle"></i> Completar Tarea
                         </button>
                     @endif
-                    
+
                     @if($tarea->estado != 'realizado' && $tarea->estado != 'anulado')
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalAnular">
                             <i class="bi bi-x-circle"></i> Anular Tarea
                         </button>
                     @endif
-                    
+
                     @if(in_array($tarea->estado, ['pendiente', 'en_proceso']))
                         <a href="{{ route('paa.tareas.edit', [$paa, $tarea]) }}" class="btn btn-warning">
                             <i class="bi bi-pencil"></i> Editar
                         </a>
                     @endif
-                    
+
                     <a href="{{ route('paa.show', $paa) }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Volver al PAA
                     </a>
@@ -100,10 +100,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-muted">Progreso</h6>
-                                    <div class="progress" style="height: 25px;">
-                                        <div class="progress-bar {{ $tarea->porcentaje_avance == 100 ? 'bg-success' : 'bg-info' }}" 
-                                             role="progressbar" 
-                                             style="width: {{ $tarea->porcentaje_avance }}%">
+                                    <div class="progress h-6">
+                                        <div class="progress-bar {{ $tarea->porcentaje_avance == 100 ? 'bg-success' : 'bg-info' }}"
+                                             role="progressbar"
+                                             data-width="{{ $tarea->porcentaje_avance }}">
                                             {{ $tarea->porcentaje_avance }}%
                                         </div>
                                     </div>
@@ -443,7 +443,7 @@
                 </div>
                 <div class="modal-body">
                     <p>¿Está seguro de completar esta tarea?</p>
-                    
+
                     <div class="mb-3">
                         <label for="evaluacion" class="form-label">Evaluación de la Tarea <span class="text-danger">*</span></label>
                         <select name="evaluacion" id="evaluacion" class="form-select" required>
@@ -482,14 +482,14 @@
                         <i class="bi bi-exclamation-triangle"></i>
                         <strong>¡Atención!</strong> Esta acción anulará la tarea permanentemente.
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="motivo" class="form-label">Motivo de Anulación <span class="text-danger">*</span></label>
-                        <textarea name="motivo" 
-                                  id="motivo" 
-                                  class="form-control" 
-                                  rows="3" 
-                                  required 
+                        <textarea name="motivo"
+                                  id="motivo"
+                                  class="form-control"
+                                  rows="3"
+                                  required
                                   minlength="10"
                                   placeholder="Describa el motivo de la anulación (mínimo 10 caracteres)..."></textarea>
                         <small class="text-muted">Mínimo 10 caracteres</small>
