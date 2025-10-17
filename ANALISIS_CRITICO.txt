@@ -1,0 +1,184 @@
+═══════════════════════════════════════════════════════════════════
+ANÁLISIS CRÍTICO DE MIGRACIÓN - Access a Laravel
+17 de Octubre de 2025
+═══════════════════════════════════════════════════════════════════
+
+ESTADO ACTUAL: 45-50% completado
+PROGRESO REAL: PAA básico OK, pero falta RF-3 y siguientes
+
+═══════════════════════════════════════════════════════════════════
+1. HALLAZGOS CRÍTICOS
+═══════════════════════════════════════════════════════════════════
+
+🔴 CRÍTICO #1: CONTROL DE ACCESO INCOMPLETO
+   - Middleware 'role' NO está registrado en Kernel.php
+   - Rutas PAA sin protección de roles
+   - Auditados pueden crear/editar PAAs (GRAVE)
+   - Auditores pueden aprobar PAAs (solo Jefe debe)
+   
+   IMPACTO: Alto - Violación de seguridad
+
+🔴 CRÍTICO #2: FALTA LA MATRIZ DE PRIORIZACIÓN (RF-3.1)
+   - NO existe tabla 'matriz_priorizacion'
+   - NO existe modelo 'MatrizPriorizacion'
+   - Sin riesgos (Extremo, Alto, Moderado, Bajo)
+   - Sin ciclos de rotación automáticos
+   - Video Access muestra esto como fundamental
+   
+   IMPACTO: BLOQUEANTE para Programa de Auditoría
+
+🔴 CRÍTICO #3: PROGRAMA DE AUDITORÍA VACÍO (RF-3.3)
+   - NO existe tabla 'programa_auditoria_interna'
+   - NO existe el traslado automático desde matriz
+   - Los auditores no pueden ver qué auditar
+   - No hay aprobación del Comité ICCCI
+   
+   IMPACTO: Sistema no puede ejecutar auditorías
+
+🟠 IMPORTANTE: LÓGICA DE CASCADA INCOMPLETA
+   En Access: PAA → Tareas por rol OCI → Seguimientos → Evidencias
+   En Laravel: Falta validar que cada nivel respete la cascada
+   - ¿PAA en estado 'elaboracion' permite crear tareas? ✓
+   - ¿PAA en estado 'finalizado' permite crear tareas? ✗ (debe validar)
+   - ¿Se eliminan tareas si PAA se anula? ¿O se copia a historial?
+
+═══════════════════════════════════════════════════════════════════
+2. COMPARACIÓN: ACCESS vs LARAVEL (Según transcripción)
+═══════════════════════════════════════════════════════════════════
+
+FLUJO EN ACCESS:
+1. Parametrizar funcionarios, roles OCI, entidades control
+2. Crear PAA con fecha y jefe responsable
+3. Agregar tareas por cada rol OCI (5 roles)
+   - Cada tarea con: descripción, fechas, responsable, comentarios
+   - Comentarios pueden indicar frecuencia (ej: "semestral" = 2 puntos control)
+4. Crear PUNTOS DE CONTROL por tarea
+   - Cada punto: observación, estado (realizado/pendiente/anulado)
+   - Evaluación: bien/mal/pendiente
+   - Ente de control relacionado
+   - Evidencia adjunta
+5. Ver RESUMEN DE CUMPLIMIENTO
+   - % de avance por PAA
+   - % de avance por rol OCI
+   - Gráficos de estado
+
+MATRIZ DE PRIORIZACIÓN:
+- Selecciona qué PROCESOS auditar (estratégicos, misionales, apoyo)
+- Asigna nivel de riesgo (manual: Extremo, Alto, Moderado, Bajo)
+- Sistema calcula ponderación automática
+- Calcula días desde última auditoría
+- Ciclo de rotación automático:
+  * Extremo → Cada año
+  * Alto → Cada 2 años
+  * Moderado → Cada 3 años
+  * Bajo → No se audita
+
+PROGRAMA DE AUDITORÍA:
+- Traslada automáticamente procesos PRIORIZADOS de la matriz
+- Define objetivos, alcances, criterios
+- Asigna recursos y fechas
+- Requiere aprobación del Comité ICCCI
+- Genera formato FR-GCA-001
+
+═══════════════════════════════════════════════════════════════════
+3. VALIDACIONES NECESARIAS
+═══════════════════════════════════════════════════════════════════
+
+✓ DEBE VALIDAR:
+
+1. SEGURIDAD POR ROL:
+   □ Super Admin: Acceso total a TODO
+   □ Jefe Auditor: Crear/editar/aprobar PAA, crear programa
+   □ Auditor: Ver PAA, ejecutar tareas, crear seguimientos/evidencias
+   □ Auditado: Ver solo sus auditorías, presentar controversias
+
+2. TRANSICIONES DE ESTADO:
+   □ PAA: elaboracion → aprobado → en_ejecucion → finalizado
+   □ Tarea: pendiente → en_proceso → realizada
+   □ Seguimiento: pendiente → realizado/anulado
+   □ ¿Se puede anular desde cualquier estado? Validar
+
+3. CASCADA DE DATOS:
+   □ Si elimino PAA, ¿qué pasa con tareas y seguimientos?
+   □ Si cambio estado de PAA a 'finalizado', ¿bloqueo nuevas tareas?
+   □ Si anulo tarea, ¿qué pasa con sus seguimientos?
+
+4. CÁLCULO DE CUMPLIMIENTO:
+   □ % por rol OCI = (seguimientos realizados / total) * 100
+   □ % total PAA = (seguimientos realizados en todas tareas / total) * 100
+   □ Filtrar por auditor si es el usuario actual
+
+5. EVIDENCIAS:
+   □ ¿Se validan extensiones? (PDF, Word, Excel, Imágenes)
+   □ ¿Tamaño máximo 2MB?
+   □ ¿Se eliminan al actualizar seguimiento?
+   □ ¿Relación polimórfica permite múltiples tipos?
+
+═══════════════════════════════════════════════════════════════════
+4. ORDEN DE PRIORIDAD RECOMENDADO
+═══════════════════════════════════════════════════════════════════
+
+INMEDIATO (Esta semana):
+  1. Registrar middleware 'role' en Kernel.php
+  2. Agregar autorización en rutas de PAA
+  3. Validar controladores PAA respetan roles
+
+PRÓXIMA SEMANA:
+  4. Implementar MatrizPriorizacion (modelo, controlador, vistas)
+  5. Agregar lógica de riesgos y cálculo de rotación
+  6. Validar cascada de datos PAA → Tareas → Seguimientos
+
+SEMANA SIGUIENTE:
+  7. Implementar ProgramaAuditoria con traslado automático
+  8. Agregar aprobación del Comité ICCCI
+  9. Generar formato FR-GCA-001
+
+═══════════════════════════════════════════════════════════════════
+5. ARCHIVOS QUE NECESITAN CAMBIOS
+═══════════════════════════════════════════════════════════════════
+
+CAMBIOS INMEDIATOS:
+- app/Http/Middleware/Kernel.php → Registrar middleware 'role'
+- routes/web.php → Agregar middleware a rutas PAA
+- app/Http/Controllers/PAA/PAAController.php → Validaciones
+- app/Http/Controllers/PAA/PAATareaController.php → Validaciones
+- app/Http/Controllers/PAA/PAASeguimientoController.php → Validaciones
+
+NUEVOS ARCHIVOS:
+- app/Models/MatrizPriorizacion.php
+- app/Models/ProgramaAuditoria.php
+- app/Http/Controllers/Parametrizacion/MatrizPriorizacionController.php
+- app/Http/Controllers/Parametrizacion/ProgramaAuditoriaController.php
+- database/migrations/XXXX_create_matriz_priorizacion_table.php
+- database/migrations/XXXX_create_programa_auditoria_table.php
+- resources/views/matriz-priorizacion/*
+- resources/views/programa-auditoria/*
+
+═══════════════════════════════════════════════════════════════════
+6. PREGUNTAS CLAVE ANTES DE IMPLEMENTAR
+═══════════════════════════════════════════════════════════════════
+
+1. ¿Cada PAA pertenece a una entidad/municipio específico?
+   → Sí, hay municipio_id en PAA
+   → ¿Auditor debe ver PAAs de su municipio solamente?
+
+2. ¿Un auditor puede ser responsable de múltiples tareas?
+   → Sí, puede (aunque en video de Access parecería ser uno per tarea)
+   → ¿Filtrar PAAs por auditor asignado?
+
+3. ¿El cálculo de cumplimiento es por PAA total o por rol?
+   → En Access: Ambos
+   → % por rol OCI (5 dashboards)
+   → % total del PAA (1 dashboard)
+
+4. ¿Las evidencias se pueden cargar en cualquier momento?
+   → Sí, pero solo en seguimientos realizados
+   → ¿Bloquear si seguimiento está pendiente?
+
+5. ¿La aprobación del Comité ICCCI es manual?
+   → Sí, Jefe Auditor debe seleccionar "Comité aprobó"
+   → ¿O es automática si programa es válido?
+
+═══════════════════════════════════════════════════════════════════
+SIGUIENTE PASO: Esperar tus respuestas para validaciones
+═══════════════════════════════════════════════════════════════════

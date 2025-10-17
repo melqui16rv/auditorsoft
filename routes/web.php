@@ -15,6 +15,7 @@ use App\Http\Controllers\PAA\PAATareaController;
 use App\Http\Controllers\PAA\PAASeguimientoController;
 use App\Http\Controllers\EvidenciaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Parametrizacion\MatrizPriorizacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,7 +90,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/users/{user}/update-password', [UserController::class, 'updatePassword'])->name('users.update-password');
     });
 
-    // Rutas del PAA (Plan Anual de Auditoría)
+    // Rutas de Parametrización (Jefe Auditor y Super Admin)
+    Route::prefix('parametrizacion')->name('parametrizacion.')->middleware('role:super_administrador,jefe_auditor')->group(function () {
+        // Matriz de Priorización
+        Route::resource('matriz-priorizacion', MatrizPriorizacionController::class);
+        
+        // Acciones especiales de Matriz
+        Route::post('/matriz-priorizacion/{matrizPriorizacion}/validar', [MatrizPriorizacionController::class, 'validar'])
+            ->name('matriz-priorizacion.validar');
+        Route::post('/matriz-priorizacion/{matrizPriorizacion}/aprobar', [MatrizPriorizacionController::class, 'aprobar'])
+            ->name('matriz-priorizacion.aprobar');
+    });
     Route::prefix('paa')->name('paa.')->group(function () {
         // Listar - Accesible para Super Admin, Jefe Auditor y Auditor
         Route::get('/', [PAAController::class, 'index'])

@@ -1,0 +1,262 @@
+════════════════════════════════════════════════════════════════════
+PLAN DE CONTINUACIÓN - VALIDADO Y VERIFICADO
+17 de Octubre de 2025
+════════════════════════════════════════════════════════════════════
+
+ESTADO ACTUAL VERIFICADO EN BD:
+✓ Usuarios: 12 (3 por rol)
+✓ Roles OCI: 5 (Decreto 648/2017)
+✓ Procesos: 3 de ejemplo
+✓ Áreas: 3 de ejemplo
+✓ Criterios: 2 de ejemplo
+✓ Alcances: 3 de ejemplo
+✓ Objetivos: 3 de ejemplo
+✓ Municipios: 107 (de 1,123)
+✓ PAAs: 2 (de prueba)
+✓ Tareas PAA: 4 (de prueba)
+✓ Seguimientos: 0
+✓ Evidencias: 0
+
+TABLAS FALTANTES (bloqueantes):
+✗ matriz_priorizacion (RF-3.1) - CRÍTICO
+✗ programa_auditoria_interna (RF-3.3) - CRÍTICO
+✗ plan_individual_auditoria (RF-4) - Siguiente fase
+✗ hallazgos (RF-5) - Siguiente fase
+✗ controversias (RF-5) - Siguiente fase
+✗ acciones_correctivas (RF-5) - Siguiente fase
+
+════════════════════════════════════════════════════════════════════
+PLAN DE IMPLEMENTACIÓN - FASE INMEDIATA (Esta semana)
+════════════════════════════════════════════════════════════════════
+
+PRIORIDAD 1: MATRIZ DE PRIORIZACIÓN (RF-3.1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Según Video Access:
+- Selecciona PROCESOS del cat_procesos
+- Asigna nivel de RIESGO (Extremo, Alto, Moderado, Bajo) - MANUAL
+- Sistema calcula PONDERACIÓN automática
+- Registra FECHA DE ÚLTIMA AUDITORÍA
+- Sistema calcula DÍAS TRANSCURRIDOS
+- Sistema define CICLO DE ROTACIÓN automático:
+  * Extremo → Cada año
+  * Alto → Cada 2 años
+  * Moderado → Cada 3 años
+  * Bajo → No se audita
+
+ESTRUCTURA PROPUESTA:
+─────────────────────
+
+Tabla: matriz_priorizacion
+├── id
+├── nombre
+├── descripcion
+├── municipio_id (FK → cat_municipios_colombia)
+├── fecha_elaboracion
+├── elaborado_por (FK → users)
+├── estado: borrador|validado|aprobado
+│
+├── DETALLES (relación 1:N)
+│   matriz_priorizacion_detalle:
+│   ├── id
+│   ├── matriz_priorizacion_id
+│   ├── proceso_id (FK → cat_procesos)
+│   ├── riesgo_nivel: extremo|alto|moderado|bajo [MANUAL]
+│   ├── ponderacion_riesgo: CALCULADO AUTOMÁTICAMENTE
+│   ├── requiere_comite: si|no [CHECKBOX]
+│   ├── requiere_entes_reguladores: si|no [CHECKBOX]
+│   ├── fecha_ultima_auditoria: DATE|NULL
+│   ├── dias_transcurridos: INT CALCULADO
+│   ├── ciclo_rotacion: 1|2|3|nunca [CALCULADO]
+│   ├── incluir_en_programa: si|no [AUTO-CHECK]
+│   └── observaciones
+│
+├── Metadatos FR-GCE
+├── created_by, updated_by, deleted_by
+├── soft deletes
+└── timestamps
+
+LÓGICA DE CÁLCULO:
+──────────────────
+
+1. PONDERACIÓN (automática según riesgo):
+   - Extremo = 5 puntos
+   - Alto = 4 puntos
+   - Moderado = 3 puntos
+   - Bajo = 2 puntos
+
+2. CICLO DE ROTACIÓN (automático):
+   IF ponderacion >= 5 THEN ciclo = "Cada año"
+   ELSE IF ponderacion = 4 THEN ciclo = "Cada 2 años"
+   ELSE IF ponderacion = 3 THEN ciclo = "Cada 3 años"
+   ELSE ciclo = "No auditar"
+
+3. DÍAS TRANSCURRIDOS (automático):
+   dias_transcurridos = DATEDIFF(TODAY, fecha_ultima_auditoria)
+
+4. INCLUIR EN PROGRAMA (automático):
+   IF ciclo != "No auditar" THEN incluir = TRUE
+   ELSE incluir = FALSE
+
+MODELO: MatrizPriorizacion.php + MatrizPriorizacionDetalle.php
+CONTROLADOR: MatrizPriorizacionController.php
+VISTAS: resources/views/matriz-priorizacion/*
+├── index.blade.php (listado)
+├── create.blade.php (crear nueva matriz)
+├── edit.blade.php (editar matriz)
+└── show.blade.php (detalle con detalles embebidos)
+
+MIGRACIONES:
+├── create_matriz_priorizacion_table.php
+└── create_matriz_priorizacion_detalle_table.php
+
+RUTAS:
+GET    /matriz-priorizacion
+GET    /matriz-priorizacion/create
+POST   /matriz-priorizacion
+GET    /matriz-priorizacion/{matriz}
+GET    /matriz-priorizacion/{matriz}/edit
+PUT    /matriz-priorizacion/{matriz}
+DELETE /matriz-priorizacion/{matriz}
+
+════════════════════════════════════════════════════════════════════
+PRIORIDAD 2: PROGRAMA DE AUDITORÍA (RF-3.3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Según Video Access:
+- TRASLADA AUTOMÁTICAMENTE procesos de Matriz Priorización
+- Define OBJETIVOS (cat_objetivos_programa)
+- Define ALCANCES (cat_alcances_auditoria)
+- Define CRITERIOS (cat_criterios_normatividad)
+- Asigna RECURSOS (funcionarios)
+- Asigna FECHAS de inicio/fin
+- Asigna RESPONSABLE (auditor líder)
+- Requiere APROBACIÓN DEL COMITÉ ICCCI
+- Genera FORMATO FR-GCA-001
+
+ESTRUCTURA PROPUESTA:
+─────────────────────
+
+Tabla: programa_auditoria_interna
+├── id
+├── codigo: PA-VIGENCIA-NÚMERO [AUTOMÁTICO]
+├── vigencia: 2025, 2026, etc.
+├── fecha_programacion
+├── fecha_aprobacion: NULL hasta que Comité apruebe
+├── elaborado_por (FK → users)
+├── aprobado_por_id (FK → users) [Comité ICCCI]
+├── estado: borrador|aprobado|en_ejecucion|finalizado|anulado
+│
+├── PROGRAMA GENERAL
+│   ├── objetivo_programa_id (FK → cat_objetivos_programa)
+│   ├── alcance_programa_id (FK → cat_alcances_auditoria)
+│   ├── recursos: INT (cantidad de auditores)
+│   └── descripcion
+│
+├── DETALLES (relación 1:N)
+│   programa_auditoria_detalle:
+│   ├── id
+│   ├── programa_auditoria_id
+│   ├── matriz_priorizacion_detalle_id [TRASLADO AUTOMÁTICO]
+│   ├── proceso_id (del traslado)
+│   ├── area_id (del traslado)
+│   ├── objetivo_id (FK → cat_objetivos_programa)
+│   ├── alcance_id (FK → cat_alcances_auditoria)
+│   ├── criterio_id (FK → cat_criterios_normatividad)
+│   ├── fecha_inicio_planeada
+│   ├── fecha_fin_planeada
+│   ├── responsable_id (auditor líder)
+│   ├── estado: pendiente|en_proceso|realizado|anulado
+│   └── observaciones
+│
+├── Metadatos FR-GCA-001
+├── created_by, updated_by, deleted_by
+├── soft deletes
+└── timestamps
+
+FLUJO DE CREACIÓN:
+──────────────────
+
+1. Usuario selecciona matriz_priorizacion
+2. Sistema CARGA AUTOMÁTICAMENTE todos los detalles con incluir=TRUE
+3. Usuario REVISA y puede MODIFICAR:
+   - Objetivos
+   - Alcances
+   - Criterios
+   - Fechas
+   - Responsables
+4. Usuario GUARDA en estado "borrador"
+5. Usuario ENVÍA A APROBACIÓN
+6. Comité ICCCI (seleccionado por Jefe) → APRUEBA o RECHAZA
+7. Si aprueba → Estado = "aprobado" → Ya se puede ejecutar (PIAI)
+
+MODELO: ProgramaAuditoria.php + ProgramaAuditoriaDetalle.php
+CONTROLADOR: ProgramaAuditoriaController.php
+VISTAS: resources/views/programa-auditoria/*
+├── index.blade.php
+├── create.blade.php (con selector de matriz)
+├── edit.blade.php
+└── show.blade.php
+
+MIGRACIONES:
+├── create_programa_auditoria_interna_table.php
+└── create_programa_auditoria_detalle_table.php
+
+RUTAS:
+GET    /programa-auditoria
+GET    /programa-auditoria/create
+POST   /programa-auditoria
+GET    /programa-auditoria/{programa}
+GET    /programa-auditoria/{programa}/edit
+PUT    /programa-auditoria/{programa}
+DELETE /programa-auditoria/{programa}
+POST   /programa-auditoria/{programa}/aprobar (solo Comité)
+
+════════════════════════════════════════════════════════════════════
+PERMISOS POR ROL PARA NUEVAS FUNCIONALIDADES
+════════════════════════════════════════════
+
+MATRIZ DE PRIORIZACIÓN:
+├── Super Admin: CRUD completo
+├── Jefe Auditor: CRUD completo
+├── Auditor: Ver (consulta solamente)
+└── Auditado: NO ACCESO
+
+PROGRAMA DE AUDITORÍA:
+├── Super Admin: CRUD + Aprobar
+├── Jefe Auditor: CRUD + Enviar a aprobar
+├── Comité ICCCI: Ver + Aprobar/Rechazar
+├── Auditor: Ver
+└── Auditado: NO ACCESO
+
+════════════════════════════════════════════════════════════════════
+RESPUESTAS ASUMIDAS (VALIDAR CONTIGO):
+════════════════════════════════════════════
+
+1. ¿Multi-municipio?
+   → SÍ, matriz y programa por municipio/entidad
+
+2. ¿Niveles de riesgo?
+   → MANUAL en Matriz (Jefe elige)
+   → Sistema calcula ciclo automáticamente
+
+3. ¿Aprobación Comité?
+   → Jefe selecciona en Programa
+   → Comité da OK/Rechaza
+   → Se guarda en aprobado_por_id
+
+4. ¿Cascada de datos?
+   → Programa TRASLADA AUTOMÁTICAMENTE datos de Matriz
+   → Si edito Matriz después, Programa conserva sus datos
+   → Si elimino Matriz, Programa sigue existiendo
+
+════════════════════════════════════════════════════════════════════
+¿PROCEDER CON IMPLEMENTACIÓN?
+════════════════════════════════════════════════════════════════════
+
+Responde SI o NO para cada:
+
+[ ] ¿Implementar Matriz de Priorización ahora?
+[ ] ¿Implementar Programa de Auditoría ahora?
+[ ] ¿Las respuestas asumidas son correctas?
+[ ] ¿Algún cambio en la estructura propuesta?
