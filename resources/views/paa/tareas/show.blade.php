@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detalle de Tarea - ' . $tarea->rolOci->nombre_rol)
+@section('title', 'Detalle de Tarea - ' . $tarea->nombre_rol_oci)
 
 @section('sidebar')
     @include('partials.sidebar')
@@ -119,18 +119,18 @@
                                         <tr>
                                             <th width="40%">Rol OCI:</th>
                                             <td>
-                                                <span class="badge bg-primary">{{ $tarea->rolOci->nombre_rol }}</span>
+                                                <span class="badge bg-primary">{{ $tarea->nombre_rol_oci }}</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Descripción:</th>
-                                            <td>{{ $tarea->descripcion_tarea }}</td>
+                                            <td>{{ $tarea->descripcion }}</td>
                                         </tr>
                                         <tr>
                                             <th>Responsable:</th>
                                             <td>
-                                                <i class="bi bi-person-circle"></i> {{ $tarea->responsable->name }}
-                                                <br><small class="text-muted">{{ ucfirst($tarea->responsable->role) }}</small>
+                                                <i class="bi bi-person-circle"></i> {{ $tarea->responsable->name ?? 'Sin asignar' }}
+                                                <br><small class="text-muted">{{ $tarea->responsable ? ucfirst($tarea->responsable->role) : '' }}</small>
                                             </td>
                                         </tr>
                                         <tr>
@@ -143,42 +143,22 @@
                                     <table class="table table-borderless">
                                         <tr>
                                             <th width="50%">Inicio Planeado:</th>
-                                            <td>{{ \Carbon\Carbon::parse($tarea->fecha_inicio_planeada)->format('d/m/Y') }}</td>
+                                            <td>{{ optional($tarea->fecha_inicio)->format('d/m/Y') ?? 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Fin Planeado:</th>
-                                            <td>{{ \Carbon\Carbon::parse($tarea->fecha_fin_planeada)->format('d/m/Y') }}</td>
+                                            <td>{{ optional($tarea->fecha_fin)->format('d/m/Y') ?? 'N/A' }}</td>
                                         </tr>
-                                        @if($tarea->fecha_inicio_real)
-                                        <tr>
-                                            <th>Inicio Real:</th>
-                                            <td>
-                                                <span class="badge bg-info">{{ \Carbon\Carbon::parse($tarea->fecha_inicio_real)->format('d/m/Y') }}</span>
-                                            </td>
-                                        </tr>
-                                        @endif
-                                        @if($tarea->fecha_fin_real)
-                                        <tr>
-                                            <th>Fin Real:</th>
-                                            <td>
-                                                <span class="badge bg-success">{{ \Carbon\Carbon::parse($tarea->fecha_fin_real)->format('d/m/Y') }}</span>
-                                            </td>
-                                        </tr>
-                                        @endif
                                         <tr>
                                             <th>Duración Planeada:</th>
                                             <td>
-                                                {{ \Carbon\Carbon::parse($tarea->fecha_inicio_planeada)->diffInDays(\Carbon\Carbon::parse($tarea->fecha_fin_planeada)) }} días
+                                                @if($tarea->fecha_inicio && $tarea->fecha_fin)
+                                                    {{ abs(\Carbon\Carbon::parse($tarea->fecha_fin)->diffInDays(\Carbon\Carbon::parse($tarea->fecha_inicio))) }} días
+                                                @else
+                                                    N/A
+                                                @endif
                                             </td>
                                         </tr>
-                                        @if($tarea->fecha_inicio_real && $tarea->fecha_fin_real)
-                                        <tr>
-                                            <th>Duración Real:</th>
-                                            <td>
-                                                {{ \Carbon\Carbon::parse($tarea->fecha_inicio_real)->diffInDays(\Carbon\Carbon::parse($tarea->fecha_fin_real)) }} días
-                                            </td>
-                                        </tr>
-                                        @endif
                                     </table>
                                 </div>
                             </div>
@@ -214,7 +194,7 @@
                         <div class="card-header bg-light">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Puntos de Control y Seguimientos</h5>
-                                @if($tarea->estado_tarea != 'realizada' && $tarea->estado_tarea != 'anulada')
+                                @if($tarea->estado != 'realizada' && $tarea->estado != 'anulada')
                                 <a href="#" class="btn btn-sm btn-primary">
                                     <i class="bi bi-plus-circle"></i> Nuevo Seguimiento
                                 </a>
@@ -240,10 +220,16 @@
                                         @foreach($seguimientos as $seguimiento)
                                         <tr>
                                             <td>{{ $seguimiento->id }}</td>
-                                            <td>{{ Str::limit($seguimiento->descripcion_punto_control, 50) }}</td>
-                                            <td>{{ $seguimiento->fecha_seguimiento ? \Carbon\Carbon::parse($seguimiento->fecha_seguimiento)->format('d/m/Y') : 'N/A' }}</td>
-                                            <td>{!! $seguimiento->estado_badge !!}</td>
-                                            <td>{!! $seguimiento->evaluacion_badge !!}</td>
+                                            <td>{{ Str::limit($seguimiento->observaciones, 50) }}</td>
+                                            <td>{{ $seguimiento->fecha_realizacion ? \Carbon\Carbon::parse($seguimiento->fecha_realizacion)->format('d/m/Y') : 'Pendiente' }}</td>
+                                            <td>
+                                                @if($seguimiento->fecha_realizacion)
+                                                    <span class="badge bg-success">Realizado</span>
+                                                @else
+                                                    <span class="badge bg-warning">Pendiente</span>
+                                                @endif
+                                            </td>
+                                            <td>-</td>
                                             <td>{{ $seguimiento->enteControl->nombre ?? 'N/A' }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-info" title="Ver">

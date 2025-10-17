@@ -23,16 +23,17 @@ class UpdatePAATareaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rol_oci_id' => ['sometimes', 'exists:cat_roles_oci,id'],
-            'descripcion_tarea' => ['sometimes', 'string', 'min:10', 'max:1000'],
-            'fecha_inicio_planeada' => ['sometimes', 'date'],
-            'fecha_fin_planeada' => ['sometimes', 'date', 'after:fecha_inicio_planeada'],
-            'fecha_inicio_real' => ['nullable', 'date'],
-            'fecha_fin_real' => ['nullable', 'date', 'after:fecha_inicio_real'],
-            'responsable_id' => ['sometimes', 'exists:users,id'],
-            'estado' => ['sometimes', 'in:pendiente,en_proceso,realizado,anulado,vencido'],
-            'evaluacion' => ['nullable', 'in:bien,mal,pendiente'],
-            'observaciones' => ['nullable', 'string', 'max:2000'],
+            'rol_oci' => ['sometimes', 'string', 'in:fomento_cultura,apoyo_fortalecimiento,investigaciones,evaluacion_control,evaluacion_gestion'],
+            'nombre' => ['sometimes', 'string', 'min:5', 'max:255'],
+            'descripcion' => ['sometimes', 'string', 'min:10', 'max:1000'],
+            'fecha_inicio' => ['sometimes', 'date'],
+            'fecha_fin' => ['sometimes', 'date', 'after:fecha_inicio'],
+            'auditor_responsable_id' => ['sometimes', 'exists:users,id'],
+            'estado' => ['sometimes', 'in:pendiente,en_proceso,realizada,anulada'],
+            'objetivo' => ['nullable', 'string', 'max:2000'],
+            'alcance' => ['nullable', 'string', 'max:2000'],
+            'criterios_auditoria' => ['nullable', 'string', 'max:2000'],
+            'recursos_necesarios' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
@@ -44,15 +45,18 @@ class UpdatePAATareaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'rol_oci_id.exists' => 'El rol OCI seleccionado no es válido.',
-            'descripcion_tarea.min' => 'La descripción debe tener al menos 10 caracteres.',
-            'descripcion_tarea.max' => 'La descripción no puede exceder 1000 caracteres.',
-            'fecha_fin_planeada.after' => 'La fecha de fin planeada debe ser posterior a la fecha de inicio planeada.',
-            'fecha_fin_real.after' => 'La fecha de fin real debe ser posterior a la fecha de inicio real.',
-            'responsable_id.exists' => 'El responsable seleccionado no es válido.',
+            'rol_oci.in' => 'El rol OCI seleccionado no es válido.',
+            'nombre.min' => 'El nombre debe tener al menos 5 caracteres.',
+            'nombre.max' => 'El nombre no puede exceder 255 caracteres.',
+            'descripcion.min' => 'La descripción debe tener al menos 10 caracteres.',
+            'descripcion.max' => 'La descripción no puede exceder 1000 caracteres.',
+            'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
+            'auditor_responsable_id.exists' => 'El responsable seleccionado no es válido.',
             'estado.in' => 'El estado seleccionado no es válido.',
-            'evaluacion.in' => 'La evaluación seleccionada no es válida.',
-            'observaciones.max' => 'Las observaciones no pueden exceder 2000 caracteres.',
+            'objetivo.max' => 'El objetivo no puede exceder 2000 caracteres.',
+            'alcance.max' => 'El alcance no puede exceder 2000 caracteres.',
+            'criterios_auditoria.max' => 'Los criterios de auditoría no pueden exceder 2000 caracteres.',
+            'recursos_necesarios.max' => 'Los recursos necesarios no pueden exceder 2000 caracteres.',
         ];
     }
 }

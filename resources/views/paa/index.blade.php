@@ -91,11 +91,12 @@
         </div>
         <div class="card-body">
             @if($paas->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover">
+                <div class="table-responsive" style="overflow-x: auto; display: block;">
+                    <table class="table table-hover" style="width: 100%; margin-bottom: 0;">
                         <thead class="table-light">
                             <tr>
                                 <th>Código</th>
+                                <th>Tareas</th>
                                 <th>Vigencia</th>
                                 <th>Entidad</th>
                                 <th>Fecha Elaboración</th>
@@ -110,6 +111,16 @@
                                 <tr>
                                     <td>
                                         <strong>{{ $paa->codigo }}</strong>
+                                    </td>
+                                    <td>
+                                        @php
+                                            if (auth()->user()->role === 'jefe_auditor' || auth()->user()->role === 'super_administrador') {
+                                                $totalTareas = $paa->tareas->count();
+                                            } else {
+                                                $totalTareas = $paa->tareas->where('auditor_responsable_id', auth()->id())->count();
+                                            }
+                                        @endphp
+                                        <span class="badge bg-info">{{ $totalTareas }} tareas</span>
                                     </td>
                                     <td>
                                         <span class="badge bg-secondary">{{ $paa->vigencia }}</span>

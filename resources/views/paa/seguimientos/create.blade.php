@@ -25,7 +25,7 @@
                         Nuevo Punto de Control / Seguimiento
                     </h4>
                     <p class="mb-0 mt-1">
-                        <small>{{ $paa->codigo }} - Tarea: {{ Str::limit($tarea->descripcion_tarea, 50) }}</small>
+                        <small>{{ $paa->codigo }} - Tarea: {{ Str::limit($tarea->descripcion, 50) }}</small>
                     </p>
                 </div>
 
@@ -54,18 +54,18 @@
                             <div class="col-md-6">
                                 <!-- Descripción del Punto de Control -->
                                 <div class="mb-3">
-                                    <label for="descripcion_punto_control" class="form-label">
-                                        Descripción del Punto de Control <span class="text-danger">*</span>
+                                    <label for="observaciones" class="form-label">
+                                        Observaciones <span class="text-danger">*</span>
                                     </label>
-                                    <textarea name="descripcion_punto_control" 
-                                              id="descripcion_punto_control" 
-                                              class="form-control @error('descripcion_punto_control') is-invalid @enderror"
+                                    <textarea name="observaciones" 
+                                              id="observaciones" 
+                                              class="form-control @error('observaciones') is-invalid @enderror"
                                               rows="4"
                                               required
                                               minlength="10"
                                               maxlength="1000"
-                                              placeholder="Describa el punto de control o seguimiento a realizar...">{{ old('descripcion_punto_control') }}</textarea>
-                                    @error('descripcion_punto_control')
+                                              placeholder="Describa el seguimiento o observación...">{{ old('observaciones') }}</textarea>
+                                    @error('observaciones')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
@@ -170,7 +170,7 @@
                                 <div class="card bg-light">
                                     <div class="card-body">
                                         <h6 class="card-title"><i class="bi bi-info-circle"></i> Información</h6>
-                                        <p class="mb-1"><small><strong>Tarea:</strong> {{ $tarea->descripcion_tarea }}</small></p>
+                                        <p class="mb-1"><small><strong>Tarea:</strong> {{ $tarea->descripcion }}</small></p>
                                         <p class="mb-0"><small><strong>PAA:</strong> {{ $paa->codigo }} - {{ $paa->vigencia }}</small></p>
                                     </div>
                                 </div>
@@ -207,11 +207,11 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Contador de caracteres para descripción
-    const descripcion = document.getElementById('descripcion_punto_control');
+    // Contador de caracteres para observaciones
+    const observaciones = document.getElementById('observaciones');
     const charCount = document.getElementById('charCount');
     
-    descripcion.addEventListener('input', function() {
+    observaciones.addEventListener('input', function() {
         charCount.textContent = this.value.length;
         if (this.value.length < 10) {
             charCount.classList.add('text-danger');
@@ -220,19 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Contador de caracteres para observaciones
-    const observaciones = document.getElementById('observaciones');
-    const obsCharCount = document.getElementById('obsCharCount');
-    
-    if (observaciones) {
-        observaciones.addEventListener('input', function() {
-            obsCharCount.textContent = this.value.length;
-        });
-    }
-
     // Validación del formulario
     document.getElementById('formCreateSeguimiento').addEventListener('submit', function(e) {
-        const desc = document.getElementById('descripcion_punto_control').value;
+        const desc = document.getElementById('observaciones').value;
         const fecha = document.getElementById('fecha_seguimiento').value;
         const ente = document.getElementById('ente_control_id').value;
 

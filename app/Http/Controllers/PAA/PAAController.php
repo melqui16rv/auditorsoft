@@ -38,14 +38,14 @@ class PAAController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PAA::with(['elaboradoPor', 'municipio'])
+        $query = PAA::with(['elaboradoPor', 'municipio', 'tareas'])
             ->orderBy('vigencia', 'desc')
             ->orderBy('fecha_elaboracion', 'desc');
 
         // Si es auditor, solo mostrar PAAs donde tiene tareas asignadas
         if (auth()->user()->role === 'auditor') {
             $query->whereHas('tareas', function($q) {
-                $q->where('responsable_id', auth()->id());
+                $q->where('auditor_responsable_id', auth()->id());
             });
         }
 
@@ -147,7 +147,6 @@ class PAAController extends Controller
         $paa->load([
             'elaboradoPor',
             'municipio',
-            'tareas.rolOci',
             'tareas.responsable',
             'tareas.seguimientos',
             'aprobadoPor'
@@ -155,7 +154,7 @@ class PAAController extends Controller
 
         // Si es auditor, verificar que tiene al menos una tarea asignada
         if (auth()->user()->role === 'auditor') {
-            $tieneTareasAsignadas = $paa->tareas->where('responsable_id', auth()->id())->count() > 0;
+            $tieneTareasAsignadas = $paa->tareas->where('auditor_responsable_id', auth()->id())->count() > 0;
             
             if (!$tieneTareasAsignadas) {
                 return redirect()->route('paa.index')
@@ -163,7 +162,7 @@ class PAAController extends Controller
             }
 
             // Filtrar solo las tareas del auditor
-            $paa->setRelation('tareas', $paa->tareas->where('responsable_id', auth()->id()));
+            $paa->setRelation('tareas', $paa->tareas->where('auditor_responsable_id', auth()->id()));
         }
 
         // Calcular estadísticas
@@ -180,13 +179,13 @@ class PAAController extends Controller
         $now = now();
         $estadisticas = [
             'total_tareas' => $paa->tareas->count(),
-            'tareas_pendientes' => $paa->tareas->where('estado_tarea', 'pendiente')->count(),
-            'tareas_en_proceso' => $paa->tareas->where('estado_tarea', 'en_proceso')->count(),
-            'tareas_realizadas' => $paa->tareas->where('estado_tarea', 'realizada')->count(),
-            'tareas_anuladas' => $paa->tareas->where('estado_tarea', 'anulada')->count(),
-            'tareas_vencidas' => $paa->tareas->where('estado_tarea', '!=', 'realizada')
-                                             ->where('estado_tarea', '!=', 'anulada')
-                                             ->where('fecha_fin_planeada', '<', $now)
+            'tareas_pendientes' => $paa->tareas->where('estado', 'pendiente')->count(),
+            'tareas_en_proceso' => $paa->tareas->where('estado', 'en_proceso')->count(),
+            'tareas_realizadas' => $paa->tareas->where('estado', 'realizada')->count(),
+            'tareas_anuladas' => $paa->tareas->where('estado', 'anulada')->count(),
+            'tareas_vencidas' => $paa->tareas->where('estado', '!=', 'realizada')
+                                             ->where('estado', '!=', 'anulada')
+                                             ->where('fecha_fin', '<', $now)
                                              ->count(),
         ];
 
@@ -405,11 +404,11 @@ class PAAController extends Controller
 
         foreach ($rolesOci as $rol) {
             // Usar la colección de tareas ya filtradas
-            $tareasDelRol = $paa->tareas->where('rol_oci_id', $rol->id);
+            $tareasDelRol = $paa->tareas->where('rol_oci', $rol->nombre_rol);
             
             $totalTareasRol = $tareasDelRol->count();
             $tareasRealizadasRol = $tareasDelRol
-                ->where('estado_tarea', PAATarea::ESTADO_REALIZADA)
+                ->where('estado', PAATarea::ESTADO_REALIZADA)
                 ->count();
 
             $porcentajeRol = $totalTareasRol > 0 

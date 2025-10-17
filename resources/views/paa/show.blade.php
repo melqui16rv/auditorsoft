@@ -230,14 +230,24 @@
                             @else
                             <!-- Acordeón por Rol OCI -->
                             <div class="accordion" id="accordionRoles">
-                                @foreach($cumplimientoPorRol as $rolId => $datosRol)
                                 @php
-                                    $nombreRol = $datosRol['nombre'];
-                                    $porcentaje = $datosRol['porcentaje'];
-                                    $totalTareas = $datosRol['tareas_total'];
-                                    $tareasRealizadas = $datosRol['tareas_realizadas'];
-                                    $tareasDelRol = $paa->tareas->where('rol_oci_id', $rolId);
-                                    $accordionId = 'rol_' . $rolId;
+                                    // Agrupar tareas por rol_oci
+                                    $tareasAgrupadas = $paa->tareas->groupBy('rol_oci');
+                                    $rolesMap = [
+                                        'fomento_cultura' => 'Fomento de la Cultura del Control',
+                                        'apoyo_fortalecimiento' => 'Apoyo al Fortalecimiento',
+                                        'investigaciones' => 'Investigaciones',
+                                        'evaluacion_control' => 'Evaluación de Control',
+                                        'evaluacion_gestion' => 'Evaluación de Gestión'
+                                    ];
+                                @endphp
+                                @forelse($tareasAgrupadas as $rolEnum => $tareasPorRol)
+                                @php
+                                    $nombreRol = $rolesMap[$rolEnum] ?? $rolEnum;
+                                    $totalTareas = $tareasPorRol->count();
+                                    $tareasRealizadas = $tareasPorRol->where('estado', 'realizada')->count();
+                                    $porcentajeRol = $totalTareas > 0 ? ($tareasRealizadas / $totalTareas * 100) : 0;
+                                    $accordionId = 'rol_' . str_replace('_', '', $rolEnum);
                                 @endphp
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
@@ -248,8 +258,8 @@
                                             <strong>{{ $nombreRol }}</strong>
                                             <span class="ms-auto me-3">
                                                 <span class="badge bg-secondary">{{ $totalTareas }} tareas</span>
-                                                <span class="badge bg-{{ $porcentaje >= 80 ? 'success' : ($porcentaje >= 50 ? 'warning' : 'danger') }}">
-                                                    {{ number_format($porcentaje, 1) }}%
+                                                <span class="badge bg-{{ $porcentajeRol >= 80 ? 'success' : ($porcentajeRol >= 50 ? 'warning' : 'danger') }}">
+                                                    {{ number_format($porcentajeRol, 1) }}%
                                                 </span>
                                             </span>
                                         </button>
@@ -263,29 +273,37 @@
                                                         <th>Responsable</th>
                                                         <th>Fechas</th>
                                                         <th>Estado</th>
-                                                        <th>Evaluación</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($tareasDelRol as $tarea)
+                                                    @foreach($tareasPorRol as $tarea)
                                                     <tr>
-                                                        <td>{{ Str::limit($tarea->descripcion_tarea, 50) }}</td>
+                                                        <td>{{ Str::limit($tarea->nombre, 50) }}</td>
                                                         <td>
                                                             <small>
                                                                 <i class="bi bi-person"></i>
-                                                                {{ $tarea->responsable->name ?? 'Sin asignar' }}
+                                                                {{ $tarea->auditor_responsable_id ? ($tarea->responsable->name ?? 'Sin asignar') : 'Sin asignar' }}
                                                             </small>
                                                         </td>
                                                         <td>
                                                             <small>
-                                                                {{ $tarea->fecha_inicio_planeada->format('d/m/Y') }}
+                                                                {{ optional($tarea->fecha_inicio)->format('d/m/Y') ?? 'N/A' }}
                                                                 <br>
-                                                                {{ $tarea->fecha_fin_planeada->format('d/m/Y') }}
+                                                                {{ optional($tarea->fecha_fin)->format('d/m/Y') ?? 'N/A' }}
                                                             </small>
                                                         </td>
-                                                        <td>{!! $tarea->estado_badge !!}</td>
-                                                        <td>{!! $tarea->evaluacion_badge !!}</td>
+                                                        <td>
+                                                            @php
+                                                                $estadoBadge = [
+                                                                    'pendiente' => '<span class="badge bg-secondary">Pendiente</span>',
+                                                                    'en_proceso' => '<span class="badge bg-warning">En Proceso</span>',
+                                                                    'realizada' => '<span class="badge bg-success">Realizada</span>',
+                                                                    'anulada' => '<span class="badge bg-danger">Anulada</span>'
+                                                                ];
+                                                            @endphp
+                                                            {!! $estadoBadge[$tarea->estado] ?? '<span class="badge bg-secondary">N/A</span>' !!}
+                                                        </td>
                                                         <td>
                                                             <div class="btn-group btn-group-sm">
                                                                 <a href="{{ route('paa.tareas.show', [$paa, $tarea]) }}" class="btn btn-info btn-sm">
@@ -303,7 +321,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
+                                @empty
+                                <div class="alert alert-info">No hay tareas para este rol</div>
+                                @endforelse
                             </div>
                             @endif
                         </div>
@@ -317,7 +337,7 @@
                                 <div class="col-md-3">
                                     <div class="card bg-primary text-white mb-3">
                                         <div class="card-body text-center">
-                                            <h2 class="mb-0">{{ $estadisticas['total_tareas'] }}</h2>
+                                            <h2 class="mb-0">{{ $paa->tareas->count() }}</h2>
                                             <p class="mb-0"><small>Total de Tareas</small></p>
                                         </div>
                                     </div>
@@ -325,7 +345,7 @@
                                 <div class="col-md-3">
                                     <div class="card bg-success text-white mb-3">
                                         <div class="card-body text-center">
-                                            <h2 class="mb-0">{{ $estadisticas['tareas_realizadas'] }}</h2>
+                                            <h2 class="mb-0">{{ $paa->tareas->where('estado', 'realizada')->count() }}</h2>
                                             <p class="mb-0"><small>Realizadas</small></p>
                                         </div>
                                     </div>
@@ -333,7 +353,7 @@
                                 <div class="col-md-3">
                                     <div class="card bg-warning text-white mb-3">
                                         <div class="card-body text-center">
-                                            <h2 class="mb-0">{{ $estadisticas['tareas_en_proceso'] }}</h2>
+                                            <h2 class="mb-0">{{ $paa->tareas->where('estado', 'en_proceso')->count() }}</h2>
                                             <p class="mb-0"><small>En Proceso</small></p>
                                         </div>
                                     </div>
@@ -341,7 +361,7 @@
                                 <div class="col-md-3">
                                     <div class="card bg-secondary text-white mb-3">
                                         <div class="card-body text-center">
-                                            <h2 class="mb-0">{{ $estadisticas['tareas_pendientes'] }}</h2>
+                                            <h2 class="mb-0">{{ $paa->tareas->where('estado', 'pendiente')->count() }}</h2>
                                             <p class="mb-0"><small>Pendientes</small></p>
                                         </div>
                                     </div>
@@ -526,65 +546,26 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Gráfico de Cumplimiento por Rol
-    const ctxRoles = document.getElementById('chartCumplimientoRoles');
-    if (ctxRoles) {
-        new Chart(ctxRoles, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode(array_column($cumplimientoPorRol, 'nombre')) !!},
-                datasets: [{
-                    label: 'Cumplimiento (%)',
-                    data: {!! json_encode(array_column($cumplimientoPorRol, 'porcentaje')) !!},
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(153, 102, 255, 0.6)',
-                        'rgba(255, 159, 64, 0.6)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-    }
-
     // Gráfico de Estados de Tareas
     const ctxEstados = document.getElementById('chartEstadosTareas');
     if (ctxEstados) {
+        const tareas = {!! json_encode($paa->tareas) !!};
+        const realizadas = tareas.filter(t => t.estado === 'realizada').length;
+        const enProceso = tareas.filter(t => t.estado === 'en_proceso').length;
+        const pendientes = tareas.filter(t => t.estado === 'pendiente').length;
+        const anuladas = tareas.filter(t => t.estado === 'anulada').length;
+
         new Chart(ctxEstados, {
             type: 'doughnut',
             data: {
-                labels: ['Realizadas', 'En Proceso', 'Pendientes', 'Vencidas', 'Anuladas'],
+                labels: ['Realizadas', 'En Proceso', 'Pendientes', 'Anuladas'],
                 datasets: [{
-                    data: [
-                        {{ $estadisticas['tareas_realizadas'] }},
-                        {{ $estadisticas['tareas_en_proceso'] }},
-                        {{ $estadisticas['tareas_pendientes'] }},
-                        {{ $estadisticas['tareas_vencidas'] }},
-                        {{ $estadisticas['tareas_anuladas'] }}
-                    ],
+                    data: [realizadas, enProceso, pendientes, anuladas],
                     backgroundColor: [
                         'rgba(40, 167, 69, 0.8)',
                         'rgba(255, 193, 7, 0.8)',
                         'rgba(108, 117, 125, 0.8)',
-                        'rgba(220, 53, 69, 0.8)',
-                        'rgba(23, 162, 184, 0.8)'
+                        'rgba(220, 53, 69, 0.8)'
                     ]
                 }]
             },

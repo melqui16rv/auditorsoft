@@ -16,6 +16,7 @@ use App\Http\Controllers\PAA\PAASeguimientoController;
 use App\Http\Controllers\EvidenciaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Parametrizacion\MatrizPriorizacionController;
+use App\Http\Controllers\Programa\ProgramaAuditoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +101,15 @@ Route::middleware('auth')->group(function () {
             ->name('matriz-priorizacion.validar');
         Route::post('/matriz-priorizacion/{matrizPriorizacion}/aprobar', [MatrizPriorizacionController::class, 'aprobar'])
             ->name('matriz-priorizacion.aprobar');
+        
+        // Programa de Auditoría
+        Route::resource('programa-auditoria', ProgramaAuditoriaController::class);
+        
+        // Acciones especiales de Programa
+        Route::patch('/programa-auditoria/{programaAuditoria}/enviar', [ProgramaAuditoriaController::class, 'enviar'])
+            ->name('programa-auditoria.enviar');
+        Route::patch('/programa-auditoria/{programaAuditoria}/aprobar', [ProgramaAuditoriaController::class, 'aprobar'])
+            ->name('programa-auditoria.aprobar');
     });
     Route::prefix('paa')->name('paa.')->group(function () {
         // Listar - Accesible para Super Admin, Jefe Auditor y Auditor

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Editar Tarea - ' . $tarea->descripcion_tarea)
+@section('title', 'Editar Tarea - ' . $tarea->descripcion)
 
 @section('sidebar')
     @include('partials.sidebar')
@@ -66,42 +66,52 @@
                             <div class="col-md-6">
                                 <!-- Rol OCI -->
                                 <div class="mb-3">
-                                    <label for="rol_oci_id" class="form-label">
+                                    <label for="rol_oci" class="form-label">
                                         Rol OCI <span class="text-danger">*</span>
                                     </label>
-                                    <select name="rol_oci_id" 
-                                            id="rol_oci_id" 
-                                            class="form-select @error('rol_oci_id') is-invalid @enderror" 
-                                            {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>
+                                    <select name="rol_oci" 
+                                            id="rol_oci" 
+                                            class="form-select @error('rol_oci') is-invalid @enderror" 
+                                            {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                         <option value="">Seleccione el rol OCI...</option>
-                                        @foreach($rolesOci as $rol)
-                                            <option value="{{ $rol->id }}" {{ (old('rol_oci_id', $tarea->rol_oci_id) == $rol->id) ? 'selected' : '' }}>
-                                                {{ $rol->nombre_rol }}
-                                            </option>
-                                        @endforeach
+                                        <option value="fomento_cultura" {{ (old('rol_oci', $tarea->rol_oci) == 'fomento_cultura') ? 'selected' : '' }}>
+                                            Fomento de la Cultura del Control
+                                        </option>
+                                        <option value="apoyo_fortalecimiento" {{ (old('rol_oci', $tarea->rol_oci) == 'apoyo_fortalecimiento') ? 'selected' : '' }}>
+                                            Apoyo al Fortalecimiento
+                                        </option>
+                                        <option value="investigaciones" {{ (old('rol_oci', $tarea->rol_oci) == 'investigaciones') ? 'selected' : '' }}>
+                                            Investigaciones
+                                        </option>
+                                        <option value="evaluacion_control" {{ (old('rol_oci', $tarea->rol_oci) == 'evaluacion_control') ? 'selected' : '' }}>
+                                            Evaluación de Control
+                                        </option>
+                                        <option value="evaluacion_gestion" {{ (old('rol_oci', $tarea->rol_oci) == 'evaluacion_gestion') ? 'selected' : '' }}>
+                                            Evaluación de Gestión
+                                        </option>
                                     </select>
-                                    @error('rol_oci_id')
+                                    @error('rol_oci')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Descripción de la Tarea -->
                                 <div class="mb-3">
-                                    <label for="descripcion_tarea" class="form-label">
+                                    <label for="descripcion" class="form-label">
                                         Descripción de la Tarea <span class="text-danger">*</span>
                                     </label>
-                                    <textarea name="descripcion_tarea" 
-                                              id="descripcion_tarea" 
-                                              class="form-control @error('descripcion_tarea') is-invalid @enderror"
+                                    <textarea name="descripcion" 
+                                              id="descripcion" 
+                                              class="form-control @error('descripcion') is-invalid @enderror"
                                               rows="4"
                                               minlength="10"
                                               maxlength="1000"
-                                              {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>{{ old('descripcion_tarea', $tarea->descripcion_tarea) }}</textarea>
-                                    @error('descripcion_tarea')
+                                              {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>{{ old('descripcion', $tarea->descripcion) }}</textarea>
+                                    @error('descripcion')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
-                                        <span id="charCount">{{ strlen($tarea->descripcion_tarea) }}</span>/1000 caracteres
+                                        <span id="charCount">{{ strlen($tarea->descripcion) }}</span>/1000 caracteres
                                     </small>
                                 </div>
 
@@ -109,95 +119,56 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="fecha_inicio_planeada" class="form-label">
-                                                Inicio Planeado <span class="text-danger">*</span>
+                                            <label for="fecha_inicio" class="form-label">
+                                                Inicio <span class="text-danger">*</span>
                                             </label>
                                             <input type="date" 
-                                                   name="fecha_inicio_planeada" 
-                                                   id="fecha_inicio_planeada" 
-                                                   class="form-control @error('fecha_inicio_planeada') is-invalid @enderror"
-                                                   value="{{ old('fecha_inicio_planeada', $tarea->fecha_inicio_planeada) }}" 
-                                                   {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>
-                                            @error('fecha_inicio_planeada')
+                                                   name="fecha_inicio" 
+                                                   id="fecha_inicio" 
+                                                   class="form-control @error('fecha_inicio') is-invalid @enderror"
+                                                   value="{{ old('fecha_inicio', optional($tarea->fecha_inicio)->format('Y-m-d')) }}" 
+                                                   {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
+                                            @error('fecha_inicio')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="fecha_fin_planeada" class="form-label">
-                                                Fin Planeado <span class="text-danger">*</span>
+                                            <label for="fecha_fin" class="form-label">
+                                                Fin <span class="text-danger">*</span>
                                             </label>
                                             <input type="date" 
-                                                   name="fecha_fin_planeada" 
-                                                   id="fecha_fin_planeada" 
-                                                   class="form-control @error('fecha_fin_planeada') is-invalid @enderror"
-                                                   value="{{ old('fecha_fin_planeada', $tarea->fecha_fin_planeada) }}" 
-                                                   {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>
-                                            @error('fecha_fin_planeada')
+                                                   name="fecha_fin" 
+                                                   id="fecha_fin" 
+                                                   class="form-control @error('fecha_fin') is-invalid @enderror"
+                                                   value="{{ old('fecha_fin', optional($tarea->fecha_fin)->format('Y-m-d')) }}" 
+                                                   {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
+                                            @error('fecha_fin')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Fechas Reales (si la tarea ha iniciado) -->
-                                @if($tarea->estado_tarea != 'pendiente')
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="fecha_inicio_real" class="form-label">
-                                                Inicio Real
-                                            </label>
-                                            <input type="date" 
-                                                   name="fecha_inicio_real" 
-                                                   id="fecha_inicio_real" 
-                                                   class="form-control @error('fecha_inicio_real') is-invalid @enderror"
-                                                   value="{{ old('fecha_inicio_real', $tarea->fecha_inicio_real) }}" 
-                                                   {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>
-                                            @error('fecha_inicio_real')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="fecha_fin_real" class="form-label">
-                                                Fin Real
-                                            </label>
-                                            <input type="date" 
-                                                   name="fecha_fin_real" 
-                                                   id="fecha_fin_real" 
-                                                   class="form-control @error('fecha_fin_real') is-invalid @enderror"
-                                                   value="{{ old('fecha_fin_real', $tarea->fecha_fin_real) }}" 
-                                                   {{ $tarea->estado_tarea != 'realizada' ? 'disabled' : '' }}>
-                                            @error('fecha_fin_real')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
 
                             <!-- Columna Derecha -->
                             <div class="col-md-6">
                                 <!-- Responsable -->
                                 <div class="mb-3">
-                                    <label for="responsable_id" class="form-label">
+                                    <label for="auditor_responsable_id" class="form-label">
                                         Responsable <span class="text-danger">*</span>
                                     </label>
-                                    <select name="responsable_id" 
-                                            id="responsable_id" 
-                                            class="form-select @error('responsable_id') is-invalid @enderror" 
-                                            {{ $tarea->estado_tarea == 'realizada' ? 'disabled' : '' }}>
+                                    <select name="auditor_responsable_id" 
+                                            id="auditor_responsable_id" 
+                                            class="form-select @error('auditor_responsable_id') is-invalid @enderror" 
+                                            {{ $tarea->estado == 'realizada' ? 'disabled' : '' }}>
                                         @foreach($responsables as $responsable)
-                                            <option value="{{ $responsable->id }}" {{ (old('responsable_id', $tarea->responsable_id) == $responsable->id) ? 'selected' : '' }}>
+                                            <option value="{{ $responsable->id }}" {{ (old('auditor_responsable_id', $tarea->auditor_responsable_id) == $responsable->id) ? 'selected' : '' }}>
                                                 {{ $responsable->name }} - {{ ucfirst($responsable->role) }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('responsable_id')
+                                    @error('auditor_responsable_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -205,77 +176,20 @@
                                 <!-- Estado (si es Super Admin) -->
                                 @if(auth()->user()->role == 'super_administrador')
                                 <div class="mb-3">
-                                    <label for="estado_tarea" class="form-label">
+                                    <label for="estado" class="form-label">
                                         Estado
                                     </label>
-                                    <select name="estado_tarea" id="estado_tarea" class="form-select @error('estado_tarea') is-invalid @enderror">
-                                        <option value="pendiente" {{ old('estado_tarea', $tarea->estado_tarea) == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                        <option value="en_proceso" {{ old('estado_tarea', $tarea->estado_tarea) == 'en_proceso' ? 'selected' : '' }}>En Proceso</option>
-                                        <option value="realizada" {{ old('estado_tarea', $tarea->estado_tarea) == 'realizada' ? 'selected' : '' }}>Realizada</option>
-                                        <option value="anulada" {{ old('estado_tarea', $tarea->estado_tarea) == 'anulada' ? 'selected' : '' }}>Anulada</option>
-                                        <option value="vencida" {{ old('estado_tarea', $tarea->estado_tarea) == 'vencida' ? 'selected' : '' }}>Vencida</option>
+                                    <select name="estado" id="estado" class="form-select @error('estado') is-invalid @enderror">
+                                        <option value="pendiente" {{ old('estado', $tarea->estado) == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                        <option value="en_proceso" {{ old('estado', $tarea->estado) == 'en_proceso' ? 'selected' : '' }}>En Proceso</option>
+                                        <option value="realizada" {{ old('estado', $tarea->estado) == 'realizada' ? 'selected' : '' }}>Realizada</option>
+                                        <option value="anulada" {{ old('estado', $tarea->estado) == 'anulada' ? 'selected' : '' }}>Anulada</option>
                                     </select>
-                                    @error('estado_tarea')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <!-- Evaluación (si es Super Admin) -->
-                                <div class="mb-3">
-                                    <label for="evaluacion_general" class="form-label">
-                                        Evaluación
-                                    </label>
-                                    <select name="evaluacion_general" id="evaluacion_general" class="form-select @error('evaluacion_general') is-invalid @enderror">
-                                        <option value="pendiente" {{ old('evaluacion_general', $tarea->evaluacion_general) == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                        <option value="bien" {{ old('evaluacion_general', $tarea->evaluacion_general) == 'bien' ? 'selected' : '' }}>Bien</option>
-                                        <option value="mal" {{ old('evaluacion_general', $tarea->evaluacion_general) == 'mal' ? 'selected' : '' }}>Mal</option>
-                                    </select>
-                                    @error('evaluacion_general')
+                                    @error('estado')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 @endif
-
-                                <!-- Observaciones -->
-                                <div class="mb-3">
-                                    <label for="observaciones" class="form-label">
-                                        Observaciones
-                                    </label>
-                                    <textarea name="observaciones" 
-                                              id="observaciones" 
-                                              class="form-control @error('observaciones') is-invalid @enderror"
-                                              rows="4"
-                                              maxlength="2000">{{ old('observaciones', $tarea->observaciones) }}</textarea>
-                                    @error('observaciones')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <small class="form-text text-muted">
-                                        <span id="obsCharCount">{{ strlen($tarea->observaciones ?? '') }}</span>/2000 caracteres
-                                    </small>
-                                </div>
-
-                                <!-- Auditoría -->
-                                <div class="card bg-light">
-                                    <div class="card-body">
-                                        <h6 class="card-title"><i class="bi bi-clock-history"></i> Auditoría</h6>
-                                        <p class="mb-1">
-                                            <strong>Creado por:</strong> {{ $tarea->createdBy->name ?? 'N/A' }}<br>
-                                            <small class="text-muted">{{ $tarea->created_at->format('d/m/Y H:i') }}</small>
-                                        </p>
-                                        @if($tarea->updated_at != $tarea->created_at)
-                                        <p class="mb-1">
-                                            <strong>Última modificación:</strong> {{ $tarea->updatedBy->name ?? 'N/A' }}<br>
-                                            <small class="text-muted">{{ $tarea->updated_at->format('d/m/Y H:i') }}</small>
-                                        </p>
-                                        @endif
-                                        @if($tarea->deleted_at)
-                                        <p class="mb-0">
-                                            <strong>Eliminado por:</strong> {{ $tarea->deletedBy->name ?? 'N/A' }}<br>
-                                            <small class="text-muted">{{ $tarea->deleted_at->format('d/m/Y H:i') }}</small>
-                                        </p>
-                                        @endif
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -284,7 +198,7 @@
                             <a href="{{ route('paa.tareas.show', [$paa, $tarea]) }}" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Cancelar
                             </a>
-                            @if($tarea->estado_tarea != 'realizada')
+                            @if($tarea->estado != 'realizada')
                             <button type="submit" class="btn btn-warning">
                                 <i class="bi bi-save"></i> Actualizar Tarea
                             </button>
@@ -305,7 +219,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Contador de caracteres
-    const descripcion = document.getElementById('descripcion_tarea');
+    const descripcion = document.getElementById('descripcion');
     const charCount = document.getElementById('charCount');
     
     if (descripcion && !descripcion.disabled) {
@@ -324,8 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Validación de fechas
-    const fechaInicio = document.getElementById('fecha_inicio_planeada');
-    const fechaFin = document.getElementById('fecha_fin_planeada');
+    const fechaInicio = document.getElementById('fecha_inicio');
+    const fechaFin = document.getElementById('fecha_fin');
 
     if (fechaInicio && !fechaInicio.disabled) {
         fechaInicio.addEventListener('change', function() {

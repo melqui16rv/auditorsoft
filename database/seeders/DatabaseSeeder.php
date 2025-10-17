@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             ParametrizacionBasicaSeeder::class,
             MunicipiosColombiaSeeder::class,
             UsersSeeder::class,
+            PAASeeder::class,
+            PAASeguimientoSeeder::class,
+            EvidenciaSeeder::class,
         ]);
     }
 }

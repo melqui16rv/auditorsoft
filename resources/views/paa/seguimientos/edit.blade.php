@@ -49,36 +49,36 @@
                             <div class="col-md-6">
                                 <!-- Descripción -->
                                 <div class="mb-3">
-                                    <label for="descripcion_punto_control" class="form-label">
-                                        Descripción del Punto de Control <span class="text-danger">*</span>
+                                    <label for="observaciones" class="form-label">
+                                        Observaciones <span class="text-danger">*</span>
                                     </label>
-                                    <textarea name="descripcion_punto_control" 
-                                              id="descripcion_punto_control" 
-                                              class="form-control @error('descripcion_punto_control') is-invalid @enderror"
+                                    <textarea name="observaciones" 
+                                              id="observaciones" 
+                                              class="form-control @error('observaciones') is-invalid @enderror"
                                               rows="4"
                                               minlength="10"
                                               maxlength="1000"
-                                              {{ $seguimiento->estado == 'realizado' ? 'disabled' : '' }}>{{ old('descripcion_punto_control', $seguimiento->descripcion_punto_control) }}</textarea>
-                                    @error('descripcion_punto_control')
+                                              {{ $seguimiento->fecha_realizacion ? 'disabled' : '' }}>{{ old('observaciones', $seguimiento->observaciones) }}</textarea>
+                                    @error('observaciones')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="text-muted">
-                                        <span id="charCount">{{ strlen($seguimiento->descripcion_punto_control) }}</span>/1000
+                                        <span id="charCount">{{ strlen($seguimiento->observaciones) }}</span>/1000
                                     </small>
                                 </div>
 
                                 <!-- Fecha -->
                                 <div class="mb-3">
-                                    <label for="fecha_seguimiento" class="form-label">
-                                        Fecha del Seguimiento <span class="text-danger">*</span>
+                                    <label for="fecha_realizacion" class="form-label">
+                                        Fecha de Realización <span class="text-danger">*</span>
                                     </label>
                                     <input type="date" 
-                                           name="fecha_seguimiento" 
-                                           id="fecha_seguimiento" 
-                                           class="form-control @error('fecha_seguimiento') is-invalid @enderror"
-                                           value="{{ old('fecha_seguimiento', $seguimiento->fecha_seguimiento) }}" 
-                                           {{ $seguimiento->estado == 'realizado' ? 'disabled' : '' }}>
-                                    @error('fecha_seguimiento')
+                                           name="fecha_realizacion" 
+                                           id="fecha_realizacion" 
+                                           class="form-control @error('fecha_realizacion') is-invalid @enderror"
+                                           value="{{ old('fecha_realizacion', optional($seguimiento->fecha_realizacion)->format('Y-m-d')) }}" 
+                                           {{ $seguimiento->fecha_realizacion ? 'disabled' : '' }}>
+                                    @error('fecha_realizacion')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -184,18 +184,11 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const desc = document.getElementById('descripcion_punto_control');
     const obs = document.getElementById('observaciones');
     
-    if (desc && !desc.disabled) {
-        desc.addEventListener('input', () => {
-            document.getElementById('charCount').textContent = desc.value.length;
-        });
-    }
-    
-    if (obs) {
+    if (obs && !obs.disabled) {
         obs.addEventListener('input', () => {
-            document.getElementById('obsCount').textContent = obs.value.length;
+            document.getElementById('charCount').textContent = obs.value.length;
         });
     }
 });

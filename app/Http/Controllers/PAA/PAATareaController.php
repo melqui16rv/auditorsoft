@@ -30,18 +30,18 @@ class PAATareaController extends Controller
 
         // Construir query de tareas
         $query = $paa->tareas()
-            ->with(['rolOci', 'responsable', 'seguimientos'])
-            ->orderBy('fecha_inicio_planeada');
+            ->with(['responsable', 'seguimientos'])
+            ->orderBy('fecha_inicio');
 
         // Si es auditor, filtrar solo sus tareas asignadas
         if (auth()->user()->role === 'auditor') {
-            $query->where('responsable_id', auth()->id());
+            $query->where('auditor_responsable_id', auth()->id());
         }
 
         $tareas = $query->paginate(15);
 
         // Si es auditor y no tiene tareas, mostrar mensaje
-        if (auth()->user()->role === 'auditor' && $tareas->count() === 0) {
+        if (auth()->user()->role === 'auditor' && $tareas->total() === 0) {
             return redirect()->route('paa.show', $paa)
                 ->with('info', 'No tienes tareas asignadas en este PAA.');
         }
@@ -94,8 +94,7 @@ class PAATareaController extends Controller
             // Crear la tarea
             $tarea = new PAATarea($request->validated());
             $tarea->paa_id = $paa->id;
-            $tarea->estado_tarea = 'pendiente'; // Estado inicial
-            $tarea->evaluacion_general = 'pendiente'; // Evaluación inicial
+            $tarea->estado = 'pendiente'; // Estado inicial
             $tarea->created_by = auth()->id();
             $tarea->save();
 
@@ -127,14 +126,13 @@ class PAATareaController extends Controller
         }
 
         // Si es auditor, verificar que es el responsable de la tarea
-        if (auth()->user()->role === 'auditor' && $tarea->responsable_id !== auth()->id()) {
+        if (auth()->user()->role === 'auditor' && $tarea->auditor_responsable_id !== auth()->id()) {
             return redirect()->route('paa.show', $paa)
                 ->with('info', 'No tienes acceso a esa tarea.');
         }
 
         // Cargar relaciones
         $tarea->load([
-            'rolOci',
             'responsable',
             'seguimientos.evidencias',
             'seguimientos.enteControl',
@@ -144,7 +142,8 @@ class PAATareaController extends Controller
 
         // Calcular estadísticas
         $totalSeguimientos = $tarea->seguimientos->count();
-        $seguimientosRealizados = $tarea->seguimientos->where('estado', 'realizado')->count();
+        $seguimientosRealizados = $tarea->seguimientos->whereNotNull('fecha_realizacion')->count();
+        $seguimientosPendientes = $tarea->seguimientos->whereNull('fecha_realizacion')->count();
         $porcentajeSeguimientos = $totalSeguimientos > 0 
             ? ($seguimientosRealizados / $totalSeguimientos) * 100 
             : 0;
@@ -163,7 +162,7 @@ class PAATareaController extends Controller
             $evidencias = $evidencias->merge($seguimiento->evidencias);
         }
 
-        return view('paa.tareas.show', compact('paa', 'tarea', 'seguimientos', 'totalSeguimientos', 'seguimientosRealizados', 'porcentajeSeguimientos', 'totalEvidencias', 'evidencias'));
+        return view('paa.tareas.show', compact('paa', 'tarea', 'seguimientos', 'totalSeguimientos', 'seguimientosRealizados', 'seguimientosPendientes', 'porcentajeSeguimientos', 'totalEvidencias', 'evidencias'));
     }
 
     /**
@@ -182,7 +181,7 @@ class PAATareaController extends Controller
         }
 
         // Si es auditor, verificar que es el responsable de la tarea
-        if (auth()->user()->role === 'auditor' && $tarea->responsable_id !== auth()->id()) {
+        if (auth()->user()->role === 'auditor' && $tarea->auditor_responsable_id !== auth()->id()) {
             return redirect()->route('paa.show', $paa)
                 ->with('info', 'No tienes acceso a esa tarea.');
         }
@@ -322,16 +321,9 @@ class PAATareaController extends Controller
             abort(403, 'No tienes permisos para completar esta tarea.');
         }
 
-        // Validar evaluación
-        $evaluacion = request()->input('evaluacion', 'bien');
-        if (!in_array($evaluacion, ['bien', 'mal'])) {
-            return redirect()->back()
-                ->with('error', 'La evaluación debe ser "bien" o "mal".');
-        }
-
         DB::beginTransaction();
         try {
-            $tarea->completar($evaluacion);
+            $tarea->completar();
             $tarea->updated_by = auth()->id();
             $tarea->save();
 

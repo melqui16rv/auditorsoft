@@ -48,21 +48,31 @@
                             <div class="col-md-6">
                                 <!-- Rol OCI -->
                                 <div class="mb-3">
-                                    <label for="rol_oci_id" class="form-label">
+                                    <label for="rol_oci" class="form-label">
                                         Rol OCI <span class="text-danger">*</span>
                                     </label>
-                                    <select name="rol_oci_id" 
-                                            id="rol_oci_id" 
-                                            class="form-select @error('rol_oci_id') is-invalid @enderror" 
+                                    <select name="rol_oci" 
+                                            id="rol_oci" 
+                                            class="form-select @error('rol_oci') is-invalid @enderror" 
                                             required>
                                         <option value="">Seleccione el rol OCI...</option>
-                                        @foreach($rolesOci as $rol)
-                                            <option value="{{ $rol->id }}" {{ old('rol_oci_id') == $rol->id ? 'selected' : '' }}>
-                                                {{ $rol->nombre_rol }}
-                                            </option>
-                                        @endforeach
+                                        <option value="fomento_cultura" {{ old('rol_oci') == 'fomento_cultura' ? 'selected' : '' }}>
+                                            Fomento de la Cultura del Control
+                                        </option>
+                                        <option value="apoyo_fortalecimiento" {{ old('rol_oci') == 'apoyo_fortalecimiento' ? 'selected' : '' }}>
+                                            Apoyo al Fortalecimiento
+                                        </option>
+                                        <option value="investigaciones" {{ old('rol_oci') == 'investigaciones' ? 'selected' : '' }}>
+                                            Investigaciones
+                                        </option>
+                                        <option value="evaluacion_control" {{ old('rol_oci') == 'evaluacion_control' ? 'selected' : '' }}>
+                                            Evaluación de Control
+                                        </option>
+                                        <option value="evaluacion_gestion" {{ old('rol_oci') == 'evaluacion_gestion' ? 'selected' : '' }}>
+                                            Evaluación de Gestión
+                                        </option>
                                     </select>
-                                    @error('rol_oci_id')
+                                    @error('rol_oci')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">Decreto 648/2017 - Cinco roles funcionales de la OCI</small>
@@ -82,7 +92,7 @@
                                            minlength="5"
                                            maxlength="255"
                                            placeholder="Ej: Auditoría al proceso de compras...">
-                                    @error('nombre_tarea')
+                                    @error('nombre')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">Título corto y descriptivo (5-255 caracteres)</small>
@@ -90,18 +100,18 @@
 
                                 <!-- Descripción de la Tarea -->
                                 <div class="mb-3">
-                                    <label for="descripcion_tarea" class="form-label">
+                                    <label for="descripcion" class="form-label">
                                         Descripción de la Tarea <span class="text-danger">*</span>
                                     </label>
-                                    <textarea name="descripcion_tarea" 
-                                              id="descripcion_tarea" 
-                                              class="form-control @error('descripcion_tarea') is-invalid @enderror"
+                                    <textarea name="descripcion" 
+                                              id="descripcion" 
+                                              class="form-control @error('descripcion') is-invalid @enderror"
                                               rows="4"
                                               required
                                               minlength="10"
                                               maxlength="1000"
-                                              placeholder="Describa detalladamente la tarea a realizar...">{{ old('descripcion_tarea') }}</textarea>
-                                    @error('descripcion_tarea')
+                                              placeholder="Describa detalladamente la tarea a realizar...">{{ old('descripcion') }}</textarea>
+                                    @error('descripcion')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
@@ -111,34 +121,34 @@
 
                                 <!-- Fecha Inicio Planeada -->
                                 <div class="mb-3">
-                                    <label for="fecha_inicio_planeada" class="form-label">
-                                        Fecha de Inicio Planeada <span class="text-danger">*</span>
+                                    <label for="fecha_inicio" class="form-label">
+                                        Fecha de Inicio <span class="text-danger">*</span>
                                     </label>
                                     <input type="date" 
-                                           name="fecha_inicio_planeada" 
-                                           id="fecha_inicio_planeada" 
-                                           class="form-control @error('fecha_inicio_planeada') is-invalid @enderror"
-                                           value="{{ old('fecha_inicio_planeada', date('Y-m-d')) }}" 
+                                           name="fecha_inicio" 
+                                           id="fecha_inicio" 
+                                           class="form-control @error('fecha_inicio') is-invalid @enderror"
+                                           value="{{ old('fecha_inicio', date('Y-m-d')) }}" 
                                            min="{{ date('Y-m-d') }}"
                                            required>
-                                    @error('fecha_inicio_planeada')
+                                    @error('fecha_inicio')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Fecha Fin Planeada -->
                                 <div class="mb-3">
-                                    <label for="fecha_fin_planeada" class="form-label">
-                                        Fecha de Fin Planeada <span class="text-danger">*</span>
+                                    <label for="fecha_fin" class="form-label">
+                                        Fecha de Fin <span class="text-danger">*</span>
                                     </label>
                                     <input type="date" 
-                                           name="fecha_fin_planeada" 
-                                           id="fecha_fin_planeada" 
-                                           class="form-control @error('fecha_fin_planeada') is-invalid @enderror"
-                                           value="{{ old('fecha_fin_planeada') }}" 
+                                           name="fecha_fin" 
+                                           id="fecha_fin" 
+                                           class="form-control @error('fecha_fin') is-invalid @enderror"
+                                           value="{{ old('fecha_fin') }}" 
                                            min="{{ date('Y-m-d') }}"
                                            required>
-                                    @error('fecha_fin_planeada')
+                                    @error('fecha_fin')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">Debe ser posterior a la fecha de inicio</small>
@@ -235,7 +245,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Contador de caracteres para descripción
-    const descripcion = document.getElementById('descripcion_tarea');
+    const descripcion = document.getElementById('descripcion');
     const charCount = document.getElementById('charCount');
     
     descripcion.addEventListener('input', function() {
@@ -247,19 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Contador de caracteres para observaciones
-    const observaciones = document.getElementById('observaciones');
-    const obsCharCount = document.getElementById('obsCharCount');
-    
-    if (observaciones) {
-        observaciones.addEventListener('input', function() {
-            obsCharCount.textContent = this.value.length;
-        });
-    }
-
     // Validación de fechas
-    const fechaInicio = document.getElementById('fecha_inicio_planeada');
-    const fechaFin = document.getElementById('fecha_fin_planeada');
+    const fechaInicio = document.getElementById('fecha_inicio');
+    const fechaFin = document.getElementById('fecha_fin');
 
     fechaInicio.addEventListener('change', function() {
         fechaFin.min = this.value;
@@ -278,12 +278,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Validación del formulario
     document.getElementById('formCreateTarea').addEventListener('submit', function(e) {
-        const rolOci = document.getElementById('rol_oci_id').value;
-        const nombre = document.getElementById('nombre_tarea').value;
-        const desc = document.getElementById('descripcion_tarea').value;
-        const responsable = document.getElementById('responsable_id').value;
-        const inicio = document.getElementById('fecha_inicio_planeada').value;
-        const fin = document.getElementById('fecha_fin_planeada').value;
+        const rolOci = document.getElementById('rol_oci').value;
+        const nombre = document.getElementById('nombre').value;
+        const desc = document.getElementById('descripcion').value;
+        const responsable = document.getElementById('auditor_responsable_id').value;
+        const inicio = document.getElementById('fecha_inicio').value;
+        const fin = document.getElementById('fecha_fin').value;
 
         if (!rolOci || !nombre || !desc || !responsable || !inicio || !fin) {
             e.preventDefault();

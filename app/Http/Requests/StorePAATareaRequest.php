@@ -23,13 +23,16 @@ class StorePAATareaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rol_oci_id' => ['required', 'exists:cat_roles_oci,id'],
-            'nombre_tarea' => ['required', 'string', 'min:5', 'max:255'],
-            'descripcion_tarea' => ['required', 'string', 'min:10', 'max:1000'],
-            'fecha_inicio_planeada' => ['required', 'date', 'after_or_equal:today'],
-            'fecha_fin_planeada' => ['required', 'date', 'after:fecha_inicio_planeada'],
-            'responsable_id' => ['required', 'exists:users,id'],
-            'observaciones' => ['nullable', 'string', 'max:2000'],
+            'rol_oci' => ['required', 'string', 'in:fomento_cultura,apoyo_fortalecimiento,investigaciones,evaluacion_control,evaluacion_gestion'],
+            'nombre' => ['required', 'string', 'min:5', 'max:255'],
+            'descripcion' => ['required', 'string', 'min:10', 'max:1000'],
+            'fecha_inicio' => ['required', 'date', 'after_or_equal:today'],
+            'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
+            'auditor_responsable_id' => ['required', 'exists:users,id'],
+            'objetivo' => ['nullable', 'string', 'max:2000'],
+            'alcance' => ['nullable', 'string', 'max:2000'],
+            'criterios_auditoria' => ['nullable', 'string', 'max:2000'],
+            'recursos_necesarios' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
@@ -41,21 +44,24 @@ class StorePAATareaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'rol_oci_id.required' => 'El rol OCI es obligatorio.',
-            'rol_oci_id.exists' => 'El rol OCI seleccionado no es válido.',
-            'nombre_tarea.required' => 'El nombre de la tarea es obligatorio.',
-            'nombre_tarea.min' => 'El nombre debe tener al menos 5 caracteres.',
-            'nombre_tarea.max' => 'El nombre no puede exceder 255 caracteres.',
-            'descripcion_tarea.required' => 'La descripción de la tarea es obligatoria.',
-            'descripcion_tarea.min' => 'La descripción debe tener al menos 10 caracteres.',
-            'descripcion_tarea.max' => 'La descripción no puede exceder 1000 caracteres.',
-            'fecha_inicio_planeada.required' => 'La fecha de inicio es obligatoria.',
-            'fecha_inicio_planeada.after_or_equal' => 'La fecha de inicio no puede ser anterior a hoy.',
-            'fecha_fin_planeada.required' => 'La fecha de fin es obligatoria.',
-            'fecha_fin_planeada.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
-            'responsable_id.required' => 'El responsable es obligatorio.',
-            'responsable_id.exists' => 'El responsable seleccionado no es válido.',
-            'observaciones.max' => 'Las observaciones no pueden exceder 2000 caracteres.',
+            'rol_oci.required' => 'El rol OCI es obligatorio.',
+            'rol_oci.in' => 'El rol OCI seleccionado no es válido.',
+            'nombre.required' => 'El nombre de la tarea es obligatorio.',
+            'nombre.min' => 'El nombre debe tener al menos 5 caracteres.',
+            'nombre.max' => 'El nombre no puede exceder 255 caracteres.',
+            'descripcion.required' => 'La descripción de la tarea es obligatoria.',
+            'descripcion.min' => 'La descripción debe tener al menos 10 caracteres.',
+            'descripcion.max' => 'La descripción no puede exceder 1000 caracteres.',
+            'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio no puede ser anterior a hoy.',
+            'fecha_fin.required' => 'La fecha de fin es obligatoria.',
+            'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
+            'auditor_responsable_id.required' => 'El responsable es obligatorio.',
+            'auditor_responsable_id.exists' => 'El responsable seleccionado no es válido.',
+            'objetivo.max' => 'El objetivo no puede exceder 2000 caracteres.',
+            'alcance.max' => 'El alcance no puede exceder 2000 caracteres.',
+            'criterios_auditoria.max' => 'Los criterios de auditoría no pueden exceder 2000 caracteres.',
+            'recursos_necesarios.max' => 'Los recursos necesarios no pueden exceder 2000 caracteres.',
         ];
     }
 }

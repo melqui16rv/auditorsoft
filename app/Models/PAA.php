@@ -210,7 +210,7 @@ class PAA extends Model
         }
 
         $tareasRealizadas = $this->tareas()
-            ->where('estado_tarea', PAATarea::ESTADO_REALIZADA)
+            ->where('estado', 'realizada')
             ->count();
 
         return round(($tareasRealizadas / $totalTareas) * 100, 2);
@@ -219,31 +219,36 @@ class PAA extends Model
     /**
      * Calcular cumplimiento por rol OCI
      * 
-     * @return array ['rol_id' => ['nombre' => '', 'porcentaje' => 0.0, 'tareas_total' => 0, 'tareas_realizadas' => 0]]
+     * @return array ['rol_enum' => ['nombre' => '', 'porcentaje' => 0.0, 'tareas_total' => 0, 'tareas_realizadas' => 0]]
      */
     public function calcularCumplimientoPorRol(): array
     {
         $resultados = [];
 
-        // Obtener todos los roles OCI desde la base de datos
-        $rolesOci = \App\Models\RolOci::orderBy('orden')->get();
+        $rolesOciEnum = [
+            'fomento_cultura' => 'Liderazgo Estratégico',
+            'apoyo_fortalecimiento' => 'Enfoque Prevención',
+            'investigaciones' => 'Entes Externos',
+            'evaluacion_control' => 'Gestión de Riesgo',
+            'evaluacion_gestion' => 'Auditoría Interna',
+        ];
 
-        foreach ($rolesOci as $rol) {
+        foreach ($rolesOciEnum as $rolEnum => $rolNombre) {
             $totalTareasRol = $this->tareas()
-                ->where('rol_oci_id', $rol->id)
+                ->where('rol_oci', $rolEnum)
                 ->count();
 
             $tareasRealizadasRol = $this->tareas()
-                ->where('rol_oci_id', $rol->id)
-                ->where('estado_tarea', PAATarea::ESTADO_REALIZADA)
+                ->where('rol_oci', $rolEnum)
+                ->where('estado', 'realizada')
                 ->count();
 
             $porcentaje = $totalTareasRol > 0 
                 ? round(($tareasRealizadasRol / $totalTareasRol) * 100, 2)
                 : 0.0;
 
-            $resultados[$rol->id] = [
-                'nombre' => $rol->nombre_rol,
+            $resultados[$rolEnum] = [
+                'nombre' => $rolNombre,
                 'porcentaje' => $porcentaje,
                 'tareas_total' => $totalTareasRol,
                 'tareas_realizadas' => $tareasRealizadasRol,
